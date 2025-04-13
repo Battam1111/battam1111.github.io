@@ -1,4 +1,4 @@
-import { Mail, MessageSquare, Github, Linkedin } from "lucide-react";
+import { Mail, MessageSquare, Github } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -6,8 +6,8 @@ export default function ContactSection() {
       <h2 className="text-3xl font-semibold border-b pb-2">Contact</h2>
 
       <p className="text-gray-700 max-w-xl">
-        I’m always open to collaboration, interesting conversations, or just sharing ideas over coffee ☕.
-        Whether it's about reinforcement learning, embodied AI, or something entirely unexpected — feel free to reach out!
+        I&apos;m always open to collaboration, interesting conversations, or just sharing ideas over coffee ☕.
+        Whether it&apos;s about reinforcement learning, embodied AI, or something entirely unexpected — feel free to reach out!
       </p>
 
       <div className="space-y-4">
