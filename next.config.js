@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
+    output: 'export', // 启用静态导出
     images: {
-      unoptimized: true, // 防止 export 时出错
+      unoptimized: true, // 关闭 image 优化，适配 GitHub Pages
     },
-    trailingSlash: true, // 兼容 GitHub Pages 的静态路径
+    trailingSlash: true, // 每个页面结尾添加 /，避免 GitHub Pages 路径错误
   };
   
   module.exports = nextConfig;
