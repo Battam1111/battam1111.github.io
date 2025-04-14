@@ -143,7 +143,7 @@ export default function ResearchSection() {
                   ticks: { color: "#6b7280", font: { size: 12 } },
                   grid: {
                     color: "#e5e7eb",
-                    // @ts-ignore ✅ Chart.js 实际支持，但类型中未声明
+                    // @ts-expect-error 该方法未在类型中声明，但我们确定它存在
                     borderDash: [4, 4],
                   },
                 },

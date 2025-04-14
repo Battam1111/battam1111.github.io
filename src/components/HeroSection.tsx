@@ -14,7 +14,7 @@ const profileImages = [
 // ✅ HeroSection 主组件
 export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0); // 当前图像索引
-  const [isTransitioning, setIsTransitioning] = useState(false); // 控制动画
+  const [, setIsTransitioning] = useState(false); // 控制动画
   const touchStartX = useRef<number | null>(null); // 手势起点
   const intervalRef = useRef<NodeJS.Timeout | null>(null); // 自动轮播定时器
 
