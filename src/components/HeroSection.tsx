@@ -7,7 +7,7 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ✅ 头像轮播图路径列表（确保图片放在 public/PersonalAlbums 目录）
+// ✅ 头像轮播图路径列表
 const profileImages = [
   "/PersonalAlbums/pic1.jpg",
   "/PersonalAlbums/pic2.jpg",
@@ -16,32 +16,31 @@ const profileImages = [
 
 // ✅ HeroSection 主组件
 export default function HeroSection() {
-  const [currentIndex, setCurrentIndex] = useState(0); // 当前展示的图像索引
-  const touchStartX = useRef<number | null>(null); // 手势滑动起点 X 坐标
-  const intervalRef = useRef<NodeJS.Timeout | null>(null); // 轮播定时器
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // ✅ 初始化粒子系统（tsparticles）
+  // ✅ 初始化粒子背景
   const particlesInit = async (main: any) => {
     await loadFull(main);
   };
 
-  // ✅ 自动轮播效果，每 6 秒切换一张图片
+  // ✅ 自动轮播效果
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % profileImages.length);
     }, 6000);
-
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  // ✅ 手势交互：记录起点
+  // ✅ 触摸开始记录
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
 
-  // ✅ 手势交互：判断滑动方向并切换图片
+  // ✅ 触摸结束切换
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
@@ -51,11 +50,9 @@ export default function HeroSection() {
     touchStartX.current = null;
   };
 
-  // ✅ 向前切换图像
+  // ✅ 向后/向前切换
   const goToNextImage = () =>
     setCurrentIndex((prev) => (prev + 1) % profileImages.length);
-
-  // ✅ 向后切换图像
   const goToPrevImage = () =>
     setCurrentIndex((prev) =>
       prev === 0 ? profileImages.length - 1 : prev - 1
@@ -64,9 +61,9 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-16 space-y-12 md:space-y-0 animate-fade-in"
+      className="relative min-h-[90vh] overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-16 space-y-12 md:space-y-0 animate-fade-in bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-[#0a0a0a] dark:to-[#1a1a1a]"
     >
-      {/* ✅ 粒子背景层（科技感增强） */}
+      {/* ✅ 粒子背景层 */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -85,10 +82,14 @@ export default function HeroSection() {
         className="absolute inset-0 -z-10"
       />
 
-      {/* ✅ 左侧介绍文字区域 */}
+      {/* ✅ 左侧文字简介 */}
       <div className="flex-1 space-y-5 text-center md:text-left z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
-          Hi, I’m{" "}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight 
+                       text-gray-900 dark:text-white">
+          {/* ✅ 修复亮色模式下移动端文字不可见问题 */}
+          <span className="block text-gray-900 dark:text-white sm:inline">
+            Hi, I’m{" "}
+          </span>
           <span className="text-purple-600 dark:text-purple-400">
             Yanjun Chen
           </span>
@@ -125,9 +126,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ✅ 右侧头像 + 动效 + 立体背景 */}
+      {/* ✅ 右侧头像 + 动效 */}
       <div className="flex-1 flex flex-col items-center relative z-10">
-        {/* ✅ 椭圆容器 + 模糊背景 + 光晕效果 */}
         <div
           className="relative w-[260px] sm:w-[300px] md:w-[320px] aspect-[3/4] overflow-hidden rounded-[42%/50%] border-4 border-white dark:border-gray-700 shadow-2xl backdrop-blur-md bg-white/10 backdrop-saturate-200 cursor-pointer"
           onTouchStart={handleTouchStart}
@@ -138,7 +138,7 @@ export default function HeroSection() {
             clickX < rect.width / 2 ? goToPrevImage() : goToNextImage();
           }}
         >
-          {/* ✅ 动态切换 + 镜头推拉感（framer-motion） */}
+          {/* ✅ 动态切换图像动画 */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -153,7 +153,6 @@ export default function HeroSection() {
                 alt={`Yanjun Chen ${currentIndex + 1}`}
                 fill
                 sizes="100%"
-                // ✅ 关键：顶部对齐，保证头像不会「下移」，避免上方留白
                 className="object-cover object-top"
                 priority
               />
@@ -161,7 +160,7 @@ export default function HeroSection() {
           </AnimatePresence>
         </div>
 
-        {/* ✅ 指示器小圆点 */}
+        {/* ✅ 指示器圆点 */}
         <div className="flex space-x-2 mt-4">
           {profileImages.map((_, index) => (
             <span
