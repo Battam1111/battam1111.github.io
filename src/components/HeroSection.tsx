@@ -1,85 +1,74 @@
 "use client";
 
-// ✅ 导入 React hook
+// ✅ 引入核心 hook
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-// ✅ 轮播图片路径（确保图片在 public/PersonalAlbums 中）
+// ✅ 头像轮播图路径（建议使用优化格式 jpg/webp）
 const profileImages = [
   "/PersonalAlbums/pic1.jpg",
   "/PersonalAlbums/pic2.jpg",
   "/PersonalAlbums/pic3.jpg",
 ];
 
-// ✅ HeroSection 主组件
+// ✅ 主组件
 export default function HeroSection() {
-  const [currentIndex, setCurrentIndex] = useState(0); // 当前图像索引
-  const [, setIsTransitioning] = useState(false); // 控制动画
-  const touchStartX = useRef<number | null>(null); // 手势起点
-  const intervalRef = useRef<NodeJS.Timeout | null>(null); // 自动轮播定时器
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // ✅ 下一张图片
-  const goToNextImage = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev + 1) % profileImages.length);
-  };
-
-  // ✅ 上一张图片
-  const goToPrevImage = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) =>
-      prev === 0 ? profileImages.length - 1 : prev - 1
-    );
-  };
-
-  // ✅ 自动轮播启动
+  // ✅ 自动轮播切换
   useEffect(() => {
-    intervalRef.current = setInterval(goToNextImage, 6000); // 每6秒切换
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % profileImages.length);
+    }, 6000);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  // ✅ 清除动画标记
-  useEffect(() => {
-    const timer = setTimeout(() => setIsTransitioning(false), 600);
-    return () => clearTimeout(timer);
-  }, [currentIndex]);
-
-  // ✅ 触摸开始
+  // ✅ 手势滑动处理
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
-
-  // ✅ 触摸结束
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(deltaX) > 40) {
+    if (Math.abs(deltaX) > 50) {
       deltaX > 0 ? goToPrevImage() : goToNextImage();
     }
     touchStartX.current = null;
   };
 
+  const goToNextImage = () =>
+    setCurrentIndex((prev) => (prev + 1) % profileImages.length);
+  const goToPrevImage = () =>
+    setCurrentIndex((prev) =>
+      prev === 0 ? profileImages.length - 1 : prev - 1
+    );
+
   return (
     <section
       id="hero"
-      className="min-h-[80vh] flex flex-col-reverse md:flex-row items-center justify-between text-center md:text-left px-4 sm:px-8 md:px-16 lg:px-24 py-12 space-y-12 md:space-y-0 animate-fade-in"
+      className="min-h-[80vh] flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-12 space-y-12 md:space-y-0 animate-fade-in"
     >
-      {/* ✅ 左侧内容区 */}
-      <div className="flex-1 space-y-4">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight dark:text-white">
-          Hi, I’m <span className="text-purple-600">Yanjun Chen</span>.
+      {/* ✅ 左侧文字区域 */}
+      <div className="flex-1 space-y-4 text-center md:text-left">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 leading-tight">
+          Hi, I’m <span className="text-purple-600 dark:text-purple-400">Yanjun Chen</span>.
         </h1>
+
         <p className="text-lg text-gray-700 dark:text-gray-300">
           PhD in <strong>RLHF</strong> & <strong>Embodied AI</strong>. | INTJ.
-          <em className="text-gray-500 block">Builder of thinking agents.</em>
+          <br />
+          <em className="text-gray-500 dark:text-gray-400">Builder of thinking agents.</em>
         </p>
-        <p className="text-sm italic text-gray-500">
+
+        <p className="text-sm italic text-gray-500 dark:text-gray-400">
           Let’s explore minds that learn.
         </p>
 
-        {/* ✅ CTA */}
+        {/* ✅ CTA 按钮区域 */}
         <div className="flex flex-wrap gap-4 pt-6 justify-center md:justify-start">
           <a
             href="#contact"
@@ -97,11 +86,10 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ✅ 右侧图像区 */}
+      {/* ✅ 右侧图像轮播区域 */}
       <div className="flex-1 flex flex-col items-center relative">
-        {/* ✅ 圆形图像容器（保持比例 + 居中） */}
         <div
-          className="relative w-[300px] aspect-square rounded-full overflow-hidden border-4 border-white shadow-lg hover:shadow-xl cursor-pointer transition-all dark:border-gray-600"
+          className="relative w-[300px] aspect-square rounded-full overflow-hidden border-4 border-white shadow-lg hover:shadow-xl cursor-pointer transition-all dark:border-gray-700"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           onClick={(e) => {
@@ -110,7 +98,6 @@ export default function HeroSection() {
             clickX < rect.width / 2 ? goToPrevImage() : goToNextImage();
           }}
         >
-          {/* ✅ 多张图片重叠，当前一张显示 */}
           {profileImages.map((src, index) => (
             <Image
               key={index}

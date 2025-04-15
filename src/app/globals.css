@@ -1,121 +1,132 @@
 @import "tailwindcss";
 
+/* 🌍 全局设计变量 */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
+  --color-primary: #2563eb;       /* 蓝色主色 */
+  --color-secondary: #7c3aed;     /* 辅助紫色 */
+  --color-accent: #10b981;        /* 强调绿色 */
+  --color-muted: #6b7280;         /* 中性色 */
 
-  /* 推荐：直接定义这类变量，无需 @theme */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans, sans-serif);
+  --font-sans: var(--font-geist-sans, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, monospace);
 }
 
+/* 🌙 暗黑模式支持 */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #f5f5f5;
+    --color-muted: #9ca3af;
   }
+}
+
+/* ✅ 页面通用基础样式 */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  line-height: 1.75;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ✅ 淡入动画（用于轮播图像切换） */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 代码块样式 */
-pre code {
-  display: block;
-  overflow-x: auto;
-  padding: 1em;
-  background: #f5f5f5;
-  border-radius: 5px;
-}
-
-/* 图片居中显示 */
-.md-img {
-  display: block;
-  margin: 1em auto;
-  max-width: 100%;
-}
-
-/* 标题锚点样式 */
-h1 a, h2 a, h3 a {
+/* ✅ 链接样式 */
+a {
+  color: var(--color-primary);
   text-decoration: none;
-  color: inherit;
-  position: relative;
+  transition: color 0.2s ease;
 }
-
-h1 a::before, h2 a::before, h3 a::before {
-  content: "#";
-  position: absolute;
-  left: -1.5em;
-  color: #ccc;
-  visibility: hidden;
-}
-
-h1:hover a::before, h2:hover a::before, h3:hover a::before {
-  visibility: visible;
-}
-
-/* 目录样式 */
-.toc {
-  border-left: 4px solid #ddd;
-  padding-left: 1em;
-  margin-bottom: 2em;
-}
-
-.toc ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.toc li {
-  margin: 0.5em 0;
-}
-
-.toc a {
-  text-decoration: none;
-  color: #0070f3;
-}
-
-.toc a:hover {
+a:hover {
+  color: var(--color-secondary);
   text-decoration: underline;
 }
 
-/* 这些规则会对全站生效 */
-article img {
-  display: block;
-  margin: 2rem auto;
-  max-height: 500px;
-  border-radius: 8px;
+/* ✅ 标题通用样式（带锚点支持） */
+h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 5rem;
+  font-weight: 700;
+}
+h1 a, h2 a, h3 a {
+  color: inherit;
+  position: relative;
+}
+h1 a::before, h2 a::before, h3 a::before {
+  content: "#";
+  position: absolute;
+  left: -1.25rem;
+  color: var(--color-muted);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+h1:hover a::before, h2:hover a::before, h3:hover a::before {
+  opacity: 1;
 }
 
+/* ✅ 图片处理样式 */
+img {
+  display: block;
+  margin: 2rem auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.md-img {
+  display: block;
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+}
+
+/* ✅ 代码块样式 */
 pre code {
   display: block;
   overflow-x: auto;
-  background: #f2f2f2;
-  border-radius: 4px;
   padding: 1rem;
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+@media (prefers-color-scheme: dark) {
+  pre code {
+    background: #1f2937;
+  }
 }
 
+/* ✅ 行内代码 */
+code {
+  background: #e5e7eb;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+}
+@media (prefers-color-scheme: dark) {
+  code {
+    background: #374151;
+    color: #e5e7eb;
+  }
+}
+
+/* ✅ 引用块（blockquote） */
+blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ✅ 动画类 fade-in 和 scale-up */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -123,5 +134,51 @@ pre code {
   }
 }
 .animate-fade-in {
-  animation: fade-in 0.8s ease-out both;
+  animation: fade-in 0.6s ease-out both;
+}
+
+@keyframes scale-up {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-scale-up {
+  animation: scale-up 0.4s ease-out both;
+}
+
+/* ✅ TOC 样式（博客目录） */
+.toc {
+  border-left: 4px solid var(--color-muted);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+.toc li {
+  margin: 0.5rem 0;
+}
+.toc a {
+  color: var(--color-primary);
+}
+.toc a:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+/* ✅ Prose 富文本默认样式（兼容 markdown 渲染） */
+.prose {
+  font-size: 1.05rem;
+  max-width: 75ch;
+  line-height: 1.75;
+  color: var(--foreground);
 }
