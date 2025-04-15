@@ -1,36 +1,47 @@
 "use client";
 
-// ✅ 引入核心 hook
+// ✅ 引入必要的 Hooks 和库
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import { motion, AnimatePresence } from "framer-motion";
 
-// ✅ 头像轮播图路径（建议使用优化格式 jpg/webp）
+// ✅ 头像轮播图路径列表（确保图片放在 public/PersonalAlbums 目录）
 const profileImages = [
   "/PersonalAlbums/pic1.jpg",
   "/PersonalAlbums/pic2.jpg",
   "/PersonalAlbums/pic3.jpg",
 ];
 
-// ✅ 主组件
+// ✅ HeroSection 主组件
 export default function HeroSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const touchStartX = useRef<number | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0); // 当前展示的图像索引
+  const touchStartX = useRef<number | null>(null); // 手势滑动起点 X 坐标
+  const intervalRef = useRef<NodeJS.Timeout | null>(null); // 轮播定时器
 
-  // ✅ 自动轮播切换
+  // ✅ 初始化粒子系统（tsparticles）
+  const particlesInit = async (main: any) => {
+    await loadFull(main);
+  };
+
+  // ✅ 自动轮播效果，每 6 秒切换一张图片
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % profileImages.length);
     }, 6000);
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  // ✅ 手势滑动处理
+  // ✅ 手势交互：记录起点
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
+
+  // ✅ 手势交互：判断滑动方向并切换图片
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
@@ -40,8 +51,11 @@ export default function HeroSection() {
     touchStartX.current = null;
   };
 
+  // ✅ 向前切换图像
   const goToNextImage = () =>
     setCurrentIndex((prev) => (prev + 1) % profileImages.length);
+
+  // ✅ 向后切换图像
   const goToPrevImage = () =>
     setCurrentIndex((prev) =>
       prev === 0 ? profileImages.length - 1 : prev - 1
@@ -50,25 +64,50 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="min-h-[80vh] flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-12 space-y-12 md:space-y-0 animate-fade-in"
+      className="relative min-h-[90vh] overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-16 space-y-12 md:space-y-0 animate-fade-in"
     >
-      {/* ✅ 左侧文字区域 */}
-      <div className="flex-1 space-y-4 text-center md:text-left">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 leading-tight">
-          Hi, I’m <span className="text-purple-600 dark:text-purple-400">Yanjun Chen</span>.
+      {/* ✅ 粒子背景层（科技感增强） */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          fullScreen: { enable: false },
+          background: { color: { value: "transparent" } },
+          particles: {
+            number: { value: 60 },
+            color: { value: "#c084fc" },
+            links: { enable: true, color: "#a855f7", distance: 120 },
+            move: { enable: true, speed: 1 },
+            size: { value: 2 },
+            opacity: { value: 0.6 },
+          },
+        }}
+        className="absolute inset-0 -z-10"
+      />
+
+      {/* ✅ 左侧介绍文字区域 */}
+      <div className="flex-1 space-y-5 text-center md:text-left z-10">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
+          Hi, I’m{" "}
+          <span className="text-purple-600 dark:text-purple-400">
+            Yanjun Chen
+          </span>
+          .
         </h1>
 
         <p className="text-lg text-gray-700 dark:text-gray-300">
           PhD in <strong>RLHF</strong> & <strong>Embodied AI</strong>. | INTJ.
           <br />
-          <em className="text-gray-500 dark:text-gray-400">Builder of thinking agents.</em>
+          <em className="text-gray-500 dark:text-gray-400">
+            Builder of thinking agents.
+          </em>
         </p>
 
         <p className="text-sm italic text-gray-500 dark:text-gray-400">
           Let’s explore minds that learn.
         </p>
 
-        {/* ✅ CTA 按钮区域 */}
+        {/* ✅ CTA 按钮组 */}
         <div className="flex flex-wrap gap-4 pt-6 justify-center md:justify-start">
           <a
             href="#contact"
@@ -86,10 +125,11 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ✅ 右侧图像轮播区域 */}
-      <div className="flex-1 flex flex-col items-center relative">
+      {/* ✅ 右侧头像 + 动效 + 立体背景 */}
+      <div className="flex-1 flex flex-col items-center relative z-10">
+        {/* ✅ 椭圆容器 + 模糊背景 + 光晕效果 */}
         <div
-          className="relative w-[300px] aspect-square rounded-full overflow-hidden border-4 border-white shadow-lg hover:shadow-xl cursor-pointer transition-all dark:border-gray-700"
+          className="relative w-[260px] sm:w-[300px] md:w-[320px] aspect-[3/4] overflow-hidden rounded-[42%/50%] border-4 border-white dark:border-gray-700 shadow-2xl backdrop-blur-md bg-white/10 backdrop-saturate-200 cursor-pointer"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           onClick={(e) => {
@@ -98,24 +138,30 @@ export default function HeroSection() {
             clickX < rect.width / 2 ? goToPrevImage() : goToNextImage();
           }}
         >
-          {profileImages.map((src, index) => (
-            <Image
-              key={index}
-              src={src}
-              alt={`Yanjun Chen ${index + 1}`}
-              fill
-              sizes="300px"
-              className={`absolute object-contain p-4 top-0 left-0 transition-all duration-700 ease-in-out ${
-                index === currentIndex
-                  ? "opacity-100 scale-100 z-10"
-                  : "opacity-0 scale-95 z-0"
-              }`}
-              priority={index === 0}
-            />
-          ))}
+          {/* ✅ 动态切换 + 镜头推拉感（framer-motion） */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <Image
+                src={profileImages[currentIndex]}
+                alt={`Yanjun Chen ${currentIndex + 1}`}
+                fill
+                sizes="100%"
+                // ✅ 关键：顶部对齐，保证头像不会「下移」，避免上方留白
+                className="object-cover object-top"
+                priority
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* ✅ 圆点指示器 */}
+        {/* ✅ 指示器小圆点 */}
         <div className="flex space-x-2 mt-4">
           {profileImages.map((_, index) => (
             <span

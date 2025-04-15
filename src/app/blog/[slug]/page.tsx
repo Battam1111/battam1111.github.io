@@ -2,43 +2,6 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
-
-/**
- * 注意：在 Next.js 15 中，params 被视为异步。
- * 为了兼容 `output: 'export'` 并避免 `params.slug` 报错，
- * 我们采用「同步 + 传递 Promise<{slug: string}> + await params」的写法。
- */
-interface Props {
-  // ✅ params 为 Promise<{ slug: string }>
-  params: Promise<{ slug: string }>;
-}
-
-/**
- * ============================
- *  1) 生成静态路由 (slug)
- * ============================
- */
-export function generateStaticParams() {
-  // ✅ 读取 /src/data/blogs 下所有 .md 文件，并生成 slug
-  const blogDir = path.join(process.cwd(), "src/data/blogs");
-  const files = fs.readdirSync(blogDir).filter((f) => f.endsWith(".md"));
-
-  return files.map((filename) => ({
-    slug: filename.replace(/\.md$/, ""),
-  }));
-}
-
-/**
- * ============================
- *  2) 同步 处理 Markdown
- * ============================
- *
- * 使用 remark + rehype 的 同步 pipeline: .processSync()
- * 这样就能保证在这里无 async/await，完全本地解析
- * 且与 `output: 'export'` 静态模式兼容。
- */
-
-// 🏷 相关 remark/rehype 插件 (需在 package.json 安装)
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
@@ -47,101 +10,89 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeStringify from "rehype-stringify";
 
-// ✅ 引入高亮样式 (可换其他主题，如 `atom-one-dark.css`)
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/github.css"; // ✅ 可替换为 atom-one-dark.css
 
-/**
- * 同步读取 + 转换 MD
- */
-function getPostDataSync(slug: string) {
-  // 拼接绝对路径
+// ✅ Props 接口（Next.js 15）
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+// ✅ 生成所有静态路径
+export function generateStaticParams() {
+  const dir = path.join(process.cwd(), "src/data/blogs");
+  const files = fs.readdirSync(dir).filter((file) => file.endsWith(".md"));
+  return files.map((filename) => ({ slug: filename.replace(/\.md$/, "") }));
+}
+
+// ✅ 读取并转换 markdown
+function getPostData(slug: string) {
   const filePath = path.join(process.cwd(), "src/data/blogs", slug + ".md");
-  // 文件不存在则返回 null
   if (!fs.existsSync(filePath)) return null;
 
-  // 读取文件并分离 frontmatter
-  const rawFile = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(rawFile);
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
 
-  // remark + rehype 同步方式: .processSync()
   const processed = remark()
     .use(remarkGfm)
     .use(remarkRehype)
-    .use(rehypeSlug) // 标题加 id
+    .use(rehypeSlug)
     .use(
       rehypeAutolinkHeadings,
       {
         behavior: "wrap",
-        // 这段 className: ["anchor"] 便于自定义样式
         properties: { className: ["anchor"] },
-      },
+      }
     )
-    .use(rehypeHighlight) // 代码块高亮
+    .use(rehypeHighlight)
     .use(rehypeStringify)
-    .processSync(content); // 同步处理
-
-  const contentHtml = processed.toString();
+    .processSync(content);
 
   return {
     metadata: data,
-    contentHtml,
+    contentHtml: processed.toString(),
   };
 }
 
-/**
- * ============================
- *  3) 页面组件
- * ============================
- *
- * 强调：在 Next.js 15 中，参数 `params` 被视为异步 => Promise<{slug}>
- * 所以必须写 async function + await params，方可避免 "should be awaited" 错误。
- */
+// ✅ 渲染页面
 export default async function BlogDetailPage({ params }: Props) {
-  // ✅ 先 await params 以取得 slug
-  const localParams = await params;
-  const { slug } = localParams;
-
-  // 然后同步读取 .md
-  const post = getPostDataSync(slug);
+  const { slug } = await params;
+  const post = getPostData(slug);
   if (!post) return notFound();
 
   const { metadata, contentHtml } = post;
-  if (!metadata) return notFound();
 
-  // 🔑 这里可以加更多元数据
-  // (如果想SEO可在 layout.tsx / metadata.ts 里做)
-  
   return (
-    <article className="prose prose-lg max-w-3xl mx-auto py-12 px-4">
-      {/* 标题 + 日期 */}
-      <h1 className="text-3xl font-bold">{metadata.title}</h1>
-      <p className="text-sm text-gray-500 mb-6">{metadata.date}</p>
+    <main className="flex flex-col md:flex-row max-w-6xl mx-auto px-4 py-12 space-y-12 md:space-y-0 md:space-x-8 animate-fade-in">
+      {/* ✅ 左侧目录占位（未来可动态构建） */}
+      <aside className="hidden md:block w-64 sticky top-24 self-start text-sm text-gray-500">
+        <p className="mb-3 font-semibold text-gray-700">📚 Table of Contents</p>
+        <ul className="space-y-2">
+          {/* 🚧 后续可通过 rehype-toc 构建真正的 TOC */}
+          <li><a href="#background" className="hover:underline">🧩 Background</a></li>
+          <li><a href="#experiment-design" className="hover:underline">🧪 Experiment</a></li>
+          <li><a href="#key-findings" className="hover:underline">📈 Findings</a></li>
+          <li><a href="#takeaway" className="hover:underline">💡 Takeaway</a></li>
+        </ul>
+      </aside>
 
-      {/* Markdown 转换后的 HTML */}
-      <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      {/* ✅ 正文内容区 */}
+      <article className="prose prose-lg max-w-none dark:prose-invert">
+        {/* ✅ 标题 + 日期 */}
+        <h1 className="text-3xl font-bold mb-1">{metadata.title}</h1>
+        <p className="text-sm text-gray-500 mb-6">{metadata.date}</p>
 
-      {/**
-       * ⚠️ 样式请写在 globals.css 或 tailwind 中
-       * 例如 globals.css:
-       *
-       * pre code {
-       *   display: block;
-       *   overflow-x: auto;
-       *   padding: 1rem;
-       *   background: #f2f2f2;
-       *   border-radius: 4px;
-       * }
-       *
-       * h2:hover .anchor {
-       *   opacity: 1;
-       * }
-       * .anchor {
-       *   margin-left: 0.5rem;
-       *   opacity: 0.4;
-       *   transition: opacity 0.2s;
-       * }
-       * ...
-       */}
-    </article>
+        {/* ✅ 插入 Markdown 渲染内容 */}
+        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+
+        {/* ✅ 推荐阅读（可后续替换为动态推荐） */}
+        <div className="mt-10 border-t pt-6">
+          <h2 className="text-lg font-semibold mb-2">👀 You might also like:</h2>
+          <ul className="list-disc list-inside text-sm text-blue-600 space-y-1">
+            <li><a href="/blog/rlhf-philosophy" className="hover:underline">RLHF isn’t optimization, it’s dialogue</a></li>
+            <li><a href="/blog/embodied-cognition" className="hover:underline">Why AI needs bodies to think</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
   );
 }
