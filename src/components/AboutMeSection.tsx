@@ -1,111 +1,71 @@
-// ✅ AboutMeSection.tsx - 全面优化版本（语义+视觉+结构+动画）
-
 export default function AboutMeSection() {
-  // ✅ 兴趣爱好列表（可扩展）
-  const interests = [
-    "Table Tennis 🏓",
-    "Video Games 🎮",
-    "KTV 🎤",
-    "Science & Tech 📖",
-  ];
-
-  // ✅ 基本信息卡片（Location / MBTI / Education）
-  const basicInfo = [
+  const blocks = [
     {
-      icon: "📍",
-      label: "Location",
-      value: "Based in Hong Kong",
+      title: "Research themes",
+      body:
+        "My work spans RLHF, reward modeling, reasoning in large language models, reinforcement learning, and embodied intelligence.",
     },
     {
-      icon: "🎯",
-      label: "MBTI",
-      value: "INTJ – The Architect",
+      title: "Approach",
+      body:
+        "I care about methods that are both rigorous and usable: clear problem framing, reproducible experiments, and systems that can transfer beyond toy settings.",
     },
     {
-      icon: "🎓",
-      label: "Education",
-      value: "PhD @ HK PolyU",
+      title: "Collaboration",
+      body:
+        "I am especially interested in collaborations that connect foundational research with practical agent systems, evaluation, or embodied decision-making.",
     },
   ];
 
-  // ✅ 技能分类列表（语言 / 编程）
-  const skillGroups = [
-    {
-      icon: "💻",
-      label: "Programming",
-      items: ["Python 🐍", "C/C++ ⚙️"],
-    },
-    {
-      icon: "🌐",
-      label: "Languages",
-      items: ["Chinese 🇨🇳", "English 🇬🇧", "Japanese 🇯🇵"],
-    },
+  const quickFacts = [
+    ["Affiliation", "The Hong Kong Polytechnic University"],
+    ["Position", "PhD student"],
+    ["Location", "Hong Kong"],
+    ["Languages", "Chinese, English, Japanese"],
+    ["Core tools", "Python, C/C++"],
+    ["Open to", "Academic and research-oriented industry collaboration"],
   ];
 
   return (
-    <section
-      id="about"
-      className="space-y-12 animate-fade-in"
-    >
-      {/* ✅ 主标题 */}
-      <h2 className="text-3xl font-bold border-b pb-2">About Me</h2>
+    <section id="about" className="section-shell space-y-10">
+      <div className="max-w-3xl space-y-4">
+        <p className="eyebrow">About</p>
+        <h2 className="section-title">Research focus and background.</h2>
+        <p className="text-base leading-7 text-[var(--muted)] md:text-lg">
+          I work at the intersection of language-model alignment,
+          reinforcement learning, and embodied intelligence. My broader goal is
+          to understand how agents can learn from feedback, reason more
+          effectively, and behave more reliably in complex environments.
+        </p>
+      </div>
 
-      {/* ✅ 简介段落 */}
-      <p className="text-gray-700 leading-relaxed text-lg max-w-3xl">
-        I&apos;m a PhD student based in Hong Kong 🇭🇰, originally from China 🇨🇳.
-        As an INTJ thinker and lifelong learner, I explore the frontiers of
-        Artificial Intelligence with a special focus on RLHF (Reinforcement
-        Learning with Human Feedback) and Embodied AI 🤖. My mind is always
-        seeking structure, clarity, and elegant solutions.
-      </p>
-
-      {/* ✅ 第一行：基本信息卡片（Location / MBTI / Education） */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {basicInfo.map(({ icon, label, value }) => (
-          <div
-            key={label}
-            className="p-5 border rounded-xl bg-gray-50 shadow-sm hover:shadow-md transition group"
-          >
-            <h3 className="text-lg font-semibold flex items-center gap-1 group-hover:text-blue-700 transition">
-              {icon} {label}
+      <div className="grid gap-5 md:grid-cols-3">
+        {blocks.map((block) => (
+          <article key={block.title} className="card-surface rounded-2xl p-6">
+            <h3 className="text-xl font-semibold text-[var(--foreground)]">
+              {block.title}
             </h3>
-            <p className="text-gray-600 text-sm mt-1">{value}</p>
-          </div>
+            <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
+              {block.body}
+            </p>
+          </article>
         ))}
       </div>
 
-      {/* ✅ 第二行：技能组（编程 & 语言） */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {skillGroups.map(({ icon, label, items }) => (
-          <div
-            key={label}
-            className="p-5 border rounded-xl bg-white shadow-sm hover:shadow-md transition group"
-          >
-            <h3 className="text-lg font-semibold flex items-center gap-1 group-hover:text-blue-700 transition">
-              {icon} {label}
-            </h3>
-            <ul className="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-              {items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      {/* ✅ 第三行：兴趣爱好标签 */}
-      <div>
-        <h3 className="text-lg font-semibold mb-3">🎨 Interests</h3>
-        <div className="flex flex-wrap gap-2">
-          {interests.map((interest) => (
-            <span
-              key={interest}
-              className="px-3 py-1 rounded-full text-sm text-gray-700 bg-gray-100 border hover:bg-gray-200 transition"
-            >
-              {interest}
-            </span>
+      <div className="card-surface rounded-2xl p-6">
+        <p className="eyebrow">Quick facts</p>
+        <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {quickFacts.map(([label, value]) => (
+            <div key={label} className="border-t border-[rgba(18,22,27,0.08)] pt-4">
+              <dt className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                {label}
+              </dt>
+              <dd className="mt-2 text-sm font-medium text-[var(--foreground)]">
+                {value}
+              </dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </div>
     </section>
   );

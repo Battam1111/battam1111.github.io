@@ -1,0 +1,124 @@
+{
+  "name": "Yanjun Chen",
+  "affiliation": "Department of Computing, The Hong Kong Polytechnic University",
+  "interests": [
+    "Reinforcement Learning",
+    "Reward Modeling",
+    "Large Language Model",
+    "Embodied AI"
+  ],
+  "avatarUrl": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=Zg8cX0sAAAAJ&citpid=1",
+  "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
+  "metrics": {
+    "recentLabel": "Since 2021",
+    "citations": 108,
+    "citationsRecent": 108,
+    "hIndex": 5,
+    "hIndexRecent": 5,
+    "i10Index": 3,
+    "i10IndexRecent": 3
+  },
+  "totalPublications": 11,
+  "updatedAt": "2026-03-08T11:10:51.949Z",
+  "publications": [
+    {
+      "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:Y0pCki6q_DkC",
+      "authors": "X Chen, A Zhao, H Xia, X Lu, H Wang, Y Chen, W Zhang, J Wang, W Li, ...",
+      "venue": "arXiv preprint arXiv:2505.16782, 2025",
+      "year": 2025,
+      "citationCount": 39,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13567364852110842665"
+    },
+    {
+      "title": "Unveiling the key factors for distilling chain-of-thought reasoning",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:UeHWp8X0CEIC",
+      "authors": "X Chen, Z Sun, G Wenjin, M Zhang, Y Chen, Y Sun, H Su, Y Pan, ...",
+      "venue": "Findings of the Association for Computational Linguistics: ACL 2025, 15094-15119, 2025",
+      "year": 2025,
+      "citationCount": 37,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=12694883840788466812"
+    },
+    {
+      "title": "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:2osOgNQ5qMEC",
+      "authors": "Y Chen, D Zhu, Y Sun, X Chen, W Zhang, X Shen",
+      "venue": "Proceedings of the 2024 Conference on Empirical Methods in Natural Language …, 2024",
+      "year": 2024,
+      "citationCount": 14,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=2064211325665185872"
+    },
+    {
+      "title": "Fine-grained and multi-dimensional metrics for document-level machine translation",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:zYLM7Y9cAGgC",
+      "authors": "Y Sun, D Zhu, Y Chen, E Xiao, X Chen, X Shen",
+      "venue": "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of …, 2025",
+      "year": 2025,
+      "citationCount": 7,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1441692737280682065,18297873443418151235"
+    },
+    {
+      "title": "Rethinking Soft Actor-Critic in High-Dimensional Action Spaces: The Cost of Ignoring Distribution Shift",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:u-x6o8ySG0sC",
+      "authors": "Y Chen, X Zhang, X Wang, Z Xu, X Shen, W Zhang",
+      "venue": "arXiv preprint arXiv:2410.16739, 2024",
+      "year": 2024,
+      "citationCount": 5,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5333583112679042942,16935265758518228407"
+    },
+    {
+      "title": "Integrating Chain-of-Thought for Multimodal Alignment: A Study on 3D Vision-Language Learning",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:IjCSPb-OGe4C",
+      "authors": "Y Chen, Y Sun, X Chen, J Wang, X Shen, W Li, W Zhang",
+      "venue": "arXiv preprint arXiv:2503.06232, 2025",
+      "year": 2025,
+      "citationCount": 3,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=17393649976605636886"
+    },
+    {
+      "title": "LLaSO: A Foundational Framework for Reproducible Research in Large Language and Speech Model",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:W7OEmFMy1HYC",
+      "authors": "Y Sun, Y Geng, P Wei, Y Chen, J Yang, R Chen, W Zhang, X Shen",
+      "venue": "arXiv preprint arXiv:2508.15418, 2025",
+      "year": 2025,
+      "citationCount": 2,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6997354733840646339"
+    },
+    {
+      "title": "Breaking the pre-planning barrier: Real-time adaptive coordination of mission and charging UAVs using graph reinforcement learning",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:qjMakFHDy7sC",
+      "authors": "Y Hu, Y Sun, Y Chen, X Chen",
+      "venue": "arXiv e-prints, arXiv: 2501.14488, 2025",
+      "year": 2025,
+      "citationCount": 1,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=11829720992587562883"
+    },
+    {
+      "title": "SonicBench: Dissecting the Physical Perception Bottleneck in Large Audio Language Models",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:ufrVoPGSRksC",
+      "authors": "Y Sun, Y Chen, X Qiu, G Zhang, H Chen, D Wu, C Li, M Yang, D Zhu, ...",
+      "venue": "arXiv preprint arXiv:2601.11039, 2026",
+      "year": 2026,
+      "citationCount": 0,
+      "citationUrl": null
+    },
+    {
+      "title": "PricingLogic: Evaluating LLMs Reasoning on Complex Tourism Pricing Tasks",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:eQOLeE2rZwMC",
+      "authors": "Y Liu, D Zhu, Z Al-Khalili, D Cheng, Y Chen, D Klakow, W Zhang, X Shen",
+      "venue": "Proceedings of the 2025 Conference on Empirical Methods in Natural Language …, 2025",
+      "year": 2025,
+      "citationCount": 0,
+      "citationUrl": null
+    },
+    {
+      "title": "MA-ROESL: Motion-aware Rapid Reward Optimization for Efficient Robot Skill Learning from Single Videos",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:Tyk-4Ss8FVUC",
+      "authors": "X Wang, X Zhang, Y Chen, X Shen, W Zhang",
+      "venue": "arXiv preprint arXiv:2505.08367, 2025",
+      "year": 2025,
+      "citationCount": 0,
+      "citationUrl": null
+    }
+  ]
+}

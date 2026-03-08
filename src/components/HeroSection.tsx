@@ -1,175 +1,136 @@
-"use client";
-
-// ✅ 引入必要的 Hooks 和库
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import { motion, AnimatePresence } from "framer-motion";
+import type { ScholarSnapshot } from "@/lib/scholar";
+import { formatSyncDate } from "@/lib/scholar";
 
-// ✅ 头像轮播图路径列表
-const profileImages = [
-  "/PersonalAlbums/pic1.jpg",
-  "/PersonalAlbums/pic2.jpg",
-  "/PersonalAlbums/pic3.jpg",
-];
+interface HeroSectionProps {
+  scholar: ScholarSnapshot;
+}
 
-// ✅ HeroSection 主组件
-export default function HeroSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const touchStartX = useRef<number | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  // ✅ 初始化粒子背景
-  const particlesInit = async (main: any) => {
-    await loadFull(main);
-  };
-
-  // ✅ 自动轮播效果
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % profileImages.length);
-    }, 6000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
-  // ✅ 触摸开始记录
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  // ✅ 触摸结束切换
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(deltaX) > 50) {
-      deltaX > 0 ? goToPrevImage() : goToNextImage();
-    }
-    touchStartX.current = null;
-  };
-
-  // ✅ 向后/向前切换
-  const goToNextImage = () =>
-    setCurrentIndex((prev) => (prev + 1) % profileImages.length);
-  const goToPrevImage = () =>
-    setCurrentIndex((prev) =>
-      prev === 0 ? profileImages.length - 1 : prev - 1
-    );
+export default function HeroSection({ scholar }: HeroSectionProps) {
+  const metrics = [
+    {
+      label: "Citations",
+      value: scholar.metrics.citations,
+      secondary: `${scholar.metrics.recentLabel} ${scholar.metrics.citationsRecent}`,
+    },
+    {
+      label: "h-index",
+      value: scholar.metrics.hIndex,
+      secondary: `${scholar.metrics.recentLabel} ${scholar.metrics.hIndexRecent}`,
+    },
+    {
+      label: "i10-index",
+      value: scholar.metrics.i10Index,
+      secondary: `${scholar.metrics.recentLabel} ${scholar.metrics.i10IndexRecent}`,
+    },
+    {
+      label: "Publications",
+      value: scholar.totalPublications,
+      secondary: `Last synced ${formatSyncDate(scholar.updatedAt)}`,
+    },
+  ];
 
   return (
     <section
-      id="hero"
-      className="relative min-h-[90vh] overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24 py-16 space-y-12 md:space-y-0 animate-fade-in bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-[#0a0a0a] dark:to-[#1a1a1a]"
+      id="top"
+      className="grid min-h-[calc(100vh-8rem)] gap-10 border-b border-[var(--line)] py-10 md:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.9fr)] md:items-center md:py-14"
     >
-      {/* ✅ 粒子背景层 */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          fullScreen: { enable: false },
-          background: { color: { value: "transparent" } },
-          particles: {
-            number: { value: 60 },
-            color: { value: "#c084fc" },
-            links: { enable: true, color: "#a855f7", distance: 120 },
-            move: { enable: true, speed: 1 },
-            size: { value: 2 },
-            opacity: { value: 0.6 },
-          },
-        }}
-        className="absolute inset-0 -z-10"
-      />
+      <div className="space-y-7">
+        <p className="eyebrow">Yanjun Chen / PhD Student</p>
+        <div className="space-y-4">
+          <h1 className="max-w-4xl text-[clamp(3rem,8vw,6.2rem)] font-semibold leading-[0.92] text-[var(--foreground)]">
+            Building more reliable learning and reasoning systems for AI agents.
+          </h1>
+          <p className="max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg">
+            I am a PhD student at The Hong Kong Polytechnic University. My
+            research focuses on reinforcement learning with human feedback,
+            reward modeling, large language models, and embodied AI. I am
+            interested in methods that make learning-based agents more reliable,
+            adaptive, and practically useful.
+          </p>
+          <p className="max-w-2xl text-sm leading-6 text-[var(--muted)]">
+            I welcome academic collaboration, visiting opportunities, and
+            research-oriented industry conversations in RLHF, agent training,
+            reasoning, and embodied intelligence.
+          </p>
+        </div>
 
-      {/* ✅ 左侧文字简介 */}
-      <div className="flex-1 space-y-5 text-center md:text-left z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight 
-                       text-gray-900 dark:text-white">
-          {/* ✅ 修复亮色模式下移动端文字不可见问题 */}
-          <span className="block text-gray-900 dark:text-white sm:inline">
-            Hi, I’m{" "}
-          </span>
-          <span className="text-purple-600 dark:text-purple-400">
-            Yanjun Chen
-          </span>
-          .
-        </h1>
-
-        <p className="text-lg text-gray-700 dark:text-gray-300">
-          PhD in <strong>RLHF</strong> & <strong>Embodied AI</strong>. | INTJ.
-          <br />
-          <em className="text-gray-500 dark:text-gray-400">
-            Builder of thinking agents.
-          </em>
-        </p>
-
-        <p className="text-sm italic text-gray-500 dark:text-gray-400">
-          Let’s explore minds that learn.
-        </p>
-
-        {/* ✅ CTA 按钮组 */}
-        <div className="flex flex-wrap gap-4 pt-6 justify-center md:justify-start">
+        <div className="flex flex-wrap gap-3 text-sm">
+          <a
+            href="mailto:yan-jun.chen@connect.polyu.hk"
+            className="rounded-full border border-[var(--foreground)] px-4 py-2 font-medium text-[var(--foreground)] transition hover:bg-[var(--foreground)] hover:text-white"
+          >
+            Email
+          </a>
+          <a
+            href={scholar.profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
+          >
+            Google Scholar
+          </a>
+          <a
+            href="https://github.com/Battam1111"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
+          >
+            GitHub
+          </a>
           <a
             href="#contact"
-            className="px-5 py-2 rounded-full border border-gray-300 text-sm font-medium text-gray-800 hover:bg-gray-900 hover:text-white transition dark:border-gray-500 dark:text-white dark:hover:bg-white dark:hover:text-black"
+            className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
           >
-            Contact Me
-          </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            className="px-5 py-2 rounded-full border border-blue-500 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition dark:border-blue-400 dark:text-blue-300 dark:hover:bg-blue-300 dark:hover:text-black"
-          >
-            View CV
+            Contact
           </a>
         </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {metrics.map((metric) => (
+            <div key={metric.label} className="card-surface rounded-2xl p-5">
+              <p className="mono text-[11px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                {metric.label}
+              </p>
+              <p className="mt-4 text-3xl font-semibold text-[var(--foreground)]">
+                {metric.value}
+              </p>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                {metric.secondary}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="max-w-2xl text-sm leading-6 text-[var(--muted)]">
+          Current topics: {scholar.interests.join(" / ")}.
+        </p>
       </div>
 
-      {/* ✅ 右侧头像 + 动效 */}
-      <div className="flex-1 flex flex-col items-center relative z-10">
-        <div
-          className="relative w-[260px] sm:w-[300px] md:w-[320px] aspect-[3/4] overflow-hidden rounded-[42%/50%] border-4 border-white dark:border-gray-700 shadow-2xl backdrop-blur-md bg-white/10 backdrop-saturate-200 cursor-pointer"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onClick={(e) => {
-            const rect = (e.target as HTMLElement).getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            clickX < rect.width / 2 ? goToPrevImage() : goToNextImage();
-          }}
-        >
-          {/* ✅ 动态切换图像动画 */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              className="absolute inset-0"
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              <Image
-                src={profileImages[currentIndex]}
-                alt={`Yanjun Chen ${currentIndex + 1}`}
-                fill
-                sizes="100%"
-                className="object-cover object-top"
-                priority
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* ✅ 指示器圆点 */}
-        <div className="flex space-x-2 mt-4">
-          {profileImages.map((_, index) => (
-            <span
-              key={index}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                index === currentIndex ? "bg-blue-600" : "bg-gray-300"
-              }`}
-            ></span>
-          ))}
+      <div className="justify-self-center">
+        <div className="card-surface relative overflow-hidden rounded-[2rem] p-3">
+          <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(43,64,88,0.15),transparent)]" />
+          <div className="relative overflow-hidden rounded-[1.4rem] border border-[rgba(18,22,27,0.08)] bg-[var(--accent-soft)]">
+            <Image
+              src="/PersonalAlbums/pic1.jpg"
+              alt="Portrait of Yanjun Chen"
+              width={520}
+              height={640}
+              priority
+              className="h-auto w-[min(88vw,420px)] object-cover"
+            />
+          </div>
+          <div className="relative flex items-center justify-between gap-6 px-2 pb-2 pt-4 text-sm text-[var(--muted)]">
+            <div>
+              <p className="font-medium text-[var(--foreground)]">
+                Department of Computing
+              </p>
+              <p>The Hong Kong Polytechnic University</p>
+            </div>
+            <p className="mono text-[11px] uppercase tracking-[0.2em]">
+              INTJ
+            </p>
+          </div>
         </div>
       </div>
     </section>

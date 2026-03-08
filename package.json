@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
-    "deploy": "echo 'Use GitHub Actions to deploy instead!'"
+    "deploy": "echo 'Use GitHub Actions to deploy instead!'",
+    "sync:scholar": "node scripts/sync-scholar.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "chart.js": "^4.4.8",
+    "cheerio": "^1.2.0",
     "framer-motion": "^12.7.2",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",

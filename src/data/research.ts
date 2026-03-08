@@ -1,66 +1,68 @@
-const research = [
+interface ResearchItem {
+  title: string;
+  description: string;
+  tags: string[];
+  pdfUrl?: string;
+  codeUrl?: string;
+  arxivId?: string;
+  published?: string;
+  citationCount?: number;
+}
+
+const research: ResearchItem[] = [
   {
-    title: "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models",
+    title: "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
     description:
-      "We uncover a paradox where moderately accurate reward models outperform stronger ones in RLHF training. This challenges the assumption that better reward models yield better language models.",
-    tags: ["RLHF", "Alignment", "Reward Models"],
-    pdfUrl: "https://arxiv.org/pdf/2410.06554",
-    codeUrl: "https://github.com/EIT-NLP/AccuracyParadox-RLHF",
-    arxivId: "2410.06554",
-    published: "EMNLP 2024",
-    citationCount: 1,
-  },
-  {
-    title: "Integrating Chain-of-Thought for Multimodal Alignment: A Study on 3D Vision-Language Learning",
-    description:
-      "We explore integrating CoT into 3D vision-language alignment, showing significant gains through structured reasoning with our 3D-CoT benchmark.",
-    tags: ["Multimodal", "Chain-of-Thought", "3D Reasoning"],
-    pdfUrl: "https://arxiv.org/pdf/2503.06232",
-    arxivId: "2503.06232",
+      "A survey of latent chain-of-thought reasoning that maps out how reasoning can emerge beyond explicit verbalized steps, with implications for evaluation, supervision, and model design.",
+    tags: ["LLM Reasoning", "Survey", "Chain-of-Thought"],
+    pdfUrl: "https://arxiv.org/pdf/2505.16782",
+    arxivId: "2505.16782",
     published: "arXiv 2025",
-    citationCount: 0,
   },
   {
-    title: "Corrected Soft Actor Critic for Continuous Control",
+    title: "Unveiling the key factors for distilling chain-of-thought reasoning",
     description:
-      "We improve SAC by correcting action sampling bias introduced by tanh, achieving better convergence and performance on standard benchmarks.",
-    tags: ["Reinforcement Learning", "SAC", "Control"],
-    pdfUrl: "https://arxiv.org/pdf/2410.16739",
-    arxivId: "2410.16739",
-    published: "arXiv 2024",
-    citationCount: 0,
-  },
-  {
-    title: "Instruction-Tuned LLMs Succeed in Document-Level MT Without Fine-Tuning—But BLEU Turns a Blind Eye",
-    description:
-      "We show instruction-tuned LLMs excel in docMT without fine-tuning. BLEU fails to capture improvements, and GPT-4 proves to be a better evaluator.",
-    tags: ["LLMs", "Document MT", "Evaluation"],
-    pdfUrl: "https://arxiv.org/pdf/2410.20941",
-    codeUrl: "https://github.com/EIT-NLP/BLEUless_DocMT",
-    arxivId: "2410.20941",
-    published: "arXiv 2024",
-    citationCount: 2,
-  },
-  {
-    title: "Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning",
-    description:
-      "We dissect how granularity, supervision format, and teacher models affect CoT distillation into small language models across 7 datasets.",
+      "An empirical study of how supervision format, reasoning granularity, and teacher quality affect the distillation of chain-of-thought reasoning into smaller language models.",
     tags: ["LLMs", "CoT Distillation", "Model Compression"],
     pdfUrl: "https://arxiv.org/pdf/2502.18001",
     codeUrl: "https://github.com/EIT-NLP/Distilling-CoT-Reasoning",
     arxivId: "2502.18001",
-    published: "arXiv 2025",
-    citationCount: 4,
+    published: "ACL Findings 2025",
   },
   {
-    title: "Breaking the Pre-Planning Barrier: Real-Time Adaptive Coordination of Mission and Charging UAVs Using Graph RL",
+    title: "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models",
     description:
-      "We introduce HGAM, a novel heterogeneous graph-based multi-agent RL model that enables real-time UAV coordination without pre-planned paths.",
-    tags: ["Multi-agent RL", "Graph Networks", "UAVs"],
-    pdfUrl: "https://arxiv.org/pdf/2501.14488",
-    arxivId: "2501.14488",
+      "We show that more accurate reward models do not always yield better RLHF outcomes, highlighting a practical paradox between reward-model quality and downstream language-model performance.",
+    tags: ["RLHF", "Alignment", "Reward Models"],
+    pdfUrl: "https://arxiv.org/pdf/2410.06554",
+    codeUrl: "https://github.com/Battam1111/AccuracyParadox-RLHF",
+    arxivId: "2410.06554",
+    published: "EMNLP 2024",
+  },
+  {
+    title: "Fine-grained and multi-dimensional metrics for document-level machine translation",
+    description:
+      "A study of fine-grained evaluation signals for document-level machine translation, with the goal of measuring translation quality beyond coarse aggregate metrics.",
+    tags: ["Machine Translation", "Evaluation", "Document MT"],
+    published: "NAACL 2025",
+  },
+  {
+    title: "Rethinking Soft Actor-Critic in High-Dimensional Action Spaces: The Cost of Ignoring Distribution Shift",
+    description:
+      "We revisit Soft Actor-Critic in high-dimensional control and analyze how distribution shift in action sampling can undermine learning stability and final performance.",
+    tags: ["Reinforcement Learning", "SAC", "Control"],
+    pdfUrl: "https://arxiv.org/pdf/2410.16739",
+    arxivId: "2410.16739",
+    published: "arXiv 2024",
+  },
+  {
+    title: "Integrating Chain-of-Thought for Multimodal Alignment: A Study on 3D Vision-Language Learning",
+    description:
+      "A study of how chain-of-thought style reasoning can improve multimodal alignment in 3D vision-language settings through more structured intermediate supervision.",
+    tags: ["Multimodal", "Chain-of-Thought", "3D Reasoning"],
+    pdfUrl: "https://arxiv.org/pdf/2503.06232",
+    arxivId: "2503.06232",
     published: "arXiv 2025",
-    citationCount: 0,
   },
 ];
 

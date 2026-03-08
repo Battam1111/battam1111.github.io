@@ -1,116 +1,87 @@
-"use client";
+import { ExternalLink, FileText, Github } from "lucide-react";
+import type { DisplayPublication } from "@/lib/scholar";
 
-// ✅ 引入图标（Lucide React 图标库）
-import { ExternalLink, FileText, Github, ChevronDown, ChevronUp } from "lucide-react";
-import { useState, useEffect } from "react";
-
-// ✅ 定义类型接口
 interface ResearchCardProps {
-  title: string;
-  description: string;
-  tags: string[];
-  pdfUrl?: string;
-  codeUrl?: string;
-  arxivId?: string;
-  published?: string;
-  citationCount?: number;
+  publication: DisplayPublication;
 }
 
-// ✅ 标签颜色映射规则（可根据关键词匹配颜色）
-const tagColorMap: { [key: string]: string } = {
-  RLHF: "bg-purple-100 text-purple-700",
-  "Chain-of-Thought": "bg-blue-100 text-blue-700",
-  CoT: "bg-blue-100 text-blue-700",
-  Multimodal: "bg-pink-100 text-pink-700",
-  LLMs: "bg-yellow-100 text-yellow-800",
-  SAC: "bg-green-100 text-green-800",
-  "Multi-agent RL": "bg-orange-100 text-orange-800",
-  "Graph Networks": "bg-teal-100 text-teal-800",
-};
+function cleanVenue(value: string) {
+  return value.replace(/\s+,/g, ",").trim();
+}
 
-export default function ResearchCard({
-  title,
-  description,
-  tags,
-  pdfUrl,
-  codeUrl,
-  arxivId,
-  published,
-  citationCount,
-}: ResearchCardProps) {
-  // ✅ 折叠状态（初始从 localStorage 加载）
-  const [expanded, setExpanded] = useState<boolean>(false); // 固定默认值 false
-
-  // ✅ 组件挂载后读取 localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem(`research-expanded-${title}`);
-      if (saved !== null) {
-        setExpanded(saved === "true");
-      }
-    }
-  }, [title]);
-  
-  // ✅ 同步折叠状态写入 localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(`research-expanded-${title}`, expanded.toString());
-    }
-  }, [expanded, title]);
-
-  // ✅ 摘要内容处理
-  const shortDescription = description.slice(0, 180) + (description.length > 180 ? "..." : "");
+export default function ResearchCard({ publication }: ResearchCardProps) {
+  const {
+    title,
+    description,
+    tags,
+    pdfUrl,
+    codeUrl,
+    arxivId,
+    published,
+    authors,
+    venue,
+    scholarUrl,
+    citationCount,
+  } = publication;
 
   return (
-    <div className="border p-6 rounded-xl shadow-sm bg-white space-y-4 hover:shadow-lg hover:-translate-y-1 transition duration-300">
-      {/* ✅ 标题 */}
-      <h3 className="text-xl font-bold tracking-tight">{title}</h3>
+    <article className="card-surface rounded-3xl p-6">
+      <div className="flex items-start justify-between gap-6">
+        <div className="space-y-3">
+          <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+            {published || cleanVenue(venue)}
+          </p>
+          <h3 className="text-2xl font-semibold leading-tight text-[var(--foreground)]">
+            {title}
+          </h3>
+        </div>
+        <div className="min-w-20 text-right">
+          <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+            Citations
+          </p>
+          <p className="mt-2 text-3xl font-semibold text-[var(--foreground)]">
+            {citationCount}
+          </p>
+        </div>
+      </div>
 
-      {/* ✅ 摘要区域 */}
-      <div className="text-gray-700 leading-snug text-sm space-y-1">
-        {expanded ? description : shortDescription}
-        {description.length > 180 && (
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="flex items-center text-xs text-blue-600 hover:underline mt-1"
+      <p className="mt-5 text-sm leading-7 text-[var(--muted)]">
+        {description}
+      </p>
+
+      <p className="mt-4 text-sm leading-6 text-[var(--muted)]">
+        {authors}
+      </p>
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="rounded-full border border-[rgba(18,22,27,0.08)] bg-[rgba(43,64,88,0.06)] px-2.5 py-1 text-xs font-medium text-[var(--muted)]"
           >
-            {expanded ? (
-              <>
-                <ChevronUp size={14} />
-                Show Less
-              </>
-            ) : (
-              <>
-                <ChevronDown size={14} />
-                Show More
-              </>
-            )}
-          </button>
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-5 text-sm text-[var(--muted)]">
+        {scholarUrl && (
+          <a
+            href={scholarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 transition hover:text-[var(--foreground)]"
+          >
+            <ExternalLink size={16} />
+            Scholar
+          </a>
         )}
-      </div>
-
-      {/* ✅ 标签区域 */}
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag) => {
-          const color = tagColorMap[tag] || "bg-gray-100 text-gray-700";
-          return (
-            <span
-              key={tag}
-              className={`text-xs px-2 py-1 rounded-full font-medium ${color}`}
-            >
-              {tag}
-            </span>
-          );
-        })}
-      </div>
-
-      {/* ✅ 链接按钮区域 */}
-      <div className="flex flex-wrap items-center gap-4 pt-2 text-sm">
         {pdfUrl && (
           <a
             href={pdfUrl}
             target="_blank"
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 transition hover:text-[var(--foreground)]"
           >
             <FileText size={16} />
             PDF
@@ -120,7 +91,8 @@ export default function ResearchCard({
           <a
             href={codeUrl}
             target="_blank"
-            className="flex items-center gap-1 text-green-600 hover:text-green-800 transition"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 transition hover:text-[var(--foreground)]"
           >
             <Github size={16} />
             Code
@@ -130,28 +102,14 @@ export default function ResearchCard({
           <a
             href={`https://arxiv.org/abs/${arxivId}`}
             target="_blank"
-            className="flex items-center gap-1 text-gray-600 hover:text-black transition"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 transition hover:text-[var(--foreground)]"
           >
             <ExternalLink size={16} />
             arXiv
           </a>
         )}
       </div>
-
-      {/* ✅ 元信息：发表时间 + 被引用次数 */}
-      {(published || citationCount !== undefined) && (
-        <div className="text-xs text-gray-500 pt-2 flex justify-between items-center">
-          <span className="italic">{published}</span>
-          {citationCount !== undefined && (
-            <span
-              className="hover:text-black transition"
-              title={`Last citation update: ${new Date().getFullYear()}`}
-            >
-              Cited {citationCount}×
-            </span>
-          )}
-        </div>
-      )}
-    </div>
+    </article>
   );
 }

@@ -1,11 +1,8 @@
-// ✅ BlogPage.tsx — 极致优化版本：结构清晰、视觉美学、导航导向
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 
-// ✅ 博客元数据类型
 interface BlogMeta {
   slug: string;
   title: string;
@@ -14,7 +11,6 @@ interface BlogMeta {
   tags?: string[];
 }
 
-// ✅ 获取博客 metadata（支持排序）
 function getAllPostMetadata(): BlogMeta[] {
   const blogDir = path.join(process.cwd(), "src/data/blogs");
   const files = fs
@@ -34,75 +30,57 @@ function getAllPostMetadata(): BlogMeta[] {
         tags: data.tags || [],
       };
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // 按时间降序
+    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime());
 }
 
-// ✅ 主页面组件
 export default function BlogPage() {
   const posts = getAllPostMetadata();
 
-  // ✅ 获取所有唯一标签
-  const allTags = Array.from(
-    new Set(posts.flatMap((post) => post.tags || []))
-  );
-
   return (
-    <main className="space-y-10 max-w-5xl mx-auto px-4 py-16 animate-fade-in">
-      {/* ✅ 标题部分 */}
-      <header className="space-y-3">
-        <h1 className="text-4xl font-extrabold tracking-tight">📝 Blog</h1>
-        <p className="text-gray-600 dark:text-gray-400 max-w-2xl text-sm">
-          Thoughts, experiments, and insights across RLHF, LLMs, Embodied AI, and beyond.
-        </p>
-      </header>
+    <main className="mx-auto max-w-5xl px-6 py-16 md:px-10">
+      <div className="space-y-10">
+        <header className="space-y-4 border-b border-[var(--line)] pb-8">
+          <p className="eyebrow">Notes</p>
+          <h1 className="section-title">Research notes and essays.</h1>
+          <p className="max-w-2xl text-base leading-7 text-[var(--muted)]">
+            Writing on RLHF, large language models, embodied AI, and adjacent
+            questions that do not fit neatly inside a paper.
+          </p>
+        </header>
 
-      {/* ✅ 标签导航 */}
-      <section className="flex flex-wrap gap-2">
-        <span className="text-sm text-gray-500 mr-2 pt-1">Tags:</span>
-        {allTags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-3 py-1 rounded-full border border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100 cursor-pointer"
-          >
-            {tag}
-          </span>
-        ))}
-      </section>
-
-      {/* ✅ 博客列表 */}
-      <section className="grid md:grid-cols-2 gap-8">
-        {posts.length === 0 && (
-          <p className="text-gray-500 col-span-2">No blog posts found.</p>
-        )}
-        {posts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="border p-6 rounded-xl bg-white shadow-sm hover:shadow-md transition cursor-pointer space-y-2 group"
-          >
-            <h2 className="text-xl font-semibold group-hover:text-blue-700">
-              {post.title}
-            </h2>
-            <p className="text-sm text-gray-500">{post.date}</p>
-            <p className="text-gray-700 text-sm leading-relaxed">
-              {post.summary}
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {post.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <p className="text-sm text-blue-600 group-hover:underline pt-1">
-              Read more →
-            </p>
-          </Link>
-        ))}
-      </section>
+        <section className="grid gap-6 md:grid-cols-2">
+          {posts.length === 0 && (
+            <p className="text-[var(--muted)]">No notes available yet.</p>
+          )}
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="card-surface rounded-3xl p-6 transition-transform duration-200 hover:-translate-y-1"
+            >
+              <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                {post.date}
+              </p>
+              <h2 className="mt-4 text-2xl font-semibold text-[var(--foreground)]">
+                {post.title}
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
+                {post.summary}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {post.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[rgba(18,22,27,0.08)] px-2 py-0.5 text-xs font-medium text-[var(--muted)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </Link>
+          ))}
+        </section>
+      </div>
     </main>
   );
 }
