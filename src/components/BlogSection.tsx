@@ -48,9 +48,9 @@ export default function BlogSection() {
     <section id="notes" className="section-shell space-y-8">
       <div className="flex items-end justify-between gap-6">
         <div className="space-y-2">
-          <p className="eyebrow">Notes</p>
+          <p className="eyebrow">Writing</p>
           <h2 className="text-2xl font-semibold text-[var(--foreground)] md:text-3xl">
-            Writing that complements the papers
+            Selected writing and research notes
           </h2>
         </div>
         <Link

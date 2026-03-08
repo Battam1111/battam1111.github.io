@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
+import { profile } from "@/data/profile";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -21,9 +22,19 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Yanjun Chen | RLHF and Embodied AI",
-  description:
-    "Personal academic homepage of Yanjun Chen, PhD student working on RLHF, large language models, and embodied AI.",
+  metadataBase: new URL("https://battam1111.github.io"),
+  title: `${profile.name} | ${profile.role}`,
+  description: `${profile.name}, ${profile.role} at ${profile.institution}, working on RLHF, large language models, and embodied AI.`,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: `${profile.name} | ${profile.role}`,
+    description: `${profile.name}, ${profile.role} at ${profile.institution}, working on RLHF, large language models, and embodied AI.`,
+    url: "https://battam1111.github.io",
+    siteName: `${profile.name} Academic Homepage`,
+    type: "website",
+  },
 };
 
 export default function RootLayout({

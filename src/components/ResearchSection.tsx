@@ -86,7 +86,7 @@ export default function ResearchSection({ scholar }: ResearchSectionProps) {
           </h3>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-2">
+        <div className="card-surface rounded-3xl px-6 py-2">
           {featured.map((publication) => (
             <ResearchCard
               key={publication.title}

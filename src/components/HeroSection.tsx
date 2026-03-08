@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { profile } from "@/data/profile";
 import type { ScholarSnapshot } from "@/lib/scholar";
 import { formatSyncDate } from "@/lib/scholar";
 
@@ -7,13 +8,6 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ scholar }: HeroSectionProps) {
-  const researchAreas = [
-    "Reinforcement learning with human feedback",
-    "Reward modeling",
-    "Large language models",
-    "Embodied AI",
-  ];
-
   const metrics = [
     {
       label: "Citations",
@@ -43,30 +37,24 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
       className="grid min-h-[calc(100vh-8rem)] gap-10 border-b border-[var(--line)] py-10 md:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.9fr)] md:items-center md:py-14"
     >
       <div className="space-y-7">
-        <p className="eyebrow">Yanjun Chen / PhD Student</p>
+        <p className="eyebrow">{profile.role}</p>
         <div className="space-y-4">
           <h1 className="display-title max-w-4xl text-[clamp(3.4rem,8vw,6.6rem)] font-semibold leading-[0.92] text-[var(--foreground)]">
-            Yanjun Chen
+            {profile.name}
           </h1>
           <p className="max-w-3xl text-lg font-medium text-[var(--foreground)] md:text-xl">
-            PhD student, Department of Computing, The Hong Kong Polytechnic University
+            {profile.department}, {profile.institution}
           </p>
           <p className="max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg">
-            I am a PhD student at The Hong Kong Polytechnic University. My
-            research focuses on reinforcement learning with human feedback,
-            reward modeling, large language models, and embodied AI. I am
-            interested in methods that make learning-based agents more reliable,
-            adaptive, and practically useful.
+            {profile.summary}
           </p>
           <p className="max-w-2xl text-sm leading-6 text-[var(--muted)]">
-            I welcome academic collaboration, visiting opportunities, and
-            research-oriented industry conversations in RLHF, agent training,
-            reasoning, and embodied intelligence.
+            {profile.mission}
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {researchAreas.map((area) => (
+          {profile.researchAreas.map((area) => (
             <span
               key={area}
               className="rounded-full border border-[rgba(18,22,27,0.08)] bg-[rgba(43,64,88,0.06)] px-3 py-1 text-sm text-[var(--muted)]"
@@ -78,13 +66,13 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
 
         <div className="flex flex-wrap gap-3 text-sm">
           <a
-            href="mailto:yan-jun.chen@connect.polyu.hk"
+            href={`mailto:${profile.email}`}
             className="rounded-full border border-[var(--foreground)] px-4 py-2 font-medium text-[var(--foreground)] transition hover:bg-[var(--foreground)] hover:text-white"
           >
             Email
           </a>
           <a
-            href={scholar.profileUrl}
+            href={profile.scholar}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
@@ -92,7 +80,7 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
             Google Scholar
           </a>
           <a
-            href="https://github.com/Battam1111"
+            href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
@@ -124,7 +112,8 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
         </div>
 
         <p className="max-w-2xl text-sm leading-6 text-[var(--muted)]">
-          Current topics: {scholar.interests.join(" / ")}.
+          Current topics: {scholar.interests.join(" / ")}. Academic profile
+          data is synchronized from Google Scholar every three days.
         </p>
       </div>
 
@@ -144,12 +133,12 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
           <div className="relative flex items-center justify-between gap-6 px-2 pb-2 pt-4 text-sm text-[var(--muted)]">
             <div>
               <p className="font-medium text-[var(--foreground)]">
-                Department of Computing
+                {profile.department}
               </p>
-              <p>The Hong Kong Polytechnic University</p>
+              <p>{profile.institution}</p>
             </div>
             <p className="mono text-[11px] uppercase tracking-[0.2em]">
-              Academic homepage
+              {profile.location}
             </p>
           </div>
         </div>
