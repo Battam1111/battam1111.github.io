@@ -51,6 +51,15 @@ export interface DisplayPublication extends PublicationOverride {
   citationCount: number;
 }
 
+export interface ProjectHighlight {
+  title: string;
+  description: string;
+  tags: string[];
+  codeUrl: string;
+  pdfUrl?: string;
+  published?: string;
+}
+
 function normalizeTitle(value: string) {
   return value
     .toLowerCase()
@@ -123,4 +132,30 @@ export function getPublicationList(): DisplayPublication[] {
       if (yearGap !== 0) return yearGap;
       return right.citationCount - left.citationCount;
     });
+}
+
+export function getRecentPublications(limit: number = 4) {
+  return [...scholarSnapshot.publications]
+    .sort((left, right) => {
+      const yearGap = (right.year ?? 0) - (left.year ?? 0);
+      if (yearGap !== 0) return yearGap;
+      return right.citationCount - left.citationCount;
+    })
+    .slice(0, limit);
+}
+
+export function getProjectHighlights(): ProjectHighlight[] {
+  return researchData
+    .filter((item): item is PublicationOverride & { codeUrl: string } =>
+      Boolean(item.codeUrl),
+    )
+    .slice(0, 4)
+    .map((item) => ({
+      title: item.title,
+      description: item.description,
+      tags: item.tags,
+      codeUrl: item.codeUrl,
+      pdfUrl: item.pdfUrl,
+      published: item.published,
+    }));
 }

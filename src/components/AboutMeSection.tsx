@@ -13,7 +13,7 @@ export default function AboutMeSection() {
     {
       title: "Collaboration",
       body:
-        "I am especially interested in collaborations that connect foundational research with practical agent systems, evaluation, or embodied decision-making.",
+        "I am especially interested in collaborations that connect foundational research with practical agent systems, evaluation, and embodied decision-making.",
     },
   ];
 
@@ -30,7 +30,7 @@ export default function AboutMeSection() {
     <section id="about" className="section-shell space-y-10">
       <div className="max-w-3xl space-y-4">
         <p className="eyebrow">About</p>
-        <h2 className="section-title">Research focus and background.</h2>
+        <h2 className="section-title">Biography and research direction.</h2>
         <p className="text-base leading-7 text-[var(--muted)] md:text-lg">
           I work at the intersection of language-model alignment,
           reinforcement learning, and embodied intelligence. My broader goal is

@@ -10,6 +10,7 @@
   --accent-soft: #e3e8ef;
   --font-sans: var(--font-plex-sans), sans-serif;
   --font-mono: var(--font-plex-mono), monospace;
+  --font-serif: var(--font-newsreader), serif;
 }
 
 html {
@@ -54,6 +55,7 @@ h1,
 h2,
 h3 {
   letter-spacing: -0.03em;
+  font-family: var(--font-serif);
 }
 
 img {
@@ -83,6 +85,10 @@ img {
   font-size: clamp(1.9rem, 4vw, 3.4rem);
   line-height: 1;
   font-weight: 600;
+}
+
+.display-title {
+  font-family: var(--font-serif);
 }
 
 .section-shell {

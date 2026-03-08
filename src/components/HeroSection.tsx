@@ -7,6 +7,13 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ scholar }: HeroSectionProps) {
+  const researchAreas = [
+    "Reinforcement learning with human feedback",
+    "Reward modeling",
+    "Large language models",
+    "Embodied AI",
+  ];
+
   const metrics = [
     {
       label: "Citations",
@@ -38,9 +45,12 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
       <div className="space-y-7">
         <p className="eyebrow">Yanjun Chen / PhD Student</p>
         <div className="space-y-4">
-          <h1 className="max-w-4xl text-[clamp(3rem,8vw,6.2rem)] font-semibold leading-[0.92] text-[var(--foreground)]">
-            Building more reliable learning and reasoning systems for AI agents.
+          <h1 className="display-title max-w-4xl text-[clamp(3.4rem,8vw,6.6rem)] font-semibold leading-[0.92] text-[var(--foreground)]">
+            Yanjun Chen
           </h1>
+          <p className="max-w-3xl text-lg font-medium text-[var(--foreground)] md:text-xl">
+            PhD student, Department of Computing, The Hong Kong Polytechnic University
+          </p>
           <p className="max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg">
             I am a PhD student at The Hong Kong Polytechnic University. My
             research focuses on reinforcement learning with human feedback,
@@ -53,6 +63,17 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
             research-oriented industry conversations in RLHF, agent training,
             reasoning, and embodied intelligence.
           </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {researchAreas.map((area) => (
+            <span
+              key={area}
+              className="rounded-full border border-[rgba(18,22,27,0.08)] bg-[rgba(43,64,88,0.06)] px-3 py-1 text-sm text-[var(--muted)]"
+            >
+              {area}
+            </span>
+          ))}
         </div>
 
         <div className="flex flex-wrap gap-3 text-sm">
@@ -128,7 +149,7 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
               <p>The Hong Kong Polytechnic University</p>
             </div>
             <p className="mono text-[11px] uppercase tracking-[0.2em]">
-              INTJ
+              Academic homepage
             </p>
           </div>
         </div>
