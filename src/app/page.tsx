@@ -5,6 +5,10 @@ import Footer from "@/components/Footer";
 import NewsSection from "@/components/NewsSection";
 import ResearchSection from "@/components/ResearchSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import TeachingSection from "@/components/TeachingSection";
+import ServiceSection from "@/components/ServiceSection";
+import HonorsSection from "@/components/HonorsSection";
+import CVSection from "@/components/CVSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import { scholarSnapshot } from "@/lib/scholar";
@@ -19,6 +23,10 @@ export default function Home() {
         <NewsSection scholar={scholarSnapshot} />
         <ResearchSection scholar={scholarSnapshot} />
         <ProjectsSection />
+        <TeachingSection />
+        <ServiceSection />
+        <HonorsSection />
+        <CVSection />
         <BlogSection />
         <ContactSection scholarProfileUrl={scholarSnapshot.profileUrl} />
       </main>

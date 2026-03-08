@@ -19,7 +19,7 @@ export default function BlogCard({
     <Link href={`/blog/${slug}`} className="block group">
       <article className="card-surface h-full rounded-3xl p-6 transition-transform duration-200 group-hover:-translate-y-1">
         <p className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
-          Note
+          Essay
         </p>
         <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
           {title}

@@ -3,6 +3,9 @@ const links = [
   { href: "#updates", label: "Updates" },
   { href: "#research", label: "Publications" },
   { href: "#projects", label: "Projects" },
+  { href: "#teaching", label: "Teaching" },
+  { href: "#service", label: "Service" },
+  { href: "#cv", label: "CV" },
   { href: "#notes", label: "Writing" },
   { href: "#contact", label: "Contact" },
 ];
@@ -10,7 +13,7 @@ const links = [
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 -mx-6 mb-10 border-b border-[var(--line)] bg-[rgba(246,244,239,0.86)] backdrop-blur md:-mx-10">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4 md:px-10">
         <a
           href="#top"
           className="mono text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]"
@@ -18,7 +21,7 @@ export default function Header() {
           Yanjun Chen
         </a>
 
-        <nav className="flex items-center gap-5 text-sm text-[var(--muted)]">
+        <nav className="flex items-center gap-5 overflow-x-auto whitespace-nowrap text-sm text-[var(--muted)]">
           {links.map((link) => (
             <a
               key={link.href}

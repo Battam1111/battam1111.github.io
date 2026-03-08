@@ -72,6 +72,12 @@ export default function HeroSection({ scholar }: HeroSectionProps) {
             Email
           </a>
           <a
+            href="#cv"
+            className="rounded-full border border-[var(--line)] px-4 py-2 font-medium text-[var(--muted)] transition hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
+          >
+            CV
+          </a>
+          <a
             href={profile.scholar}
             target="_blank"
             rel="noopener noreferrer"
