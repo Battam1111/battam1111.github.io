@@ -60,6 +60,10 @@ export interface ProjectHighlight {
   published?: string;
 }
 
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
 function normalizeTitle(value: string) {
   return value
     .toLowerCase()
@@ -68,7 +72,31 @@ function normalizeTitle(value: string) {
     .trim();
 }
 
-export const scholarSnapshot = scholarData as ScholarSnapshot;
+function assertValidScholarSnapshot(snapshot: ScholarSnapshot) {
+  if (!isNonEmptyString(snapshot.name)) {
+    throw new Error(
+      "Invalid Google Scholar snapshot: missing profile name in src/data/scholar.generated.json. Run `npm run sync:scholar` and commit a healthy snapshot.",
+    );
+  }
+
+  if (!isNonEmptyString(snapshot.profileUrl)) {
+    throw new Error(
+      "Invalid Google Scholar snapshot: missing profile URL in src/data/scholar.generated.json.",
+    );
+  }
+
+  if (!Array.isArray(snapshot.publications) || snapshot.publications.length === 0) {
+    throw new Error(
+      "Invalid Google Scholar snapshot: no publications found in src/data/scholar.generated.json. Refusing to build a broken scholarly profile.",
+    );
+  }
+
+  return snapshot;
+}
+
+export const scholarSnapshot = assertValidScholarSnapshot(
+  scholarData as ScholarSnapshot,
+);
 
 const overridesByTitle = new Map(
   researchData.map((item) => [normalizeTitle(item.title), item]),
