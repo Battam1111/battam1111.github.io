@@ -13,6 +13,30 @@ const OUTPUT_PATH = path.join(
   "scholar.generated.json",
 );
 const PAGE_SIZE = 100;
+const SOFT_HTTP_STATUSES = new Set([403, 429, 500, 502, 503, 504]);
+const SOFT_ERROR_CODES = new Set([
+  "ECONNRESET",
+  "ECONNREFUSED",
+  "ENOTFOUND",
+  "ETIMEDOUT",
+  "UND_ERR_CONNECT_TIMEOUT",
+  "UND_ERR_HEADERS_TIMEOUT",
+  "UND_ERR_SOCKET",
+]);
+const STRICT_MODE = ["1", "true", "yes"].includes(
+  (process.env.SCHOLAR_SYNC_STRICT ?? "").toLowerCase(),
+);
+
+class ScholarSyncError extends Error {
+  constructor(message, options = {}) {
+    super(message, options.cause ? { cause: options.cause } : undefined);
+    this.name = "ScholarSyncError";
+    this.code = options.code ?? null;
+    this.kind = options.kind ?? null;
+    this.status = options.status ?? null;
+    this.url = options.url ?? null;
+  }
+}
 
 function normalizeText(value = "") {
   return value
@@ -29,6 +53,98 @@ function toNumber(value = "") {
 function toAbsoluteScholarUrl(href) {
   if (!href) return null;
   return new URL(href, "https://scholar.google.com").toString();
+}
+
+async function readExistingSnapshot() {
+  try {
+    const raw = await fs.readFile(OUTPUT_PATH, "utf8");
+    return JSON.parse(raw);
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return null;
+    }
+
+    throw new ScholarSyncError(
+      `Failed to read existing Scholar snapshot at ${OUTPUT_PATH}`,
+      { cause: error, code: error?.code },
+    );
+  }
+}
+
+function hasUsableSnapshot(snapshot) {
+  return Boolean(
+    snapshot &&
+      typeof snapshot.name === "string" &&
+      snapshot.name.trim() &&
+      Array.isArray(snapshot.publications) &&
+      snapshot.publications.length > 0 &&
+      typeof snapshot.updatedAt === "string" &&
+      snapshot.updatedAt.trim(),
+  );
+}
+
+function validateSnapshot(payload) {
+  if (!payload.name) {
+    throw new ScholarSyncError(
+      "Scholar response did not include a profile name. Google may have returned a blocked or challenge page.",
+      { kind: "invalid-response" },
+    );
+  }
+
+  if (!Array.isArray(payload.publications) || payload.publications.length === 0) {
+    throw new ScholarSyncError(
+      "Scholar response did not include any publications. Google may have returned a blocked or challenge page.",
+      { kind: "invalid-response" },
+    );
+  }
+
+  return payload;
+}
+
+function getErrorCode(error) {
+  return (
+    error?.code ??
+    error?.cause?.code ??
+    error?.cause?.cause?.code ??
+    null
+  );
+}
+
+function isRecoverableScholarError(error) {
+  if (error instanceof ScholarSyncError) {
+    if (SOFT_HTTP_STATUSES.has(error.status)) {
+      return true;
+    }
+
+    if (error.kind === "invalid-response") {
+      return true;
+    }
+  }
+
+  if (error instanceof TypeError) {
+    return true;
+  }
+
+  const code = getErrorCode(error);
+  return Boolean(code && SOFT_ERROR_CODES.has(code));
+}
+
+function formatError(error) {
+  if (!error) {
+    return "unknown error";
+  }
+
+  const parts = [error.message ?? String(error)];
+  if (error.status) {
+    parts.push(`status=${error.status}`);
+  }
+
+  const code = getErrorCode(error);
+  if (code) {
+    parts.push(`code=${code}`);
+  }
+
+  return parts.join(" ");
 }
 
 function parseMetrics($) {
@@ -100,21 +216,32 @@ async function fetchScholarPage(cstart = 0) {
   url.searchParams.set("cstart", String(cstart));
   url.searchParams.set("pagesize", String(PAGE_SIZE));
 
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": USER_AGENT,
-      "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8",
-    },
-  });
+  let response;
+  try {
+    response = await fetch(url, {
+      headers: {
+        "User-Agent": USER_AGENT,
+        "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8",
+      },
+    });
+  } catch (error) {
+    throw new ScholarSyncError(
+      `Scholar request failed before receiving a response for ${url}`,
+      { cause: error, code: getErrorCode(error), url: url.toString() },
+    );
+  }
 
   if (!response.ok) {
-    throw new Error(`Scholar request failed with status ${response.status}`);
+    throw new ScholarSyncError(
+      `Scholar request failed with status ${response.status}`,
+      { status: response.status, url: url.toString() },
+    );
   }
 
   return response.text();
 }
 
-async function main() {
+async function buildSnapshot() {
   const firstHtml = await fetchScholarPage(0);
   const firstPage = load(firstHtml);
   const profile = parseProfile(firstPage);
@@ -150,10 +277,33 @@ async function main() {
     publications,
   };
 
-  await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`);
-  console.log(
-    `Saved Scholar snapshot with ${publications.length} publications to ${OUTPUT_PATH}`,
-  );
+  return validateSnapshot(payload);
+}
+
+async function main() {
+  const existingSnapshot = await readExistingSnapshot();
+
+  try {
+    const payload = await buildSnapshot();
+    await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`);
+    console.log(
+      `Saved Scholar snapshot with ${payload.totalPublications} publications to ${OUTPUT_PATH}`,
+    );
+    return;
+  } catch (error) {
+    if (
+      !STRICT_MODE &&
+      hasUsableSnapshot(existingSnapshot) &&
+      isRecoverableScholarError(error)
+    ) {
+      console.warn(
+        `Scholar sync skipped: ${formatError(error)}. Keeping existing snapshot from ${existingSnapshot.updatedAt}.`,
+      );
+      return;
+    }
+
+    throw error;
+  }
 }
 
 main().catch((error) => {
