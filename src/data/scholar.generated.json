@@ -11,15 +11,15 @@
   "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
   "metrics": {
     "recentLabel": "Since 2021",
-    "citations": 109,
-    "citationsRecent": 109,
+    "citations": 113,
+    "citationsRecent": 113,
     "hIndex": 5,
     "hIndexRecent": 5,
     "i10Index": 3,
     "i10IndexRecent": 3
   },
   "totalPublications": 12,
-  "updatedAt": "2026-03-19T04:31:42.260Z",
+  "updatedAt": "2026-03-25T04:28:43.150Z",
   "publications": [
     {
       "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
@@ -27,7 +27,7 @@
       "authors": "X Chen, A Zhao, H Xia, X Lu, H Wang, Y Chen, W Zhang, J Wang, W Li, ...",
       "venue": "arXiv preprint arXiv:2505.16782, 2025",
       "year": 2025,
-      "citationCount": 39,
+      "citationCount": 40,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13567364852110842665"
     },
     {
@@ -36,7 +36,7 @@
       "authors": "X Chen, Z Sun, G Wenjin, M Zhang, Y Chen, Y Sun, H Su, Y Pan, ...",
       "venue": "Findings of the Association for Computational Linguistics: ACL 2025, 15094-15119, 2025",
       "year": 2025,
-      "citationCount": 37,
+      "citationCount": 38,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=12694883840788466812"
     },
     {
@@ -45,7 +45,7 @@
       "authors": "Y Chen, D Zhu, Y Sun, X Chen, W Zhang, X Shen",
       "venue": "Proceedings of the 2024 Conference on Empirical Methods in Natural Language …, 2024",
       "year": 2024,
-      "citationCount": 14,
+      "citationCount": 15,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=2064211325665185872"
     },
     {
@@ -54,7 +54,7 @@
       "authors": "Y Sun, D Zhu, Y Chen, E Xiao, X Chen, X Shen",
       "venue": "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of …, 2025",
       "year": 2025,
-      "citationCount": 7,
+      "citationCount": 8,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1441692737280682065,18297873443418151235"
     },
     {
