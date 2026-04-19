@@ -11,15 +11,15 @@
   "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
   "metrics": {
     "recentLabel": "Since 2021",
-    "citations": 120,
-    "citationsRecent": 120,
+    "citations": 123,
+    "citationsRecent": 123,
     "hIndex": 5,
     "hIndexRecent": 5,
     "i10Index": 3,
     "i10IndexRecent": 3
   },
   "totalPublications": 12,
-  "updatedAt": "2026-04-16T05:13:05.795Z",
+  "updatedAt": "2026-04-19T05:11:32.300Z",
   "publications": [
     {
       "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
@@ -36,7 +36,7 @@
       "authors": "X Chen, Z Sun, G Wenjin, M Zhang, Y Chen, Y Sun, H Su, Y Pan, ...",
       "venue": "Findings of the Association for Computational Linguistics: ACL 2025, 15094-15119, 2025",
       "year": 2025,
-      "citationCount": 39,
+      "citationCount": 40,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=12694883840788466812"
     },
     {
@@ -45,7 +45,7 @@
       "authors": "Y Chen, D Zhu, Y Sun, X Chen, W Zhang, X Shen",
       "venue": "Proceedings of the 2024 Conference on Empirical Methods in Natural Language …, 2024",
       "year": 2024,
-      "citationCount": 15,
+      "citationCount": 16,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=2064211325665185872"
     },
     {
@@ -54,7 +54,7 @@
       "authors": "Y Sun, D Zhu, Y Chen, E Xiao, X Chen, X Shen",
       "venue": "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of …, 2025",
       "year": 2025,
-      "citationCount": 8,
+      "citationCount": 9,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1441692737280682065,18297873443418151235"
     },
     {
