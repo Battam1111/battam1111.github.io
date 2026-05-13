@@ -11,15 +11,15 @@
   "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
   "metrics": {
     "recentLabel": "Since 2021",
-    "citations": 130,
-    "citationsRecent": 130,
+    "citations": 137,
+    "citationsRecent": 137,
     "hIndex": 5,
     "hIndexRecent": 5,
-    "i10Index": 3,
-    "i10IndexRecent": 3
+    "i10Index": 4,
+    "i10IndexRecent": 4
   },
   "totalPublications": 12,
-  "updatedAt": "2026-05-07T05:41:23.135Z",
+  "updatedAt": "2026-05-13T05:57:19.766Z",
   "publications": [
     {
       "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
@@ -27,7 +27,7 @@
       "authors": "X Chen, A Zhao, H Xia, X Lu, H Wang, Y Chen, W Zhang, J Wang, W Li, ...",
       "venue": "arXiv preprint arXiv:2505.16782, 2025",
       "year": 2025,
-      "citationCount": 47,
+      "citationCount": 49,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13567364852110842665"
     },
     {
@@ -45,7 +45,7 @@
       "authors": "Y Chen, D Zhu, Y Sun, X Chen, W Zhang, X Shen",
       "venue": "Proceedings of the 2024 Conference on Empirical Methods in Natural Language …, 2024",
       "year": 2024,
-      "citationCount": 17,
+      "citationCount": 20,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=2064211325665185872"
     },
     {
@@ -54,7 +54,7 @@
       "authors": "Y Sun, D Zhu, Y Chen, E Xiao, X Chen, X Shen",
       "venue": "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of …, 2025",
       "year": 2025,
-      "citationCount": 9,
+      "citationCount": 10,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1441692737280682065,18297873443418151235"
     },
     {
@@ -85,6 +85,15 @@
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6997354733840646339"
     },
     {
+      "title": "Exact Is Easier: Credit Assignment for Cooperative LLM Agents",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:_FxGoFyzp5QC",
+      "authors": "Y Chen, Y Sun, H Wang, J Wang, X Zhang, X Shen, W Li, W Zhang",
+      "venue": "arXiv preprint arXiv:2603.06859, 2026",
+      "year": 2026,
+      "citationCount": 1,
+      "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=9383953974831199478"
+    },
+    {
       "title": "Breaking the pre-planning barrier: Real-time adaptive coordination of mission and charging UAVs using graph reinforcement learning",
       "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:qjMakFHDy7sC",
       "authors": "Y Hu, Y Sun, Y Chen, X Chen",
@@ -92,15 +101,6 @@
       "year": 2025,
       "citationCount": 1,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=11829720992587562883"
-    },
-    {
-      "title": "Contextual Counterfactual Credit Assignment for Multi-Agent Reinforcement Learning in LLM Collaboration",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Zg8cX0sAAAAJ&pagesize=100&citation_for_view=Zg8cX0sAAAAJ:_FxGoFyzp5QC",
-      "authors": "Y Chen, Y Sun, H Wang, X Zhang, X Shen, W Li, W Zhang",
-      "venue": "arXiv preprint arXiv:2603.06859, 2026",
-      "year": 2026,
-      "citationCount": 0,
-      "citationUrl": null
     },
     {
       "title": "SonicBench: Dissecting the Physical Perception Bottleneck in Large Audio Language Models",
