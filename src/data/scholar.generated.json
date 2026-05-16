@@ -11,15 +11,15 @@
   "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
   "metrics": {
     "recentLabel": "Since 2021",
-    "citations": 137,
-    "citationsRecent": 137,
+    "citations": 141,
+    "citationsRecent": 141,
     "hIndex": 5,
     "hIndexRecent": 5,
     "i10Index": 4,
     "i10IndexRecent": 4
   },
   "totalPublications": 12,
-  "updatedAt": "2026-05-13T05:57:19.766Z",
+  "updatedAt": "2026-05-16T05:34:55.779Z",
   "publications": [
     {
       "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
@@ -27,7 +27,7 @@
       "authors": "X Chen, A Zhao, H Xia, X Lu, H Wang, Y Chen, W Zhang, J Wang, W Li, ...",
       "venue": "arXiv preprint arXiv:2505.16782, 2025",
       "year": 2025,
-      "citationCount": 49,
+      "citationCount": 52,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13567364852110842665"
     },
     {
@@ -36,7 +36,7 @@
       "authors": "X Chen, Z Sun, G Wenjin, M Zhang, Y Chen, Y Sun, H Su, Y Pan, ...",
       "venue": "Findings of the Association for Computational Linguistics: ACL 2025, 15094-15119, 2025",
       "year": 2025,
-      "citationCount": 44,
+      "citationCount": 45,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=12694883840788466812"
     },
     {
