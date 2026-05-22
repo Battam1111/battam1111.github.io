@@ -1,0 +1,380 @@
+/*******************************************************************************
+ * Yanjun Chen — Visual Craft Layer
+ *
+ * Handcrafted overrides on top of al-folio default theme.
+ * Built 2026-05-22 from 8-agent visual research that collapsed to:
+ *   • Warm off-white background + warm near-black text (no pure #FFF / #000)
+ *   • Sage-green accent (#7A8868) — concept-aligned with Environment-Centric AI
+ *   • System sans body @ 18px / 1.6 line-height + Fraunces display serif headings
+ *   • Tight prose width (~70ch) — Butterick / Smashing convergence
+ *   • Craig Mod link decoration (offset underline, accent-colored)
+ *   • * * * section dividers (Robin Sloan style) instead of <hr>
+ *   • Warm-tinted dark mode (not cyberpunk)
+ ******************************************************************************/
+
+/* ============================================================
+   1. COLOR PALETTE — warm tones + sage accent
+   ============================================================ */
+
+:root {
+  /* Surfaces — warm off-white, never pure */
+  --global-bg-color: #FAF8F4;
+  --global-text-color: #1F1B17;
+  --global-text-color-light: #6B6358;
+  --global-divider-color: rgba(31, 27, 23, 0.08);
+
+  /* Accent — sage green (Environment-Centric AI concept echo) */
+  --global-theme-color: #7A8868;
+  --global-hover-color: #5F6B52;
+  --global-hover-text-color: #FAF8F4;
+
+  /* Cards / panels */
+  --global-card-bg-color: #FAF8F4;
+  --global-code-bg-color: #F1ECE3;
+
+  /* Footer — warm dark, not pitch */
+  --global-footer-bg-color: #1F1B17;
+  --global-footer-text-color: #C9C2B6;
+  --global-footer-link-color: #FAF8F4;
+
+  /* Highlight */
+  --global-highlight-color: #7A8868;
+}
+
+/* Dark mode — warm-tinted, library-at-night */
+html[data-theme="dark"] {
+  --global-bg-color: #10110F;
+  --global-text-color: #E8E6E0;
+  --global-text-color-light: #9C9489;
+  --global-divider-color: rgba(232, 230, 224, 0.10);
+
+  --global-theme-color: #8E9C7C;
+  --global-hover-color: #A8B594;
+  --global-hover-text-color: #10110F;
+
+  --global-card-bg-color: #1A1B18;
+  --global-code-bg-color: #1F1F1C;
+
+  --global-footer-bg-color: #1A1B18;
+  --global-footer-text-color: #9C9489;
+  --global-footer-link-color: #E8E6E0;
+}
+
+/* Selection color — sage highlight */
+::selection {
+  background: var(--global-theme-color);
+  color: var(--global-bg-color);
+}
+
+/* ============================================================
+   2. TYPOGRAPHY — Fraunces serif heading + system sans body
+   ============================================================ */
+
+:root {
+  --font-display: "Fraunces", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--global-text-color);
+  background-color: var(--global-bg-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Headings — Fraunces, balanced wrapping, slightly tightened tracking */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  font-feature-settings: "lnum" 1, "kern" 1;
+  color: var(--global-text-color);
+}
+
+h1 {
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+h2 {
+  font-size: 1.85rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-size: 1.35rem;
+  margin-top: 2rem;
+}
+h4 { font-size: 1.15rem; }
+
+/* Body paragraphs — pretty wrap, no orphans */
+p, li, blockquote {
+  text-wrap: pretty;
+  color: var(--global-text-color);
+}
+p { margin-bottom: 1.1em; }
+
+/* Code */
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+code {
+  background-color: var(--global-code-bg-color);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+/* Tabular numerals where digits should align */
+time, .publications .periodical, table td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Strong & em — restrained */
+strong, b { font-weight: 600; }
+em { font-style: italic; }
+
+/* ============================================================
+   3. LINKS — Craig Mod recipe (color inherit, accent underline)
+   ============================================================ */
+
+a,
+table.table a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--global-theme-color);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:hover,
+a:focus,
+table.table a:hover {
+  color: var(--global-theme-color);
+  text-decoration-color: currentColor;
+}
+
+/* Navbar — color only, no underline, demoted weight */
+.navbar a,
+.navbar .nav-link,
+.navbar-brand,
+.navbar-nav .nav-link {
+  text-decoration: none !important;
+  color: var(--global-text-color-light);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+.navbar a:hover,
+.navbar .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: var(--global-theme-color);
+  background-image: none !important;
+}
+.navbar .navbar-brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+/* Social icons — translate up on hover */
+.social a,
+.contact-icons a {
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease-out, color 0.2s ease-out;
+}
+.social a:hover,
+.contact-icons a:hover {
+  transform: translateY(-2px);
+  color: var(--global-theme-color);
+  text-decoration: none;
+}
+
+/* ============================================================
+   4. LAYOUT — narrower prose, smaller non-circular headshot
+   ============================================================ */
+
+/* Prose containers tighten to ~70-75ch */
+.post p,
+.post li,
+.post blockquote,
+.about p,
+.about li,
+.publications .description {
+  max-width: 70ch;
+}
+
+/* Profile image — smaller, slight rounded square */
+.profile img.profile-img,
+.profile .profile-img,
+img.profile-img {
+  max-width: 200px !important;
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--global-divider-color);
+  box-shadow: 0 1px 3px rgba(31, 27, 23, 0.06);
+}
+
+/* Profile container padding tweak */
+.profile {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Section spacing */
+section, .section { margin-block: 2.5rem; }
+
+/* ============================================================
+   5. SECTION DIVIDERS — * * * (Robin Sloan / Craig Mod style)
+   ============================================================ */
+
+hr {
+  border: none;
+  height: 2rem;
+  margin: 3rem auto;
+  text-align: center;
+  position: relative;
+  background: transparent;
+}
+
+hr::before {
+  content: "* * *";
+  display: inline-block;
+  letter-spacing: 0.8em;
+  padding-left: 0.8em;
+  color: var(--global-text-color-light);
+  font-size: 1rem;
+  line-height: 2rem;
+  font-family: var(--font-body);
+}
+
+/* ============================================================
+   6. BLOCKQUOTE — thin sage rule + italic
+   ============================================================ */
+
+blockquote {
+  border-left: 2px solid var(--global-theme-color);
+  padding-left: 1.25em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: var(--global-text-color-light);
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   7. NEWS / PUBLICATIONS — tabular dates + tighter rhythm
+   ============================================================ */
+
+.news .row,
+.publications .row {
+  border-bottom: 1px solid var(--global-divider-color);
+  padding: 0.85rem 0;
+}
+.news .row:last-child,
+.publications .row:last-child {
+  border-bottom: none;
+}
+
+.news time,
+.publications .periodical {
+  color: var(--global-text-color-light);
+  font-size: 0.9rem;
+}
+
+/* Selected publications header — Fraunces */
+.publications h2.year {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--global-divider-color);
+  padding-bottom: 0.4rem;
+}
+
+/* Paper title in list */
+.publications .title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* abbr/venue badge — small caps sage */
+.publications abbr,
+.bib-abbr {
+  color: var(--global-theme-color);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   8. FOCUS / A11Y polish
+   ============================================================ */
+
+*:focus-visible {
+  outline: 2px solid var(--global-theme-color);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Don't show outline on mouse click for elements that have hover styles */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================
+   9. FOOTER — colophon vibe
+   ============================================================ */
+
+footer.fixed-bottom,
+footer {
+  font-size: 0.88rem;
+}
+
+footer .credits {
+  font-family: var(--font-body);
+  color: var(--global-footer-text-color);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+/* Last-updated date — italic, muted */
+.last-updated, footer .last-updated {
+  font-style: italic;
+  color: var(--global-text-color-light);
+  font-size: 0.82rem;
+}
+
+/* ============================================================
+   10. ACKNOWLEDGEMENT (Xiaoyu Shen 彩蛋) — italic small
+   ============================================================ */
+
+.post em em,
+em em {
+  font-style: italic;
+}
+
+/* The acknowledgement <small><em>...</em></small> in about.md */
+.post small em,
+small em {
+  font-size: 0.92em;
+  color: var(--global-text-color-light);
+  font-style: italic;
+}

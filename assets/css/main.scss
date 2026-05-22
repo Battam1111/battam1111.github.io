@@ -37,3 +37,6 @@
 @use "font-awesome/brands";
 @use "font-awesome/solid";
 @use "font-awesome/regular";
+
+// Yanjun Chen — handcrafted visual layer (must come LAST so it wins over al-folio defaults)
+@use "yanjun-craft";

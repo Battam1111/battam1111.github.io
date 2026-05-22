@@ -459,7 +459,8 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      # Fraunces (display serif for headings, opt-sz axis enabled) + JetBrains Mono (code) + Material Icons (al-folio UI)
+      fonts: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&family=Material+Icons&display=swap"
   highlightjs:
     integrity:
       css:
