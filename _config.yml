@@ -11,7 +11,7 @@ contact_note: >
 description: >
   Yanjun Chen (陈彦筠) — second-year PhD student at The Hong Kong Polytechnic University. I work on Environment-Centric AI: the design of the environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
 footer_text: >
-  Built carefully. <a href="https://github.com/Battam1111/battam1111.github.io">View source</a>.
+  <a href="https://github.com/Battam1111/battam1111.github.io">Source on GitHub</a>.
 keywords: Environment-Centric AI, RLHF, reward modeling, LLM reasoning, multi-agent reinforcement learning, embodied AI, PolyU
 lang: en
 icon: 🌐

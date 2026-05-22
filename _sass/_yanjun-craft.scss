@@ -280,7 +280,7 @@ hr {
   border: 0;
   border-top: 1px solid var(--global-divider-color);
   height: 0;
-  margin: 2rem 0;
+  margin: 2.75rem 0;     /* v5: looser breathing room around dividers */
   background: transparent;
 }
 hr::before {

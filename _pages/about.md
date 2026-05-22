@@ -9,7 +9,7 @@ profile:
   image: prof_pic.jpg
   image_circular: false
   more_info: >
-    <p>📧 yan-jun.chen@connect.polyu.hk</p>
+    <p><i class="fa-regular fa-envelope" style="margin-right:0.4em;color:var(--global-text-color-light);"></i>yan-jun.chen@connect.polyu.hk</p>
     <p>Hong Kong</p>
 
 selected_papers: true
