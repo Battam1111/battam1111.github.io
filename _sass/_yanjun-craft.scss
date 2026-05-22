@@ -1,131 +1,149 @@
 /*******************************************************************************
- * Yanjun Chen — Visual Craft Layer
+ * Yanjun Chen — Visual Craft Layer (v4: Direction B "Tri Dao plain")
  *
- * Handcrafted overrides on top of al-folio default theme.
- * Built 2026-05-22 from 8-agent visual research that collapsed to:
- *   • Warm off-white background + warm near-black text (no pure #FFF / #000)
- *   • Sage-green accent (#7A8868) — concept-aligned with Environment-Centric AI
- *   • System sans body @ 18px / 1.6 line-height + Fraunces display serif headings
- *   • Tight prose width (~70ch) — Butterick / Smashing convergence
- *   • Craig Mod link decoration (offset underline, accent-colored)
- *   • * * * section dividers (Robin Sloan style) instead of <hr>
- *   • Warm-tinted dark mode (not cyberpunk)
+ * 2026-05-22 — pivoted from v3 (sage + Fraunces + cream "magazine") to v4
+ * "Tri Dao plain" after direction-challenge critic found:
+ *   • Sage green in 30 ML-faculty homepages: 0/30 — sample size 1
+ *   • Fraunces in 30 ML-faculty homepages: 0/30 — magazine display face
+ *   • User feedback "丑" was register mismatch (magazine chrome vs CV content)
+ *
+ * v4 direction:
+ *   • Cool ink #1A1A1A on neutral off-white #FAFAFA
+ *   • Single accent: Princeton/Berkeley blue #003366 (used ONLY on links + active nav)
+ *   • Inter (variable) for everything — heading + body — no serif
+ *   • 1px hr rule — no * * * fleuron, no paper grain
+ *   • Used by Tri Dao, Percy Liang, Chris Ré, Sergey Levine, Chelsea Finn, Madry,
+ *     Aditi Raghunathan, Stella Biderman, Hashimoto, Sang Xie — dominant 2024-26
+ *     register for ML faculty homepages
+ *
+ * Preserved from v3:
+ *   • All 8 bug fixes (profile img selector, .about cleanup, venue badge,
+ *     news tr, contact font, contact icons 1.5rem, footer un-fixed, active nav)
+ *   • Dark mode FOUC inline-script (in _includes/head.liquid)
+ *   • Print stylesheet, prefers-reduced-motion
+ *   • Preconnect to Google Fonts
+ *   • Focus ring, ::selection, mobile responsive bits
+ *
+ * NEW in v4:
+ *   • Venue badge .w-100 regression fix (Critic A found)
+ *   • Bibliography author own-name: weight-only emphasis (no underline clash)
  ******************************************************************************/
 
 /* ============================================================
-   1. COLOR PALETTE — warm tones + sage accent
+   1. COLOR PALETTE — cool ink + Princeton blue accent
    ============================================================ */
 
 :root {
-  /* Surfaces — warm off-white, never pure */
-  --global-bg-color: #FAF8F4;
-  --global-text-color: #1F1B17;
-  --global-text-color-light: #6B6358;
-  --global-divider-color: rgba(31, 27, 23, 0.08);
+  /* Surfaces — cool off-white */
+  --global-bg-color: #FAFAFA;
+  --global-text-color: #1A1A1A;
+  --global-text-color-light: #595959;
+  --global-divider-color: rgba(0, 0, 0, 0.10);
 
-  /* Accent — sage green (Environment-Centric AI concept echo) */
-  --global-theme-color: #7A8868;
-  --global-hover-color: #5F6B52;
-  --global-hover-text-color: #FAF8F4;
+  /* Accent — Princeton/Berkeley blue (used ONLY on links + active nav) */
+  --global-theme-color: #003366;
+  --global-hover-color: #001F3F;
+  --global-hover-text-color: #FAFAFA;
 
   /* Cards / panels */
-  --global-card-bg-color: #FAF8F4;
-  --global-code-bg-color: #F1ECE3;
+  --global-card-bg-color: #FAFAFA;
+  --global-code-bg-color: #F1F2F4;
 
-  /* Footer — warm dark, not pitch */
-  --global-footer-bg-color: #1F1B17;
-  --global-footer-text-color: #C9C2B6;
-  --global-footer-link-color: #FAF8F4;
+  /* Footer — flat, no dark band */
+  --global-footer-bg-color: #FAFAFA;
+  --global-footer-text-color: #595959;
+  --global-footer-link-color: #003366;
 
   /* Highlight */
-  --global-highlight-color: #7A8868;
+  --global-highlight-color: #003366;
 }
 
-/* Dark mode — warm-tinted, library-at-night */
+/* Dark mode — cool, ML researcher night-mode */
 html[data-theme="dark"] {
-  --global-bg-color: #10110F;
-  --global-text-color: #E8E6E0;
-  --global-text-color-light: #9C9489;
-  --global-divider-color: rgba(232, 230, 224, 0.10);
+  --global-bg-color: #0F1115;
+  --global-text-color: #E8EAED;
+  --global-text-color-light: #9AA0A6;
+  --global-divider-color: rgba(255, 255, 255, 0.10);
 
-  --global-theme-color: #8E9C7C;
-  --global-hover-color: #A8B594;
-  --global-hover-text-color: #10110F;
+  --global-theme-color: #7AB8FF;   /* lifted blue for dark contrast */
+  --global-hover-color: #A8CEFF;
+  --global-hover-text-color: #0F1115;
 
-  --global-card-bg-color: #1A1B18;
-  --global-code-bg-color: #1F1F1C;
+  --global-card-bg-color: #15181E;
+  --global-code-bg-color: #1B1E25;
 
-  --global-footer-bg-color: #1A1B18;
-  --global-footer-text-color: #9C9489;
-  --global-footer-link-color: #E8E6E0;
+  --global-footer-bg-color: #0F1115;
+  --global-footer-text-color: #9AA0A6;
+  --global-footer-link-color: #7AB8FF;
 }
 
-/* Selection color — sage highlight */
 ::selection {
   background: var(--global-theme-color);
   color: var(--global-bg-color);
 }
+html[data-theme="dark"] ::selection {
+  background: rgba(122, 184, 255, 0.35);
+  color: var(--global-text-color);
+}
 
 /* ============================================================
-   2. TYPOGRAPHY — Fraunces serif heading + system sans body
+   2. TYPOGRAPHY — Inter for everything, denser scale
    ============================================================ */
 
 :root {
-  --font-display: "Fraunces", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
-  --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-body: var(--font-display);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
 html {
-  font-size: 18px;
+  font-size: 17px;        /* one tick down vs v3 18px — denser, faculty register */
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1, "cv11" 1;   /* Inter humanist tweaks */
 }
 
-/* Headings — Fraunces, balanced wrapping, slightly tightened tracking */
+/* Headings — Inter, slightly tighter tracking, balanced wrap */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.18;
+  font-weight: 700;
+  line-height: 1.2;
   letter-spacing: -0.015em;
   text-wrap: balance;
-  font-feature-settings: "lnum" 1, "kern" 1;
   color: var(--global-text-color);
 }
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 2.0rem;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 h2 {
-  font-size: 1.85rem;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
 }
 h3 {
-  font-size: 1.35rem;
-  margin-top: 2rem;
+  font-size: 1.12rem;
+  margin-top: 1.8rem;
 }
-h4 { font-size: 1.15rem; }
+h4 { font-size: 1.02rem; }
 
-/* Body paragraphs — pretty wrap, no orphans */
 p, li, blockquote {
   text-wrap: pretty;
   color: var(--global-text-color);
 }
-p { margin-bottom: 1.1em; }
+p { margin-bottom: 1.05em; }
 
 /* Code */
 code, pre, kbd, samp {
@@ -139,36 +157,31 @@ code {
 }
 
 /* Tabular numerals where digits should align */
-time, .publications .periodical, table td {
+time, .publications .periodical, table td, .news th {
   font-variant-numeric: tabular-nums;
 }
 
-/* Strong & em — restrained */
 strong, b { font-weight: 600; }
 em { font-style: italic; }
 
 /* ============================================================
-   3. LINKS — Craig Mod recipe (color inherit, accent underline)
+   3. LINKS — flat color + thin underline (Tri Dao recipe)
    ============================================================ */
 
-a,
-table.table a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--global-theme-color);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.18em;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
-}
-
-a:hover,
-a:focus,
-table.table a:hover {
+a, table.table a {
   color: var(--global-theme-color);
-  text-decoration-color: currentColor;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  transition: color 0.15s ease, text-decoration-thickness 0.15s ease;
 }
 
-/* Navbar — color only, no underline, demoted weight */
+a:hover, a:focus, table.table a:hover {
+  color: var(--global-hover-color);
+  text-decoration-thickness: 2px;
+}
+
+/* Navbar — color only, no underline */
 .navbar a,
 .navbar .nav-link,
 .navbar-brand,
@@ -177,7 +190,7 @@ table.table a:hover {
   color: var(--global-text-color-light);
   font-weight: 500;
   letter-spacing: 0.01em;
-  transition: color 0.2s ease;
+  transition: color 0.15s ease;
 }
 .navbar a:hover,
 .navbar .nav-link:hover,
@@ -191,81 +204,97 @@ table.table a:hover {
   color: var(--global-text-color);
 }
 
-/* Social icons — translate up on hover */
+/* Active navbar item — thin blue underline below baseline (not bold sage) */
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link,
+.navbar-nav .nav-item.active > .nav-link {
+  color: var(--global-text-color) !important;
+  font-weight: 500 !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--global-theme-color), var(--global-theme-color));
+  background-repeat: no-repeat;
+  background-size: 100% 1.5px;
+  background-position: 0 calc(100% - 4px);
+}
+
+/* Social icons — quiet color, gentle hover */
 .social a,
 .contact-icons a {
   text-decoration: none;
   display: inline-block;
-  transition: transform 0.2s ease-out, color 0.2s ease-out;
+  transition: color 0.15s ease;
 }
 .social a:hover,
 .contact-icons a:hover {
-  transform: translateY(-2px);
   color: var(--global-theme-color);
   text-decoration: none;
 }
 
 /* ============================================================
-   4. LAYOUT — narrower prose, smaller non-circular headshot
+   4. LAYOUT — tighter prose, profile image polish
    ============================================================ */
 
-/* Prose containers tighten to ~70-75ch */
 .post p,
 .post li,
 .post blockquote,
-.about p,
-.about li,
-.publications .description {
+.publications .description,
+.bibliography li .periodical,
+.bibliography li .abstract {
   max-width: 70ch;
 }
 
-/* Profile image — smaller, slight rounded square */
-.profile img.profile-img,
-.profile .profile-img,
-img.profile-img {
+/* Profile image (Bug #1 v3 fix preserved — selector targets actual class) */
+.profile figure img,
+.profile picture img,
+.profile img.img-fluid,
+.profile .img-fluid {
   max-width: 200px !important;
   width: 100% !important;
   height: auto !important;
   border-radius: 6px !important;
   border: 1px solid var(--global-divider-color);
-  box-shadow: 0 1px 3px rgba(31, 27, 23, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.profile.float-right {
+  padding-left: 1rem;
 }
 
-/* Profile container padding tweak */
-.profile {
-  padding-left: 0;
-  padding-right: 0;
+/* Profile contact info — Bug #5 v3 fix: kill monospace leak */
+.profile .more-info,
+.profile .more-info p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--global-text-color-light);
+  letter-spacing: 0;
 }
-
-/* Section spacing */
-section, .section { margin-block: 2.5rem; }
+.profile .more-info p {
+  margin: 0.2rem 0;
+  display: block;
+}
 
 /* ============================================================
-   5. SECTION DIVIDERS — * * * (Robin Sloan / Craig Mod style)
+   5. SECTION DIVIDERS — flat 1px rule (no * * * fleuron)
    ============================================================ */
 
 hr {
-  border: none;
-  height: 2rem;
-  margin: 3rem auto;
-  text-align: center;
-  position: relative;
+  border: 0;
+  border-top: 1px solid var(--global-divider-color);
+  height: 0;
+  margin: 2rem 0;
   background: transparent;
 }
-
 hr::before {
-  content: "* * *";
-  display: inline-block;
-  letter-spacing: 0.8em;
-  padding-left: 0.8em;
-  color: var(--global-text-color-light);
-  font-size: 1rem;
-  line-height: 2rem;
-  font-family: var(--font-body);
+  content: "";   /* kill v3 * * * content */
+  display: none;
+}
+
+/* No paper grain (kill v3 body::before) */
+body::before {
+  display: none !important;
 }
 
 /* ============================================================
-   6. BLOCKQUOTE — thin sage rule + italic
+   6. BLOCKQUOTE — thin blue rule + italic
    ============================================================ */
 
 blockquote {
@@ -279,139 +308,40 @@ blockquote {
 blockquote p:last-child { margin-bottom: 0; }
 
 /* ============================================================
-   7. NEWS / PUBLICATIONS — tabular dates + tighter rhythm
+   7. NEWS — tabular-num dates + tr borders (no .row dead selector)
    ============================================================ */
 
-.news .row,
-.publications .row {
+.news .table-responsive {
+  max-height: none !important;
+  overflow: visible !important;
+}
+.news table.table tr {
   border-bottom: 1px solid var(--global-divider-color);
+}
+.news table.table tr:last-child { border-bottom: 0; }
+.news table.table th {
+  font-weight: 400 !important;
+  color: var(--global-text-color-light);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  vertical-align: top;
+  padding: 0.85rem 1rem 0.85rem 0;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+.news table.table td {
   padding: 0.85rem 0;
-}
-.news .row:last-child,
-.publications .row:last-child {
-  border-bottom: none;
-}
-
-.news time,
-.publications .periodical {
-  color: var(--global-text-color-light);
-  font-size: 0.9rem;
-}
-
-/* Selected publications header — Fraunces */
-.publications h2.year {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  border-bottom: 1px solid var(--global-divider-color);
-  padding-bottom: 0.4rem;
-}
-
-/* Paper title in list */
-.publications .title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-/* abbr/venue badge — small caps sage */
-.publications abbr,
-.bib-abbr {
-  color: var(--global-theme-color);
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  vertical-align: top;
+  font-size: 0.95rem;
 }
 
 /* ============================================================
-   8. FOCUS / A11Y polish
+   8. PUBLICATIONS — venue badge fix (Critic A regression) +
+                      borderless paper buttons + name highlight via weight
    ============================================================ */
 
-*:focus-visible {
-  outline: 2px solid var(--global-theme-color);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* Don't show outline on mouse click for elements that have hover styles */
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* ============================================================
-   9. FOOTER — colophon vibe
-   ============================================================ */
-
-footer.fixed-bottom,
-footer {
-  font-size: 0.88rem;
-}
-
-footer .credits {
-  font-family: var(--font-body);
-  color: var(--global-footer-text-color);
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-}
-
-/* Last-updated date — italic, muted */
-.last-updated, footer .last-updated {
-  font-style: italic;
-  color: var(--global-text-color-light);
-  font-size: 0.82rem;
-}
-
-/* ============================================================
-   10. ACKNOWLEDGEMENT (Xiaoyu Shen 彩蛋) — italic small
-   ============================================================ */
-
-.post em em,
-em em {
-  font-style: italic;
-}
-
-/* The acknowledgement <small><em>...</em></small> in about.md */
-.post small em,
-small em {
-  font-size: 0.92em;
-  color: var(--global-text-color-light);
-  font-style: italic;
-}
-
-/* ============================================================================
- * V3 LAYER — adversarial critic feedback (2026-05-22)
- * 8 implementation bug fixes + 5 next-level upgrades from
- *   docs/homepage-rebuild/visual-research/99-v2-adversarial-critique.md
- * ============================================================================ */
-
-/* ----- BUG #1: Profile image selector targets non-existent class ----- */
-.profile figure img,
-.profile picture img,
-.profile img.img-fluid,
-.profile .img-fluid {
-  max-width: 200px !important;
-  width: 100% !important;
-  height: auto !important;
-  border-radius: 6px !important;
-  border: 1px solid var(--global-divider-color);
-  box-shadow: 0 1px 3px rgba(31, 27, 23, 0.06);
-}
-.profile.float-right {
-  padding-left: 1rem;
-}
-
-/* ----- BUG #2: drop dead .about selectors; tighten prose ----- */
-.post p,
-.post li,
-.post blockquote,
-.publications .description,
-.bibliography li .periodical,
-.bibliography li .abstract {
-  max-width: 70ch;
-}
-
-/* ----- BUG #3: Venue badge override — inline small-caps instead of sage fill ----- */
+/* Venue badge — Critic A found .w-100 regression: needs explicit width: auto */
 .publications ol.bibliography li .abbr abbr,
 .publications ol.bibliography li .abbr abbr a {
   background-color: transparent !important;
@@ -426,15 +356,20 @@ small em {
   padding: 0.18em 0.55em;
   border-radius: 2px;
   margin-bottom: 0.4rem !important;
-  display: inline-block;
   text-decoration: none !important;
+
+  /* CRITIC A FIX: defeat Bootstrap .w-100 width:100% !important */
+  width: auto !important;
+  max-width: max-content;
+  display: inline-block;
+  white-space: nowrap;
 }
 .publications ol.bibliography li .abbr abbr a:hover {
   background-color: var(--global-theme-color) !important;
   color: var(--global-bg-color) !important;
 }
 
-/* Own-name <em> highlight: weight-only, no border-bottom (clashed w/ link underline) */
+/* Own-name <em> highlight: weight 600, no border-bottom */
 .bibliography li .author > em,
 .bibliography li .author em {
   border-bottom: 0 !important;
@@ -442,20 +377,19 @@ small em {
   font-weight: 600;
   color: var(--global-text-color);
 }
-
-/* "more authors" dashed border — remove (clashes too) */
 .bibliography li .author a.more-authors {
   border-bottom: 0 !important;
   text-decoration-color: var(--global-divider-color);
 }
 
-/* Paper title: drop al-folio's bolder weight, let Fraunces 600 do the work */
+/* Paper title: Inter 600 (no Fraunces) */
 .publications .bibliography li .title {
+  font-family: var(--font-display);
   font-weight: 600 !important;
-  font-size: 1.05rem;
+  font-size: 1.04rem;
 }
 
-/* [arXiv][Bib][Code] buttons: borderless inline chips */
+/* [arXiv][Bib][Code]: borderless inline chips */
 .publications .bibliography li .links a.btn,
 .publications .bibliography li .btn-sm {
   border: 0 !important;
@@ -474,49 +408,10 @@ small em {
   color: var(--global-bg-color) !important;
 }
 
-/* ----- BUG #4: News table — replace .row rules with table-tr borders ----- */
-.news .table-responsive {
-  max-height: none !important;
-  overflow: visible !important;
-}
-.news table.table tr {
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.news table.table tr:last-child {
-  border-bottom: 0;
-}
-.news table.table th {
-  font-weight: 400 !important;
-  color: var(--global-text-color-light);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-  vertical-align: top;
-  padding: 0.85rem 1rem 0.85rem 0;
-  white-space: nowrap;
-  font-size: 0.85rem;
-  font-family: var(--font-body);
-  letter-spacing: 0.01em;
-}
-.news table.table td {
-  padding: 0.85rem 0;
-  vertical-align: top;
-  font-size: 0.95rem;
-}
+/* ============================================================
+   9. CONTACT ICONS — small inline (Bug #6 v3 fix preserved)
+   ============================================================ */
 
-/* ----- BUG #5: Contact-info monospace leak — use body font ----- */
-.profile .more-info,
-.profile .more-info p {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--global-text-color-light);
-  letter-spacing: 0;
-}
-.profile .more-info p {
-  margin: 0.2rem 0;
-  display: block;
-}
-
-/* ----- BUG #6: Contact icons 4rem → 1.5rem; lighter color ----- */
 .social .contact-icons {
   font-size: 1.5rem !important;
   display: flex;
@@ -527,13 +422,10 @@ small em {
 }
 .social .contact-icons a {
   color: var(--global-text-color-light);
-  transition: color 0.2s ease, transform 0.2s ease;
-  text-decoration: none;
+  transition: color 0.15s ease;
 }
 .social .contact-icons a:hover {
   color: var(--global-theme-color);
-  transform: translateY(-1px);
-  text-decoration: none;
 }
 .social .contact-note {
   font-size: 0.88rem;
@@ -546,8 +438,10 @@ small em {
   font-style: italic;
 }
 
-/* ----- BUG #7: Footer — kill fixed-bottom band + colophon styling ----- */
-/* (also set via _config.yml: footer_fixed: false + new footer_text) */
+/* ============================================================
+   10. FOOTER — un-fixed, flat colophon
+   ============================================================ */
+
 footer.sticky-bottom,
 footer.fixed-bottom,
 footer {
@@ -563,54 +457,52 @@ footer {
 }
 footer a, footer .last-updated {
   color: var(--global-text-color-light);
+  text-decoration: underline;
   text-decoration-color: var(--global-divider-color);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
 }
 footer a:hover {
   color: var(--global-theme-color);
   text-decoration-color: var(--global-theme-color);
 }
 
-/* ----- BUG #8: Active nav link — thin sage underline instead of bold sage text ----- */
-.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link,
-.navbar-nav .nav-item.active > .nav-link {
-  color: var(--global-text-color) !important;
-  font-weight: 500 !important;
-  background-color: transparent !important;
-  background-image:
-    linear-gradient(var(--global-theme-color), var(--global-theme-color));
-  background-repeat: no-repeat;
-  background-size: 100% 1.5px;
-  background-position: 0 calc(100% - 4px);
+/* ============================================================
+   11. DESC SUBTITLE — Inter regular weight, muted color (no more Fraunces italic)
+   ============================================================ */
+
+.post .desc,
+.post p.desc,
+.about .desc {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  color: var(--global-text-color-light);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0;
+  font-style: normal;
 }
 
-/* ----- UPGRADE #4: Paper-grain SVG overlay (3% opacity warmth) ----- */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("/assets/img/grain.svg");
-  background-size: 200px 200px;
-  opacity: 0.025;
-  mix-blend-mode: multiply;
-  z-index: 9999;
-}
-html[data-theme="dark"] body::before {
-  opacity: 0.04;
-  mix-blend-mode: lighten;
-}
-@media (prefers-reduced-motion: reduce) {
-  body::before { display: none; }
-}
+/* ============================================================
+   12. FOCUS / A11Y polish
+   ============================================================ */
 
-/* ----- UPGRADE #5: Print stylesheet (CV-grade PDF export) ----- */
+*:focus-visible {
+  outline: 2px solid var(--global-theme-color);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+*:focus:not(:focus-visible) { outline: none; }
+
+/* ============================================================
+   13. PRINT STYLESHEET — CV-grade PDF export
+   ============================================================ */
+
 @media print {
   body {
     background: white !important;
     color: black !important;
     font-size: 10pt !important;
   }
-  body::before { display: none !important; }
   .navbar,
   .progress-bar,
   progress,
@@ -641,59 +533,32 @@ html[data-theme="dark"] body::before {
     max-width: 100% !important;
     padding: 0 !important;
   }
-  .post p, .post li {
-    max-width: none !important;
-  }
-  .bibliography li,
-  .news tr {
-    break-inside: avoid;
-  }
-  .profile {
-    float: none !important;
-    width: auto !important;
-  }
-  .profile figure img {
-    max-width: 1.5in !important;
-  }
-  hr::before { content: ""; }
-  hr {
-    border: 0;
-    border-top: 1px solid #999;
-    height: 1px;
-    margin: 1rem 0;
-  }
+  .post p, .post li { max-width: none !important; }
+  .bibliography li, .news tr { break-inside: avoid; }
+  .profile { float: none !important; width: auto !important; }
+  .profile figure img { max-width: 1.5in !important; }
+  hr { border: 0; border-top: 1px solid #999; height: 1px; margin: 1rem 0; }
 }
 
-/* ----- DESC subtitle: Fraunces italic small for craft register ----- */
-.post .desc,
-.post p.desc,
-.about .desc {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--global-text-color-light);
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.005em;
-}
+/* ============================================================
+   14. prefers-reduced-motion
+   ============================================================ */
 
-/* ----- Tweak: hide al-folio's repository.liquid GitHub stats card chrome leaks ----- */
-.repositories-row { margin-top: 0; }
-
-/* ----- Selection in dark mode: ensure legible text on sage ----- */
-html[data-theme="dark"] ::selection {
-  background: rgba(142, 156, 124, 0.4);
-  color: var(--global-text-color);
-}
-
-/* ----- Final touch: prefers-reduced-motion for all transforms ----- */
 @media (prefers-reduced-motion: reduce) {
-  .social .contact-icons a:hover,
-  .social a:hover,
-  .contact-icons a:hover {
-    transform: none !important;
-  }
   * {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================================
+   15. ACKNOWLEDGEMENT (Xiaoyu Shen 彩蛋) — italic small at page bottom
+   ============================================================ */
+
+.post small em,
+small em {
+  font-size: 0.92em;
+  color: var(--global-text-color-light);
+  font-style: italic;
 }

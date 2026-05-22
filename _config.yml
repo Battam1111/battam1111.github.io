@@ -459,8 +459,9 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      # Fraunces (display serif for headings, opt-sz axis enabled) + JetBrains Mono (code) + Material Icons (al-folio UI)
-      fonts: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&family=Material+Icons&display=swap"
+      # v4 Direction B: Inter (variable sans) + JetBrains Mono (code) + Material Icons (al-folio UI)
+      # Inter is the de-facto webfont of ML Twitter / arXiv-adjacent web — zero decoding cost for the audience
+      fonts: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Material+Icons&display=swap"
   highlightjs:
     integrity:
       css:
