@@ -1,36 +1,22 @@
-# 🧠 Yanjun Chen — Personal Homepage
+# Yanjun Chen — Academic Homepage
 
-A minimal, expressive, and thoughtfully designed personal website built with [Next.js](https://nextjs.org), showcasing research, ideas, and identity.  
-Powered by [Tailwind CSS](https://tailwindcss.com), animated via [Framer Motion](https://www.framer.com/motion/), deployed on GitHub Pages.
+Source for [battam1111.github.io](https://battam1111.github.io).
+Built with [al-folio](https://github.com/alshedivat/al-folio) (Jekyll).
 
-> **Keywords**: RLHF · Embodied AI · INTJ · Minimalism · Digital Cognition
+## Contents
 
----
+- `_pages/about.md` — main about page (Hero + Bio + Research + Acknowledgement)
+- `_data/socials.yml` — social handles
+- `_news/` — News timeline entries (one Markdown file per item)
+- `_bibliography/papers.bib` — publications
+- `assets/img/prof_pic.jpg` — profile photo
+- `_config.yml` — site configuration
+- `docs/homepage-rebuild/` — design rationale and rebuild manual (MANUAL.md + research notes)
 
-## 🚀 Live Preview
+## Deploy
 
-🌐 [battam1111.github.io](https://battam1111.github.io)
+`.github/workflows/deploy.yml` builds Jekyll on push to `main` and publishes to the `gh-pages` branch.
 
----
+## License
 
-## 🧩 Features
-
-- ✨ **Semantic Sections** — Hero · About · Projects · Blog · Contact
-- 🎨 **Tailwind CSS** — Utility-first, fully responsive, clean typography
-- 🎥 **Framer Motion** — Section animations, UI micro-interactions
-- 💡 **Blog-ready** — MD/MDX support with custom card layout
-- 🌙 **Dark Mode** *(coming soon)* — Smooth theme switcher
-- 🧠 **Content-first design** — Focused on clarity, structure, cognition
-
----
-
-## 🛠️ Getting Started
-
-To run the project locally:
-
-```bash
-# install dependencies
-npm install
-
-# start the development server
-npm run dev
+The al-folio theme is released under the [MIT License](LICENSE).

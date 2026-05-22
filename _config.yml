@@ -1,0 +1,253 @@
+# -----------------------------------------------------------------------------
+# Site settings
+# -----------------------------------------------------------------------------
+
+title: blank # leave blank to use full name
+first_name: Yanjun
+middle_name:
+last_name: Chen
+contact_note: >
+  Best reached by email. I am open to collaborations on Environment-Centric AI,
+  RLHF, reasoning, and embodied agents.
+description: >
+  Yanjun Chen (陈彦筠) — second-year PhD student at The Hong Kong Polytechnic
+  University. I work on Environment-Centric AI: the design of the environments
+  in which intelligent agents learn, across LLMs, reinforcement learning, and
+  embodied systems.
+footer_text: >
+  Built with <a href="https://github.com/alshedivat/al-folio">al-folio</a>.
+  Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+keywords: Environment-Centric AI, RLHF, reward modeling, LLM reasoning, multi-agent reinforcement learning, embodied AI, PolyU
+lang: en
+icon: 🌐
+
+url: https://battam1111.github.io
+baseurl: "" # personal site (user-site) — leave empty
+last_updated: true
+impressum_path:
+back_to_top: true
+
+# -----------------------------------------------------------------------------
+# Theme
+# -----------------------------------------------------------------------------
+
+repo_theme_light: default
+repo_theme_dark: dark
+repo_trophies:
+  enabled: false
+
+external_services:
+  github_readme_stats_url: https://github-readme-stats.vercel.app
+  github_profile_trophy_url: https://github-profile-trophy.vercel.app
+
+# -----------------------------------------------------------------------------
+# Layout
+# -----------------------------------------------------------------------------
+
+navbar_fixed: true
+footer_fixed: true
+search_enabled: true
+socials_in_search: true
+posts_in_search: true
+bib_search: true
+
+# Dimensions
+max_width: 800px # tighter than default 930 for a more research-paper feel
+
+# -----------------------------------------------------------------------------
+# Open Graph & Schema.org
+# -----------------------------------------------------------------------------
+
+serve_og_meta: true
+serve_schema_org: true
+og_image: /assets/img/og-card.png # 1200x630 — to be generated later
+
+# -----------------------------------------------------------------------------
+# Analytics and search engine verification
+# -----------------------------------------------------------------------------
+
+google_analytics:
+cronitor_analytics:
+pirsch_analytics:
+openpanel_analytics:
+
+google_site_verification:
+bing_site_verification:
+
+# -----------------------------------------------------------------------------
+# Blog
+# -----------------------------------------------------------------------------
+
+blog_name: Writing
+blog_description: notes on Environment-Centric AI, RLHF, and reasoning
+permalink: /blog/:year/:title/
+lsi: false
+
+pagination:
+  enabled: true
+
+related_blog_posts:
+  enabled: true
+  max_related: 5
+
+# Giscus comments — disabled for now (set up later if desired)
+giscus:
+  repo:
+  repo_id:
+  category: Comments
+  category_id:
+  mapping: title
+  strict: 1
+  reactions_enabled: 1
+  input_position: bottom
+  dark_theme: dark
+  light_theme: light
+  emit_metadata: 0
+
+disqus_shortname:
+external_comments_provider:
+
+# -----------------------------------------------------------------------------
+# Collections
+# -----------------------------------------------------------------------------
+
+collections:
+  news:
+    defaults:
+      layout: post
+    output: true
+    permalink: /news/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
+  books:
+    output: false # disabled — no books
+  teaching:
+    output: false # disabled — no teaching page
+  posts:
+    output: true
+    permalink: /blog/:path/
+
+news_limit: 10
+news_scrollable: true
+
+# Jupyter notebook support
+jupyter:
+  execute_notebooks: false
+
+# -----------------------------------------------------------------------------
+# Jekyll Scholar
+# -----------------------------------------------------------------------------
+
+scholar:
+  last_name: ["Chen"]
+  first_name: ["Yanjun"]
+
+  style: apa
+  locale: en
+
+  source: /_bibliography/
+  bibliography: papers.bib
+  bibliography_template: bib
+
+  replace_strings: true
+  join_strings: true
+
+  details_dir: bibliography
+  details_layout: bibtex.html
+  details_link: Details
+
+  query: "@*"
+
+# Display publication categories on /publications/ page
+publications:
+  navbar: false # we use Selected Publications on the about page; full list still available at /publications/
+
+# Filter out non-published items based on bibtex entry fields
+filtered_bibtex_keywords: [abbr, abstract, arxiv, bibtex_show, html, pdf, selected, supp, blog, code, poster, slides, website, preview]
+
+# -----------------------------------------------------------------------------
+# Display options
+# -----------------------------------------------------------------------------
+
+enable_darkmode: true
+enable_medium_zoom: true
+enable_masonry: true
+enable_video_embedding: false
+enable_publication_badges:
+  altmetric: false
+  dimensions: false
+  google_scholar: true
+  inspire_hep: false
+
+display_tags: []
+display_categories: []
+
+# -----------------------------------------------------------------------------
+# Build settings
+# -----------------------------------------------------------------------------
+
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-archives
+  - jekyll-diagrams
+  - jekyll-email-protect
+  - jekyll-feed
+  - jekyll-imagemagick
+  - jekyll-link-attributes
+  - jekyll-minifier
+  - jekyll-paginate-v2
+  - jekyll-regex-replace
+  - jekyll-scholar
+  - jekyll-sitemap
+  - jekyll-target-blank
+  - jekyll-twitter-plugin
+  - jekyll/scholar
+  - jemoji
+  - mini_qr_code_generator
+
+include: ["_pages"]
+exclude:
+  - bin
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - docs
+  - "*.iml"
+  - "*.lock"
+  - lighthouse_results
+  - readme_preview
+
+keep_files:
+  - CNAME
+  - .nojekyll
+  - .git
+
+# -----------------------------------------------------------------------------
+# Jekyll Link Attributes
+# -----------------------------------------------------------------------------
+
+target-blank:
+  add_css_class: external
+  noopener: true
+  noreferrer: true
+
+# -----------------------------------------------------------------------------
+# Jekyll Archives
+# -----------------------------------------------------------------------------
+
+jekyll-archives:
+  enabled: [year, tags, categories]
+  layouts:
+    year: archive-year
+    tag: archive-tag
+    category: archive-category
+  permalinks:
+    year: "/blog/:year/"
+    tag: "/blog/tag/:name/"
+    category: "/blog/category/:name/"
+
+display_tags: []
+display_categories: []
