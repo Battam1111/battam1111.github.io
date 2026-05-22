@@ -11,15 +11,15 @@
   "profileUrl": "https://scholar.google.com/citations?user=Zg8cX0sAAAAJ&hl=en",
   "metrics": {
     "recentLabel": "Since 2021",
-    "citations": 148,
-    "citationsRecent": 148,
+    "citations": 149,
+    "citationsRecent": 149,
     "hIndex": 5,
     "hIndexRecent": 5,
     "i10Index": 4,
     "i10IndexRecent": 4
   },
   "totalPublications": 12,
-  "updatedAt": "2026-05-19T06:20:04.845Z",
+  "updatedAt": "2026-05-22T06:19:26.638Z",
   "publications": [
     {
       "title": "Reasoning beyond language: A comprehensive survey on latent chain-of-thought reasoning",
@@ -54,7 +54,7 @@
       "authors": "Y Sun, D Zhu, Y Chen, E Xiao, X Chen, X Shen",
       "venue": "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of …, 2025",
       "year": 2025,
-      "citationCount": 10,
+      "citationCount": 11,
       "citationUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1441692737280682065,18297873443418151235"
     },
     {
