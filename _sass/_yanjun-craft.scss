@@ -104,46 +104,58 @@ html {
 body {
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1, "liga" 1, "ss01" 1, "cv11" 1;   /* Inter humanist tweaks */
+  font-variation-settings: "opsz" 18;
 }
 
-/* Headings — Inter, slightly tighter tracking, balanced wrap */
+/* Headings — Inter, slightly tighter tracking, balanced wrap, opsz axis for display sizes */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
   text-wrap: balance;
   color: var(--global-text-color);
 }
 
 h1 {
-  font-size: 2.0rem;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-size: 1.75rem;
+  letter-spacing: -0.024em;
+  line-height: 1.12;
+  font-variation-settings: "opsz" 32;
+  margin-bottom: 0.35rem;
 }
 h2 {
-  font-size: 1.4rem;
-  margin-top: 2.5rem;
-  margin-bottom: 0.8rem;
+  font-size: 1.28rem;
+  margin-top: 2.6rem;
+  margin-bottom: 0.7rem;
+  font-variation-settings: "opsz" 24;
 }
 h3 {
-  font-size: 1.12rem;
-  margin-top: 1.8rem;
+  font-size: 1.08rem;
+  margin-top: 1.6rem;
+  margin-bottom: 0.5rem;
+  font-variation-settings: "opsz" 20;
 }
-h4 { font-size: 1.02rem; }
+h4 { font-size: 1rem; }
 
 p, li, blockquote {
   text-wrap: pretty;
   color: var(--global-text-color);
 }
-p { margin-bottom: 1.05em; }
+p { margin-bottom: 1em; }
+
+/* Bold inline text — use weight 600 (Inter mid), tighten tracking very slightly */
+strong, b {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
 
 /* Code */
 code, pre, kbd, samp {
@@ -243,20 +255,27 @@ a:hover, a:focus, table.table a:hover {
   max-width: 70ch;
 }
 
-/* Profile image (Bug #1 v3 fix preserved — selector targets actual class) */
+/* Profile image — smaller (160px), softer treatment, no border (let bg breathe) */
 .profile figure img,
 .profile picture img,
 .profile img.img-fluid,
 .profile .img-fluid {
-  max-width: 200px !important;
+  max-width: 160px !important;
   width: 100% !important;
   height: auto !important;
-  border-radius: 6px !important;
-  border: 1px solid var(--global-divider-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 4px !important;
+  border: 0 !important;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 .profile.float-right {
-  padding-left: 1rem;
+  padding-left: 1.5rem;
+  max-width: 180px;
+}
+
+/* Profile container — align top of image to first line of bio (asymmetric, not center-center) */
+.profile figure {
+  margin-bottom: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 /* Profile contact info — Bug #5 v3 fix: kill monospace leak */
@@ -468,18 +487,59 @@ footer a:hover {
 }
 
 /* ============================================================
-   11. DESC SUBTITLE — Inter regular weight, muted color (no more Fraunces italic)
+   11. DESC SUBTITLE — quiet small line below the h1 name
    ============================================================ */
 
 .post .desc,
 .post p.desc,
 .about .desc {
   font-family: var(--font-body);
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   color: var(--global-text-color-light);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   letter-spacing: 0;
   font-style: normal;
+  font-weight: 400;
+}
+
+/* ============================================================
+   11b. ANGLE BLOCKS — v6 Research section: claim + paper (no arrow)
+   ============================================================ */
+
+.post p.angle {
+  margin-top: 1.3rem;
+  margin-bottom: 0.15rem;
+  font-weight: 400;
+  color: var(--global-text-color);
+}
+
+.post p.angle-paper {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+  color: var(--global-text-color-light);
+  font-size: 0.94rem;
+  border-left: 2px solid var(--global-divider-color);
+}
+
+.post p.angle-paper em {
+  color: var(--global-text-color);
+}
+
+/* ============================================================
+   11c. ACKNOWLEDGEMENT — quiet bottom note (no separator dash)
+   ============================================================ */
+
+.post p.acknowledgement {
+  margin-top: 4rem;
+  text-align: center;
+  color: var(--global-text-color-light);
+  font-size: 0.85rem;
+}
+
+.post p.acknowledgement em {
+  color: var(--global-text-color-light);
+  font-style: italic;
 }
 
 /* ============================================================
