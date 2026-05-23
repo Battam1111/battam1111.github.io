@@ -57,7 +57,7 @@ I work on **Environment-Centric AI**: treating the training environment of intel
 
 These pieces feed into a longer arc. My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
 
-<p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen, whose ongoing mentorship has shaped much of this work.</em></small></p>
+<p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen, whose ongoing mentorship has shaped much of how I think about research.</em></small></p>
 
 </div>
 
@@ -85,7 +85,7 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 这些工作都指向更长远的目标。我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 这才是抬升 AI 系统上限的真正杠杆。
 
-<p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师持续的指导，这项工作的许多面向都源于他的影响。</em></small></p>
+<p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师持续的指导，他在很多方面塑造了我做研究的方式。</em></small></p>
 
 </div>
 
@@ -113,6 +113,6 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 これらの仕事はより長期的な目標へとつながっています。私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** それこそが AI システムの到達点を引き上げる梃子になります。
 
-<p class="acknowledgement"><small><em>Xiaoyu Shen 先生からの継続的なご指導に深く感謝いたします。本研究の多くは先生のご示唆によるものです。</em></small></p>
+<p class="acknowledgement"><small><em>Xiaoyu Shen 先生からの継続的なご指導に深く感謝いたします。私の研究との向き合い方の多くは、先生からの影響によるものです。</em></small></p>
 
 </div>
