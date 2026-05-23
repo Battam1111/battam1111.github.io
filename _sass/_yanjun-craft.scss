@@ -265,18 +265,18 @@ a:hover, a:focus, table.table a:hover {
   max-width: 66ch;          /* v12: tighter than 70ch — better readability per Bringhurst */
 }
 
-/* Profile image — v13: 160px (user feedback: 128 too small), subtle hover */
+/* Profile image — v13.1: 200px (user feedback: still bigger), Sergey Levine tier */
 .profile figure img,
 .profile picture img,
 .profile img.img-fluid,
 .profile .img-fluid {
-  max-width: 160px !important;
+  max-width: 200px !important;
   width: 100% !important;
   height: auto !important;
   border-radius: 4px !important;
   border: 0 !important;
   box-shadow:
-    0 1px 14px rgba(0, 0, 0, 0.07),
+    0 2px 16px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
@@ -296,8 +296,8 @@ a:hover, a:focus, table.table a:hover {
 @media (min-width: 768px) {
   article {
     display: grid;
-    grid-template-columns: minmax(180px, 220px) 1fr;     /* v12.1: wider col 1 fits email on one line */
-    column-gap: 2.75rem;
+    grid-template-columns: minmax(220px, 260px) 1fr;     /* v13.1: wider col 1 for 200px headshot */
+    column-gap: 3rem;
     align-items: start;
   }
   /* By default every direct child of article spans both cols */
