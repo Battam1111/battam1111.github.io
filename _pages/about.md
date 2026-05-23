@@ -38,22 +38,20 @@ I am a second-year PhD student in the [Department of Computing](https://www.poly
 
 ## Research
 
-I work on **Environment-Centric AI**: the design of environments in which agents learn.
+I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two early angles:
 
-Across LLMs, reinforcement learning, and embodied AI, the **environment is not a given**. It can be designed. Two angles I've worked on recently:
-
-**Reward landscapes as environments.** When does the reward model itself become an environment that mis-shapes the policy?
+**Reward-model accuracy as environment design.** Moderate reward models train better language models than highly accurate ones on relevance, factuality, and completeness.
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**Multi-agent environments.** Cooperative LLM systems where agents shape one another's learning signal.
+**Exact multi-agent RL for cooperative LLMs.** Cooperative LLM histories are deterministic, so per-agent counterfactual credit is exactly computable. This delivers both a learning algorithm that outperforms every approximate multi-agent RL alternative and the first method-agnostic auditing tool for credit quality. Substrate for the longer goal.
 {: .angle }
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
 ### Where I'm going
 
-My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
+These are early steps. My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen, whose ongoing mentorship has shaped much of this work.</em></small></p>
