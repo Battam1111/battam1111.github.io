@@ -1,8 +1,11 @@
 ---
 layout: default
 permalink: /blog/
-title: Blog
-nav: false  # v10: hide until blog has content (Tri Dao minimal nav)
+title: Notes
+title_zh: 笔记
+title_ja: ノート
+description: Long-form essays and short notes. Research thinking, methodology, occasional process retrospectives.
+nav: true  # v19: enabled — Notes section live
 nav_order: 1
 pagination:
   enabled: true

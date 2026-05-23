@@ -1005,3 +1005,139 @@ html[lang="ja"] [lang]:not([lang="ja"]) { display: none !important; }
   font-size: 0.88rem;
   padding: 0 0.5rem;
 }
+
+/* ============================================================
+   19. V19 — Notes (blog) list + single-post styling
+   ----------------------------------------------------------
+   Notes use Newsreader for h1/h2/h3 (inherited from global rules)
+   and Inter for body. This section just tightens the list view
+   and single-post rhythm.
+   ============================================================ */
+
+/* Blog index — header (page title "Notes" + description) */
+.post > .header-bar h1,
+.post > .header-bar h2 {
+  font-family: var(--font-display);
+}
+.post .post-description {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 0.85rem + 0.2vw, 1.08rem);
+  color: var(--global-text-color-light);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.003em;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+/* Notes list — each post */
+ul.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.post-list > li {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+ul.post-list > li:last-child {
+  border-bottom: 0;
+}
+
+/* Post title in list — Newsreader, readable size, no underline anchor */
+ul.post-list h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: clamp(1.2rem, 1.05rem + 0.3vw, 1.4rem);
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+ul.post-list h3 a.post-title {
+  color: var(--global-text-color);
+  text-decoration: none;
+  background: none;
+}
+ul.post-list h3 a.post-title:hover {
+  color: var(--global-theme-color);
+  text-decoration: none;
+}
+
+ul.post-list li > p {
+  font-family: var(--font-body);
+  font-size: 0.97rem;
+  line-height: 1.55;
+  color: var(--global-text-color-light);
+  margin: 0.3rem 0 0.5rem 0;
+  max-width: 66ch;
+}
+
+ul.post-list .post-meta {
+  font-size: 0.82rem;
+  color: var(--global-text-color-light);
+  letter-spacing: 0.015em;
+  font-variant-numeric: tabular-nums;
+  margin: 0.2rem 0;
+}
+ul.post-list .post-tags {
+  font-size: 0.82rem;
+  color: var(--global-text-color-light);
+  letter-spacing: 0.015em;
+  margin: 0.2rem 0 0;
+}
+ul.post-list .post-tags a {
+  color: var(--global-text-color-light);
+  text-decoration: none;
+}
+ul.post-list .post-tags a:hover {
+  color: var(--global-theme-color);
+}
+
+/* Single post page — wider reading column, tighter title */
+.post > .post-header h1.post-title {
+  font-size: clamp(1.85rem, 1.2rem + 1.2vw, 2.4rem);
+  letter-spacing: -0.018em;
+  line-height: 1.12;
+  margin-bottom: 0.4rem;
+  margin-top: 0.25rem;
+}
+.post > .post-header .post-meta {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--global-text-color-light);
+  letter-spacing: 0.015em;
+  margin: 0.1rem 0 0.3rem 0;
+  font-variant-numeric: tabular-nums;
+}
+.post > .post-header .post-tags {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--global-text-color-light);
+  margin: 0 0 2.25rem 0;
+}
+.post > .post-header .post-tags a {
+  color: var(--global-text-color-light);
+  text-decoration: none;
+}
+.post > .post-header .post-tags a:hover {
+  color: var(--global-theme-color);
+}
+
+/* Single-post article — readable column width */
+.post > article {
+  max-width: 66ch;
+}
+.post > article p,
+.post > article ul,
+.post > article ol,
+.post > article blockquote {
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.post > article h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.6rem;
+}
+.post > article h3 {
+  margin-top: 1.8rem;
+}
+.post > article hr {
+  margin: 2.5rem 0;
+}
