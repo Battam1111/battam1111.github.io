@@ -15,12 +15,16 @@ layout: default
 
 <div class="post single-post">
   <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
+    <h1 class="post-title">
+      <span lang="en">{{ page.title }}</span>
+      {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
+      {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
+    </h1>
     <p class="post-meta">
-      Created on {{ page.date | date: '%B %d, %Y' }}
+      <span lang="en">Created on {{ page.date | date: '%B %d, %Y' }}</span><span lang="zh">{{ page.date | date: '%Y年%-m月%-d日' }} 发布</span><span lang="ja">{{ page.date | date: '%Y年%-m月%-d日' }} 公開</span>
       {% if page.author %}by {{ page.author }}{% endif %}
       {% assign last_date = page.last_modified_at | default: page.last_updated %}
-      {% if last_date %}, last updated on {{ last_date | date: '%B %d, %Y' }}{% endif %}
+      {% if last_date %}<span lang="en">, last updated on {{ last_date | date: '%B %d, %Y' }}</span><span lang="zh">，最后更新 {{ last_date | date: '%Y年%-m月%-d日' }}</span><span lang="ja">、最終更新 {{ last_date | date: '%Y年%-m月%-d日' }}</span>{% endif %}
       {% if page.meta %}• {{ page.meta }}{% endif %}
     </p>
     <p class="post-tags">

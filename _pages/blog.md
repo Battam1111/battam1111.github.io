@@ -129,21 +129,27 @@ pagination:
           <div class="col-sm-9">
 {% endif %}
         <h3>
+        {%- capture post_title_html -%}
+          <span lang="en">{{ post.title }}</span>{% if post.title_zh %}<span lang="zh">{{ post.title_zh }}</span>{% endif %}{% if post.title_ja %}<span lang="ja">{{ post.title_ja }}</span>{% endif %}
+        {%- endcapture -%}
         {% if post.redirect == blank %}
-          <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <a class="post-title" href="{{ post.url | relative_url }}">{{ post_title_html }}</a>
         {% elsif post.redirect contains '://' %}
-          <a class="post-title" href="{{ post.redirect }}" target="_blank">{{ post.title }}</a>
+          <a class="post-title" href="{{ post.redirect }}" target="_blank">{{ post_title_html }}</a>
           <svg width="2rem" height="2rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         {% else %}
-          <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post.title }}</a>
+          <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post_title_html }}</a>
         {% endif %}
       </h3>
-      <p>{{ post.description }}</p>
+      <p>
+        <span lang="en">{{ post.description }}</span>{% if post.description_zh %}<span lang="zh">{{ post.description_zh }}</span>{% endif %}{% if post.description_ja %}<span lang="ja">{{ post.description_ja }}</span>{% endif %}
+      </p>
       <p class="post-meta">
-        {{ read_time }} min read &nbsp; &middot; &nbsp;
-        {{ post.date | date: '%B %d, %Y' }}
+        <span lang="en">{{ read_time }} min read</span><span lang="zh">{{ read_time }} 分钟阅读</span><span lang="ja">約 {{ read_time }} 分で読了</span>
+        &nbsp; &middot; &nbsp;
+        <span lang="en">{{ post.date | date: '%B %d, %Y' }}</span><span lang="zh">{{ post.date | date: '%Y年%-m月%-d日' }}</span><span lang="ja">{{ post.date | date: '%Y年%-m月%-d日' }}</span>
         {% if post.external_source %}
         &nbsp; &middot; &nbsp; {{ post.external_source }}
         {% endif %}
