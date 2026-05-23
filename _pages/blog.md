@@ -5,6 +5,8 @@ title: Notes
 title_zh: 笔记
 title_ja: ノート
 description: Long-form essays and short notes. Research thinking, methodology, occasional process retrospectives.
+description_zh: 长篇随笔与短篇笔记。研究思考、方法论、偶尔的过程复盘。
+description_ja: 長めのエッセイと短い覚え書き。研究の思考過程、方法論、ときどき過程の振り返り。
 nav: true  # v19: enabled — Notes section live
 nav_order: 1
 pagination:
@@ -27,7 +29,13 @@ pagination:
       {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
       {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
     </h1>
-    {% if page.description %}<p class="post-description">{{ page.description }}</p>{% endif %}
+    {% if page.description %}
+      <p class="post-description">
+        <span lang="en">{{ page.description }}</span>
+        {% if page.description_zh %}<span lang="zh">{{ page.description_zh }}</span>{% endif %}
+        {% if page.description_ja %}<span lang="ja">{{ page.description_ja }}</span>{% endif %}
+      </p>
+    {% endif %}
   </header>
 
 {% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
