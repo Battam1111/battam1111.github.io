@@ -13,5 +13,9 @@ assets/rendercv/rendercv_output/*.typ
 Gemfile.lock
 node_modules/
 vendor
-# Local snapshot/dev tools (not deployed)
-tools/
+# Local snapshot/dev tools (not deployed) — keep CV source under tools/cv/
+tools/*.png
+tools/snapshot*.py
+tools/snapshot_*.py
+tools/review/
+tools/cv/cv-preview.png

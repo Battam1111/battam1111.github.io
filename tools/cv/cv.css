@@ -1,0 +1,272 @@
+/* ============================================================
+   Yanjun Chen — CV stylesheet
+   Print-targeted. Matches homepage visual register:
+   Inter, cool ink #1A1A1A, Princeton blue #003366, warm off-white.
+   Single-column, A4, ~0.7in margins.
+   ============================================================ */
+
+@page {
+  size: A4;
+  margin: 0.55in 0.7in 0.5in 0.7in;
+}
+
+:root {
+  --ink: #1A1A1A;
+  --ink-light: #595959;
+  --rule: rgba(0, 0, 0, 0.12);
+  --accent: #003366;
+  --bg: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 10pt;
+  line-height: 1.42;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
+  font-variation-settings: "opsz" 14;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ----------------------------------------------------------
+   HEADER — name + role + contact strip
+   ---------------------------------------------------------- */
+
+.cv-header {
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--rule);
+}
+.cv-header .name {
+  margin: 0 0 0.18rem 0;
+  font-size: 22pt;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.05;
+  font-variation-settings: "opsz" 32;
+  color: var(--ink);
+}
+.cv-header .role {
+  margin: 0 0 0.4rem 0;
+  font-size: 10pt;
+  color: var(--ink-light);
+  font-weight: 400;
+}
+.cv-header .contact {
+  margin: 0;
+  font-size: 8.8pt;
+  color: var(--ink-light);
+  letter-spacing: 0.005em;
+}
+.cv-header .contact .sep {
+  color: var(--rule);
+  margin: 0 0.35em;
+}
+.cv-header .contact a { color: var(--ink); }
+.cv-header .contact a:hover { color: var(--accent); }
+
+/* ----------------------------------------------------------
+   SECTIONS
+   ---------------------------------------------------------- */
+
+section {
+  margin-top: 0.35rem;
+  margin-bottom: 0.15rem;
+}
+
+h2 {
+  font-size: 9.5pt;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0.5rem 0 0.25rem 0;
+  padding-bottom: 0.14rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h3.pub-cat {
+  font-size: 9pt;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin: 0.5rem 0 0.18rem 0;
+}
+
+p { margin: 0 0 0.35rem 0; }
+
+p.lede {
+  margin-top: 0.05rem;
+  margin-bottom: 0.4rem;
+  font-size: 10pt;
+  line-height: 1.5;
+  max-width: 100%;
+}
+p.lede strong { font-weight: 600; }
+p.lede em { color: var(--ink); font-style: italic; }
+
+/* ----------------------------------------------------------
+   ENTRY — two-line block (head row + body)
+   Used for Education + Open Source
+   ---------------------------------------------------------- */
+
+.entry {
+  margin-bottom: 0.3rem;
+}
+.entry:last-child { margin-bottom: 0.15rem; }
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 9.6pt;
+  line-height: 1.3;
+}
+.entry-head .entry-where { color: var(--ink); }
+.entry-head .entry-when {
+  color: var(--ink-light);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-size: 9pt;
+}
+.entry-head a { font-size: 9pt; color: var(--ink-light); }
+.entry-head a:hover { color: var(--accent); text-decoration: underline; }
+.entry-body {
+  font-size: 9.6pt;
+  color: var(--ink-light);
+  margin-top: 0.1rem;
+  line-height: 1.42;
+}
+.entry-body em { color: var(--ink); font-style: italic; }
+
+/* ----------------------------------------------------------
+   PUBLICATIONS
+   ---------------------------------------------------------- */
+
+.legend {
+  font-size: 8.5pt;
+  color: var(--ink-light);
+  margin: 0 0 0.35rem 0;
+  font-style: italic;
+}
+.legend .first-marker { color: var(--accent); font-style: normal; }
+.legend .self { color: var(--ink); font-weight: 600; font-style: normal; }
+
+ol.pubs {
+  list-style: none;
+  margin: 0 0 0.3rem 0;
+  padding: 0;
+  counter-reset: pub;
+}
+ol.pubs li {
+  position: relative;
+  padding-left: 1.05rem;
+  margin-bottom: 0.22rem;
+  font-size: 9.6pt;
+  line-height: 1.4;
+  color: var(--ink-light);
+}
+ol.pubs li::before {
+  counter-increment: pub;
+  content: counter(pub) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-light);
+  font-size: 9.2pt;
+}
+ol.pubs li .self {
+  color: var(--ink);
+  font-weight: 600;
+}
+ol.pubs li .first-marker {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 0.15em;
+}
+ol.pubs li .title {
+  color: var(--ink);
+  font-weight: 500;
+}
+ol.pubs li em {
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* ----------------------------------------------------------
+   HONORS list — date column on left
+   ---------------------------------------------------------- */
+
+ul.honors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul.honors li {
+  display: flex;
+  gap: 0.85rem;
+  align-items: baseline;
+  margin-bottom: 0.15rem;
+  font-size: 9.6pt;
+  line-height: 1.38;
+}
+ul.honors .when {
+  flex: 0 0 4.5rem;
+  color: var(--ink-light);
+  font-variant-numeric: tabular-nums;
+  font-size: 8.8pt;
+  letter-spacing: 0.015em;
+}
+ul.honors .what {
+  color: var(--ink);
+  flex: 1;
+}
+
+/* ----------------------------------------------------------
+   SKILLS dl
+   ---------------------------------------------------------- */
+
+dl.skills {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  row-gap: 0.18rem;
+  column-gap: 0.85rem;
+}
+dl.skills dt {
+  font-size: 9.2pt;
+  color: var(--ink-light);
+  letter-spacing: 0.015em;
+}
+dl.skills dd {
+  margin: 0;
+  font-size: 9.6pt;
+  color: var(--ink);
+}
+
+/* ----------------------------------------------------------
+   FOOTER
+   ---------------------------------------------------------- */
+
+.cv-footer {
+  margin-top: 0.6rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--rule);
+  font-size: 8pt;
+  color: var(--ink-light);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.cv-footer .dot { color: var(--rule); }
+.cv-footer a { color: var(--ink-light); }
+.cv-footer a:hover { color: var(--accent); }

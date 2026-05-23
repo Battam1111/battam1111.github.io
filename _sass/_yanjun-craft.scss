@@ -372,6 +372,42 @@ a:hover, a:focus, table.table a:hover {
   display: block;
 }
 
+/* v14: profile inline icons row (Scholar / GitHub / X / ORCID / CV) */
+.profile .more-info p.profile-links {
+  margin-top: 0.9rem;
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+  font-size: 1.05rem;
+  flex-wrap: wrap;
+}
+.profile .more-info p.profile-links a {
+  color: var(--global-text-color-light);
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+}
+.profile .more-info p.profile-links a:hover {
+  color: var(--global-theme-color);
+  transform: translateY(-1px);
+}
+
+/* v14: explicit CV link text below icons */
+.profile .more-info p.profile-cv {
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+}
+.profile .more-info p.profile-cv a {
+  color: var(--global-theme-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  font-weight: 500;
+}
+.profile .more-info p.profile-cv a:hover {
+  text-decoration-thickness: 2px;
+}
+
 /* ============================================================
    5. SECTION DIVIDERS — flat 1px rule (no * * * fleuron)
    ============================================================ */
@@ -812,12 +848,11 @@ article > h2::before {
   opacity: 0.55;
 }
 
-/* Acknowledgement (Xiaoyu Shen 彩蛋) — tighter, italic, dimmer */
+/* Acknowledgement (Xiaoyu Shen 彩蛋) — v14: dropped border-top to avoid
+   double hairline with News h2's section divider below */
 .post p.acknowledgement,
 .clearfix p.acknowledgement {
-  margin-top: 2.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--global-divider-color);
+  margin-top: 2rem;
   text-align: center;
   color: var(--global-text-color-light);
   font-size: 0.84rem;

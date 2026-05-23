@@ -11,6 +11,14 @@ profile:
   more_info: >
     <p><i class="fa-regular fa-envelope" style="margin-right:0.4em;color:var(--global-text-color-light);"></i><span style="white-space:nowrap;">yan&#8209;jun.chen@connect.polyu.hk</span></p>
     <p>Hong Kong</p>
+    <p class="profile-links">
+      <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i></a>
+      <a href="https://github.com/Battam1111" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="https://x.com/YanjunChen1111" title="X / Twitter" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://orcid.org/0009-0001-9065-9137" title="ORCID" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i></a>
+      <a href="/assets/pdf/cv.pdf" title="CV (PDF)" target="_blank"><i class="fa-regular fa-file-pdf"></i></a>
+    </p>
+    <p class="profile-cv"><a href="/assets/pdf/cv.pdf" target="_blank">CV (PDF) &rarr;</a></p>
 
 selected_papers: true
 social: true
