@@ -267,9 +267,32 @@ a:hover, a:focus, table.table a:hover {
   border: 0 !important;
   box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
-.profile.float-right {
-  padding-left: 2rem;     /* v6.1: more breathing between headshot and prose */
+
+/* v7: profile aligned LEFT (user request 2026-05-23) */
+.profile.float-left {
+  padding-right: 2rem;       /* breathing between headshot and prose */
+  padding-left: 0;
   max-width: 200px;
+}
+.profile.float-right {
+  padding-left: 2rem;
+  max-width: 200px;
+}
+
+/* Mobile: stack profile above bio, center it */
+@media (max-width: 767px) {
+  .profile.float-left,
+  .profile.float-right {
+    float: none !important;
+    margin: 0 auto 1.5rem !important;
+    padding: 0 !important;
+    max-width: 160px !important;
+    text-align: center;
+  }
+  .profile.float-left .more-info,
+  .profile.float-right .more-info {
+    text-align: center;
+  }
 }
 
 /* Profile container — align top of image to first line of bio (asymmetric, not center-center) */
@@ -344,13 +367,13 @@ blockquote p:last-child { margin-bottom: 0; }
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
   vertical-align: top;
-  padding: 0.85rem 1rem 0.85rem 0;
+  padding: 0.65rem 1rem 0.65rem 0;   /* v7: tighter row rhythm */
   white-space: nowrap;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   letter-spacing: 0.01em;
 }
 .news table.table td {
-  padding: 0.85rem 0;
+  padding: 0.65rem 0;
   vertical-align: top;
   font-size: 0.95rem;
 }
@@ -531,7 +554,8 @@ footer a:hover {
    ============================================================ */
 
 .post p.acknowledgement {
-  margin-top: 4rem;
+  margin-top: 2.25rem;          /* v7: tighter (was 4rem too sparse) */
+  margin-bottom: 0.5rem;
   text-align: center;
   color: var(--global-text-color-light);
   font-size: 0.85rem;
@@ -621,4 +645,75 @@ small em {
   font-size: 0.92em;
   color: var(--global-text-color-light);
   font-style: italic;
+}
+
+/* ============================================================
+   16. V7 POLISH — section headers, hero rhythm, acknowledgement
+   ============================================================ */
+
+/* News + section h2 headers: never underline (even when anchored) */
+h2 a,
+h2 a:hover,
+h3 a,
+h3 a:hover,
+.heading-anchor,
+a.anchor-link {
+  text-decoration: none !important;
+  color: inherit !important;
+  background: none !important;
+}
+
+/* News header specifically (Jekyll renders h2#news from `news:` toggle) */
+.news h2,
+h2#news,
+h2[id="news"] {
+  text-decoration: none;
+  border-bottom: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+  letter-spacing: -0.01em;
+}
+
+/* Default "news" label that al-folio renders — kill the link underline */
+.news > h2 a,
+.news > h2 {
+  text-decoration: none !important;
+  color: var(--global-text-color) !important;
+}
+
+/* Hero h1 → subtitle margin tightening */
+.post .desc,
+.post p.desc,
+.about .desc {
+  margin-bottom: 1.5rem;       /* v7: pull subtitle closer to h1 / loosen below */
+  margin-top: 0.1rem;
+}
+
+/* Hero h1 — tighter bottom (subtitle follows) */
+.post h1:first-of-type,
+article h1:first-of-type {
+  margin-bottom: 0.25rem;
+}
+
+/* Bio paragraph (first <p> after profile) — tighter line-height for hero feel */
+.post > p:first-of-type {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* "Two angles" intro paragraph — slightly tighter */
+.post > p {
+  margin-top: 0.95em;
+  margin-bottom: 0.95em;
+}
+
+/* Inline <strong> tighter tracking for visual cleanliness */
+.post strong,
+.post b {
+  font-weight: 600;
+  color: var(--global-text-color);
+  letter-spacing: -0.005em;
 }

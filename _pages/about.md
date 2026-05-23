@@ -5,7 +5,7 @@ permalink: /
 subtitle: PhD Student, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.
 
 profile:
-  align: right
+  align: left
   image: prof_pic.jpg
   image_circular: false
   more_info: >
@@ -26,7 +26,7 @@ latest_posts:
 
 I am drawn to **Environment-Centric AI**: the design of environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
 
-I am a second-year PhD student in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Wei Zhang.
+I am a second-year PhD student in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
 ## Research
 
