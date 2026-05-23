@@ -1,7 +1,7 @@
 ---
 layout: default
 permalink: /blog/
-title: blog
+title: Blog
 nav: false  # v10: hide until blog has content (Tri Dao minimal nav)
 nav_order: 1
 pagination:

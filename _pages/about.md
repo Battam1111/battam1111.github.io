@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: PhD Student, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.
 
