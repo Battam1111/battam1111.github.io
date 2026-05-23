@@ -1149,34 +1149,33 @@ ul.post-list .post-tags a:hover {
   .navbar-brand-mobile-only { display: none !important; }
 }
 
-/* Opaque background for collapsed mobile menu (specificity + !important
-   to defeat al-folio's _navbar.scss and Bootstrap defaults that would
-   otherwise leave the dropdown transparent over the hero content).
-   v20.2: also bg on inner .navbar-nav, .nav-item, and the .container
-   parent because the .navbar-collapse's bg apparently isn't enough to
-   block content beneath in some compositor passes. */
+/* v20.3: Full-viewport overlay for collapsed mobile menu.
+   Bootstrap's default .navbar-collapse has transparent bg in the
+   compositor regardless of declared background-color (we verified via
+   getComputedStyle which reported opaque but visual still shows hero
+   bleed-through). So instead of relying on Bootstrap's collapse
+   container, we make it a `position: fixed` panel that physically
+   covers the area below the navbar. Drawer-style. */
 @media (max-width: 575.98px) {
-  nav#navbar.navbar,
-  nav#navbar .container,
-  nav#navbar .navbar-collapse,
-  nav#navbar .navbar-collapse.show,
-  nav#navbar .navbar-collapse.collapsing,
-  nav#navbar .navbar-collapse .navbar-nav,
-  nav#navbar .navbar-collapse .nav-item {
-    background-color: var(--global-bg-color) !important;
-  }
-  nav#navbar .navbar-collapse,
-  nav#navbar .navbar-collapse.show,
-  nav#navbar .navbar-collapse.collapsing {
-    position: absolute;
-    top: 100%;
+  nav#navbar .navbar-collapse {
+    position: fixed !important;
+    top: 57px;                  /* navbar height */
     left: 0;
     right: 0;
-    margin: 0;
-    padding: 0.25rem 1rem 1rem;
+    bottom: 0;                  /* extend to bottom of viewport */
+    background-color: #FAFAFA !important;
+    margin: 0 !important;
+    padding: 1rem 1.25rem !important;
     border-top: 1px solid var(--global-divider-color);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
     z-index: 1080;
+  }
+  html[data-theme="dark"] nav#navbar .navbar-collapse {
+    background-color: #0F1115 !important;
+  }
+  /* Hide menu when not open — Bootstrap toggles .show on open */
+  nav#navbar .navbar-collapse:not(.show):not(.collapsing) {
+    display: none !important;
   }
 
   /* All menu items: left-align (match brand position), bigger tap targets */
