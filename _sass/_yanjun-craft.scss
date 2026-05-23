@@ -1149,14 +1149,23 @@ ul.post-list .post-tags a:hover {
   .navbar-brand-mobile-only { display: none !important; }
 }
 
-/* Opaque background for collapsed mobile menu */
+/* Opaque background for collapsed mobile menu (specificity + !important
+   to defeat al-folio's _navbar.scss and Bootstrap defaults that would
+   otherwise leave the dropdown transparent over the hero content) */
 @media (max-width: 575.98px) {
-  #navbar .navbar-collapse {
-    background-color: var(--global-bg-color);
-    margin: 0 -1rem -0.5rem;
-    padding: 0.5rem 1rem 1rem;
+  nav#navbar .navbar-collapse,
+  nav#navbar .navbar-collapse.show,
+  nav#navbar .navbar-collapse.collapsing {
+    background-color: var(--global-bg-color) !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.25rem 1rem 1rem;
     border-top: 1px solid var(--global-divider-color);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    z-index: 1080;       /* above content, below modal */
   }
 
   /* All menu items: left-align (match brand position), bigger tap targets */
