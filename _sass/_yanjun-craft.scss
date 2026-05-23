@@ -91,9 +91,21 @@ html[data-theme="dark"] ::selection {
    ============================================================ */
 
 :root {
-  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-  --font-body: var(--font-display);
+  /* v18: Newsreader serif for headings; Inter sans for body.
+     CJK headings fall through Newsreader (no CJK glyphs) to Noto Serif SC/JP. */
+  --font-display: "Newsreader", "Noto Serif SC", "Noto Serif JP", "Source Han Serif SC", "Songti SC", "STSong", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* v18: CJK-aware heading font order. When the active lang is ja, prefer Noto
+   Serif JP for kanji (because SC and JP kanji shapes differ for some characters);
+   when zh, prefer Noto Serif SC. This switching is invisible in EN. */
+:lang(ja) {
+  --font-display: "Newsreader", "Noto Serif JP", "Noto Serif SC", "Source Han Serif", Georgia, serif;
+}
+:lang(zh) {
+  --font-display: "Newsreader", "Noto Serif SC", "Noto Serif JP", "Source Han Serif SC", "Songti SC", Georgia, serif;
 }
 
 html {
@@ -114,42 +126,48 @@ body {
   font-variation-settings: "opsz" 18;
 }
 
-/* Headings — Inter, slightly tighter tracking, balanced wrap, opsz axis for display sizes */
+/* Headings — Newsreader (serif), balanced wrap, opsz axis for display sizes.
+   Serif needs slightly looser tracking than sans + slightly higher line-height. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.018em;
+  font-weight: 600;            /* v18: Newsreader 700 reads too bold; 600 is right */
+  line-height: 1.2;            /* v18: 1.18 -> 1.2 (serif breathes better) */
+  letter-spacing: -0.012em;    /* v18: looser than Inter's -0.018 */
   text-wrap: balance;
   color: var(--global-text-color);
+  font-feature-settings: "kern" 1, "liga" 1;   /* keep ligatures; drop Inter-specific ss01/cv11 */
 }
 
 h1 {
-  /* v15: fluid clamp() — 2rem on narrow, up to 2.6rem on wide viewports */
-  font-size: clamp(2rem, 1.2rem + 1.4vw, 2.6rem);
-  letter-spacing: -0.028em;
+  /* v18: fluid, slightly larger than v15 to compensate for serif's lower x-height */
+  font-size: clamp(2.05rem, 1.2rem + 1.5vw, 2.75rem);
+  letter-spacing: -0.018em;    /* h1 tighter than smaller headings */
   line-height: 1.08;
-  font-variation-settings: "opsz" 32;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-variation-settings: "opsz" 60;          /* Newsreader display-size opsz */
+  margin-bottom: 0.55rem;
 }
 h2 {
-  /* v15: fluid 1.3rem narrow -> 1.5rem wide */
-  font-size: clamp(1.3rem, 1rem + 0.5vw, 1.5rem);
-  margin-top: 3rem;          /* v15: more breathing between sections */
-  margin-bottom: 0.9rem;
-  letter-spacing: -0.016em;
-  font-variation-settings: "opsz" 24;
+  font-size: clamp(1.35rem, 1.05rem + 0.55vw, 1.6rem);
+  margin-top: 3rem;
+  margin-bottom: 0.95rem;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-variation-settings: "opsz" 36;
 }
 h3 {
-  /* v15: slight uplift, 1.08 -> clamp(1.08, ..., 1.2) */
-  font-size: clamp(1.08rem, 0.95rem + 0.25vw, 1.2rem);
-  margin-top: 1.85rem;
-  margin-bottom: 0.55rem;
+  font-size: clamp(1.1rem, 0.98rem + 0.25vw, 1.25rem);
+  margin-top: 1.95rem;
+  margin-bottom: 0.6rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  font-variation-settings: "opsz" 20;
+  letter-spacing: -0.006em;
+  font-variation-settings: "opsz" 24;
 }
-h4 { font-size: 1.02rem; }
+h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variation-settings: "opsz" 18;
+}
 
 p, li, blockquote {
   text-wrap: pretty;
@@ -217,7 +235,7 @@ a:hover, a:focus, table.table a:hover {
   background-image: none !important;
 }
 .navbar .navbar-brand {
-  font-family: var(--font-display);
+  font-family: var(--font-body);   /* v18: navbar stays sans, not serif */
   font-weight: 600;
   color: var(--global-text-color);
 }
@@ -550,11 +568,13 @@ blockquote p:last-child { margin-bottom: 0; }
   color: var(--global-text-color) !important;
 }
 
-/* Paper title: Inter 600 (no Fraunces) */
+/* Paper title: v18 — stays sans (Inter) for list-scannability. The serif
+   heading register is for hero h1/h2/h3 only; bibliography titles are body-tier. */
 .publications .bibliography li .title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 600 !important;
   font-size: 1.04rem;
+  letter-spacing: -0.005em;
 }
 
 /* [arXiv][Bib][Code]: borderless inline chips */
