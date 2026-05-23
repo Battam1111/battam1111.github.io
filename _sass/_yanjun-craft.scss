@@ -296,8 +296,8 @@ a:hover, a:focus, table.table a:hover {
 @media (min-width: 768px) {
   article {
     display: grid;
-    grid-template-columns: minmax(160px, 200px) 1fr;
-    column-gap: 2.5rem;
+    grid-template-columns: minmax(180px, 220px) 1fr;     /* v12.1: wider col 1 fits email on one line */
+    column-gap: 2.75rem;
     align-items: start;
   }
   /* By default every direct child of article spans both cols */
@@ -356,17 +356,19 @@ a:hover, a:focus, table.table a:hover {
   margin-top: 0.15rem;
 }
 
-/* Profile contact info — Bug #5 v3 fix: kill monospace leak; v12: tighter rhythm */
+/* Profile contact info — Bug #5 v3 fix: kill monospace leak; v12.1: keep email on one line */
 .profile .more-info,
 .profile .more-info p {
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.84rem;            /* v12.1: 0.88 -> 0.84 so email fits */
   color: var(--global-text-color-light);
   letter-spacing: 0;
   line-height: 1.5;
+  word-break: keep-all;           /* v12.1: don't break at hyphens inside identifiers */
+  overflow-wrap: normal;
 }
 .profile .more-info p {
-  margin: 0.15rem 0;
+  margin: 0.18rem 0;
   display: block;
 }
 
