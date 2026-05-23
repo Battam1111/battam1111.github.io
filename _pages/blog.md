@@ -21,16 +21,14 @@ pagination:
 
 <div class="post">
 
-{% assign blog_name_size = site.blog_name | size %}
-{% assign blog_description_size = site.blog_description | size %}
-
-{% if blog_name_size > 0 or blog_description_size > 0 %}
-
-  <div class="header-bar">
-    <h1>{{ site.blog_name }}</h1>
-    <h2>{{ site.blog_description }}</h2>
-  </div>
-  {% endif %}
+  <header class="post-header">
+    <h1 class="post-title">
+      <span lang="en">{{ page.title }}</span>
+      {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
+      {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
+    </h1>
+    {% if page.description %}<p class="post-description">{{ page.description }}</p>{% endif %}
+  </header>
 
 {% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
 
