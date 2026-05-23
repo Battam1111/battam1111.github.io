@@ -265,12 +265,12 @@ a:hover, a:focus, table.table a:hover {
   max-width: 66ch;          /* v12: tighter than 70ch — better readability per Bringhurst */
 }
 
-/* Profile image — v13.1: 200px (user feedback: still bigger), Sergey Levine tier */
+/* Profile image — v13.2: 220px (user feedback: match email width visually) */
 .profile figure img,
 .profile picture img,
 .profile img.img-fluid,
 .profile .img-fluid {
-  max-width: 200px !important;
+  max-width: 220px !important;
   width: 100% !important;
   height: auto !important;
   border-radius: 4px !important;
@@ -296,7 +296,7 @@ a:hover, a:focus, table.table a:hover {
 @media (min-width: 768px) {
   article {
     display: grid;
-    grid-template-columns: minmax(220px, 260px) 1fr;     /* v13.1: wider col 1 for 200px headshot */
+    grid-template-columns: minmax(220px, 240px) 1fr;     /* v13.2: col 1 = image width, tight visual */
     column-gap: 3rem;
     align-items: start;
   }
