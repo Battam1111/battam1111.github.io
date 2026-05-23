@@ -97,14 +97,14 @@ html[data-theme="dark"] ::selection {
 }
 
 html {
-  font-size: 16.5px;      /* v12: 16.5 → quieter, lets Inter's x-height carry, closer to Tri Dao/Levine */
+  font-size: 17px;         /* v15: 16.5 -> 17 for more presence at wide viewports */
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.62;       /* v12: 1.6 → 1.62 for slightly more breathing in prose */
+  line-height: 1.65;        /* v15: 1.62 -> 1.65 for more prose breathing */
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
   -webkit-font-smoothing: antialiased;
@@ -125,28 +125,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.85rem;       /* v12: 1.75 → 1.85, more presence at 16.5px base */
-  letter-spacing: -0.026em; /* v12: tighter for display weight */
-  line-height: 1.1;
+  /* v15: fluid clamp() — 2rem on narrow, up to 2.6rem on wide viewports */
+  font-size: clamp(2rem, 1.2rem + 1.4vw, 2.6rem);
+  letter-spacing: -0.028em;
+  line-height: 1.08;
   font-variation-settings: "opsz" 32;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 h2 {
-  font-size: 1.22rem;       /* v12: 1.28 → 1.22, calmer section heads */
-  margin-top: 2.75rem;      /* v12: more breathing */
-  margin-bottom: 0.8rem;
-  letter-spacing: -0.014em; /* v12: looser than h1 */
+  /* v15: fluid 1.3rem narrow -> 1.5rem wide */
+  font-size: clamp(1.3rem, 1rem + 0.5vw, 1.5rem);
+  margin-top: 3rem;          /* v15: more breathing between sections */
+  margin-bottom: 0.9rem;
+  letter-spacing: -0.016em;
   font-variation-settings: "opsz" 24;
 }
 h3 {
-  font-size: 1.02rem;       /* v12: 1.08 → 1.02, closer to body for sub-section feel */
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;         /* v12: 700 → 600, less heavy at this size */
-  letter-spacing: -0.008em;
+  /* v15: slight uplift, 1.08 -> clamp(1.08, ..., 1.2) */
+  font-size: clamp(1.08rem, 0.95rem + 0.25vw, 1.2rem);
+  margin-top: 1.85rem;
+  margin-bottom: 0.55rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   font-variation-settings: "opsz" 20;
 }
-h4 { font-size: 1rem; }
+h4 { font-size: 1.02rem; }
 
 p, li, blockquote {
   text-wrap: pretty;
@@ -519,9 +522,23 @@ blockquote p:last-child { margin-bottom: 0; }
   font-weight: 600;
   color: var(--global-text-color);
 }
-.bibliography li .author a.more-authors {
+/* v15: kill the dashed underline on "N more authors" — replace with quiet button feel */
+.bibliography li .author a.more-authors,
+.bibliography li .author span.more-authors,
+.bibliography li .author .more-authors {
   border-bottom: 0 !important;
-  text-decoration-color: var(--global-divider-color);
+  text-decoration: none !important;
+  cursor: pointer;
+  color: var(--global-text-color-light) !important;
+  font-size: 0.92em;
+  padding: 0.05em 0.2em;
+  border-radius: 2px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.bibliography li .author a.more-authors:hover,
+.bibliography li .author span.more-authors:hover {
+  background-color: var(--global-code-bg-color);
+  color: var(--global-text-color) !important;
 }
 
 /* Paper title: Inter 600 (no Fraunces) */
@@ -617,12 +634,26 @@ footer a:hover {
 .post p.desc,
 .about .desc {
   font-family: var(--font-body);
-  font-size: 0.86rem;        /* v8: smaller, more demure */
+  /* v15: 0.86 -> fluid clamp() up to 1.05 for more wide-viewport presence */
+  font-size: clamp(0.95rem, 0.85rem + 0.2vw, 1.08rem);
   color: var(--global-text-color-light);
   margin-bottom: 1.75rem;
-  letter-spacing: 0.005em;
+  letter-spacing: 0.003em;
   font-style: normal;
   font-weight: 400;
+  line-height: 1.55;
+}
+/* v15: de-emphasize underlines in subtitle so it reads as one quiet line */
+.post .desc a,
+.post p.desc a,
+.about .desc a {
+  text-decoration-color: var(--global-divider-color);
+  text-decoration-thickness: 1px;
+}
+.post .desc a:hover,
+.post p.desc a:hover {
+  text-decoration-color: var(--global-theme-color);
+  text-decoration-thickness: 2px;
 }
 
 /* ============================================================
@@ -789,18 +820,19 @@ h2[id="news"] {
   color: var(--global-text-color) !important;
 }
 
-/* Hero h1 → subtitle margin tightening */
+/* Hero h1 → subtitle margin tightening (v15: more breathing for larger sizes) */
 .post .desc,
 .post p.desc,
 .about .desc {
-  margin-bottom: 1.85rem;      /* v12: more space between hero block and content */
-  margin-top: 0.15rem;
+  margin-bottom: 2.25rem;       /* v15: 1.85 -> 2.25 to match bigger h1 */
+  margin-top: 0.25rem;
 }
 
 /* Hero h1 — tighter bottom (subtitle follows) */
 .post h1:first-of-type,
 article h1:first-of-type {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
+  margin-top: 0.5rem;
 }
 
 /* v12: bio first-paragraph rhythm — slightly larger pulse */

@@ -59,7 +59,7 @@ posts_in_search: true
 bib_search: true
 
 # Dimensions
-max_width: 930px
+max_width: 1024px   # v15: 930 -> 1024 for better wide-viewport use
 
 # -----------------------------------------------------------------------------
 # Open Graph & Schema.org
