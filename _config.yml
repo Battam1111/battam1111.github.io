@@ -99,7 +99,7 @@ pagination:
   enabled: true
 
 related_blog_posts:
-  enabled: true
+  enabled: false   # v19: disabled until we have enough posts to make recommendations meaningful
   max_related: 5
 
 # Giscus comments (RECOMMENDED)
