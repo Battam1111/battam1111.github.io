@@ -1157,6 +1157,15 @@ ul.post-list .post-tags a:hover {
    container, we make it a `position: fixed` panel that physically
    covers the area below the navbar. Drawer-style. */
 @media (max-width: 575.98px) {
+  /* IMPORTANT v20.4: al-folio's #navbar has opacity: 0.95 for a frosted-glass
+     effect. opacity creates a stacking context that flattens — CHILD opacity
+     can't override it. So even with bg=#FAFAFA the menu rendered at 95% alpha,
+     letting hero content bleed through. Fix: force #navbar opacity to 1 on
+     mobile (lose frosted-glass on mobile, gain functional menu). */
+  nav#navbar {
+    opacity: 1 !important;
+  }
+
   nav#navbar .navbar-collapse {
     position: fixed !important;
     top: 57px;                  /* navbar height */
