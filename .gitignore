@@ -14,8 +14,10 @@ Gemfile.lock
 node_modules/
 vendor
 # Local snapshot/dev tools (not deployed) — keep CV source under tools/cv/
+tools/**/*.png
 tools/*.png
 tools/snapshot*.py
 tools/snapshot_*.py
 tools/review/
+tools/v15/
 tools/cv/cv-preview.png
