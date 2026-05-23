@@ -88,7 +88,7 @@
   <link rel="shortcut icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}">
 {% endif %}
 <!-- v12: explicit cache-bust because bust_css_cache hashes pre-Sass (always empty MD5). -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v15-2' }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v15-3' }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
 
 {% if site.enable_darkmode %}

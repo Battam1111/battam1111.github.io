@@ -268,6 +268,15 @@ a:hover, a:focus, table.table a:hover {
   max-width: 66ch;          /* v12: tighter than 70ch — better readability per Bringhurst */
 }
 
+/* v15.2 override: bibliography <li> wrappers must NOT inherit the 66ch limit
+   from .post li above, otherwise the col-sm-2 + col-sm-10 Bootstrap row
+   gets squeezed into 66ch (~880px) and leaves a right gap. */
+.bibliography > li,
+ol.bibliography > li,
+.publications .bibliography > li {
+  max-width: none !important;
+}
+
 /* Profile image — v13.2: 220px (user feedback: match email width visually) */
 .profile figure img,
 .profile picture img,
