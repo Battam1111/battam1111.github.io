@@ -97,20 +97,20 @@ html[data-theme="dark"] ::selection {
 }
 
 html {
-  font-size: 17px;        /* one tick down vs v3 18px — denser, faculty register */
+  font-size: 16.5px;      /* v12: 16.5 → quieter, lets Inter's x-height carry, closer to Tri Dao/Levine */
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.62;       /* v12: 1.6 → 1.62 for slightly more breathing in prose */
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1, "cv11" 1;   /* Inter humanist tweaks */
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;   /* Inter humanist + contextual alternates */
   font-variation-settings: "opsz" 18;
 }
 
@@ -125,22 +125,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.75rem;
-  letter-spacing: -0.024em;
-  line-height: 1.12;
+  font-size: 1.85rem;       /* v12: 1.75 → 1.85, more presence at 16.5px base */
+  letter-spacing: -0.026em; /* v12: tighter for display weight */
+  line-height: 1.1;
   font-variation-settings: "opsz" 32;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 h2 {
-  font-size: 1.28rem;
-  margin-top: 2.6rem;
-  margin-bottom: 0.7rem;
+  font-size: 1.22rem;       /* v12: 1.28 → 1.22, calmer section heads */
+  margin-top: 2.75rem;      /* v12: more breathing */
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.014em; /* v12: looser than h1 */
   font-variation-settings: "opsz" 24;
 }
 h3 {
-  font-size: 1.08rem;
-  margin-top: 1.6rem;
+  font-size: 1.02rem;       /* v12: 1.08 → 1.02, closer to body for sub-section feel */
+  margin-top: 1.75rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;         /* v12: 700 → 600, less heavy at this size */
+  letter-spacing: -0.008em;
   font-variation-settings: "opsz" 20;
 }
 h4 { font-size: 1rem; }
@@ -243,7 +246,14 @@ a:hover, a:focus, table.table a:hover {
 }
 
 /* ============================================================
-   4. LAYOUT — tighter prose, profile image polish
+   4. LAYOUT (v12) — CSS Grid for hero, tighter prose
+   ----------------------------------------------------------
+   v12 pivot: float-based layout caused unfixable h2 overlap
+   bugs (v11, v11.1 both insufficient because al-folio's
+   .clearfix wrapper didn't establish a proper BFC). Switch
+   to CSS Grid: profile + bio sit as grid items in row 1,
+   all subsequent sections (h2/news/publications/social)
+   span both columns from row 2 onward. Zero float math.
    ============================================================ */
 
 .post p,
@@ -252,66 +262,86 @@ a:hover, a:focus, table.table a:hover {
 .publications .description,
 .bibliography li .periodical,
 .bibliography li .abstract {
-  max-width: 70ch;
+  max-width: 66ch;          /* v12: tighter than 70ch — better readability per Bringhurst */
 }
 
-/* Profile image — v8: 140px (Tri Dao tier), no border, softer shadow */
+/* Profile image — v12: 128px (one tick down from 140 for elegance), subtle hover */
 .profile figure img,
 .profile picture img,
 .profile img.img-fluid,
 .profile .img-fluid {
-  max-width: 140px !important;
+  max-width: 128px !important;
   width: 100% !important;
   height: auto !important;
   border-radius: 4px !important;
   border: 0 !important;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 1px 12px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.profile figure img:hover,
+.profile picture img:hover {
+  box-shadow:
+    0 2px 18px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
 }
 
-/* v8: profile LEFT, slimmer wrapper */
-.profile.float-left {
-  padding-right: 2rem;
-  padding-left: 0;
-  max-width: 180px;
-}
-.profile.float-right {
-  padding-left: 2rem;
-  max-width: 180px;
+/* ----------------------------------------------------------
+   GRID HERO LAYOUT (v12) — desktop ≥ 768px
+   article is the grid container. profile + clearfix sit
+   in row 1 as side-by-side cells. Everything below spans.
+   ---------------------------------------------------------- */
+@media (min-width: 768px) {
+  article {
+    display: grid;
+    grid-template-columns: minmax(160px, 200px) 1fr;
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+  /* By default every direct child of article spans both cols */
+  article > * {
+    grid-column: 1 / -1;
+    min-width: 0;          /* prevent grid-blowout from long URLs */
+  }
+  /* Hero row 1: profile col 1, bio col 2 */
+  article > .profile.float-left {
+    float: none !important;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  article > .profile.float-right {
+    float: none !important;
+    grid-column: 2;
+    grid-row: 1;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  article > .clearfix {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  article > .profile.float-right ~ .clearfix {
+    grid-column: 1;
+    grid-row: 1;
+  }
 }
 
-/* v11 CRITICAL FIX (from real screenshot): Research h2 was visually OVERLAPPING
-   the email block because .profile.float-left created vertical float space that
-   subsequent h2 wrapped around. Force clear with broad selector + !important. */
-.post h2,
-.post h3,
-.post hr,
-.post p.acknowledgement,
-article h2,
-article h3 {
-  clear: both !important;
-}
-
-/* v11.1: also ensure the bio paragraph block doesn't wrap above profile bottom —
-   use overflow:auto on the post container so the float is "contained" */
-.post {
-  overflow: visible;
-}
-
-/* v11.1: make sure profile wrapper has a bottom margin so it doesn't immediately
-   collide with the next non-cleared element (covers edge cases) */
-.profile.float-left,
-.profile.float-right {
-  margin-bottom: 2rem;
-}
-
-/* Mobile: stack profile above bio, center it */
+/* Mobile (<768px): stack profile above bio, center it */
 @media (max-width: 767px) {
   .profile.float-left,
   .profile.float-right {
     float: none !important;
-    margin: 0 auto 1.5rem !important;
+    margin: 0 auto 1.75rem !important;
     padding: 0 !important;
-    max-width: 160px !important;
+    max-width: 144px !important;
     text-align: center;
   }
   .profile.float-left .more-info,
@@ -320,22 +350,23 @@ article h3 {
   }
 }
 
-/* Profile container — align top of image to first line of bio (asymmetric, not center-center) */
+/* Profile figure — align top of image with first line of bio (asymmetric) */
 .profile figure {
-  margin-bottom: 0.5rem;
-  margin-top: 0.25rem;
+  margin-bottom: 0.65rem;
+  margin-top: 0.15rem;
 }
 
-/* Profile contact info — Bug #5 v3 fix: kill monospace leak */
+/* Profile contact info — Bug #5 v3 fix: kill monospace leak; v12: tighter rhythm */
 .profile .more-info,
 .profile .more-info p {
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--global-text-color-light);
   letter-spacing: 0;
+  line-height: 1.5;
 }
 .profile .more-info p {
-  margin: 0.2rem 0;
+  margin: 0.15rem 0;
   display: block;
 }
 
@@ -392,15 +423,21 @@ blockquote p:last-child { margin-bottom: 0; }
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
   vertical-align: top;
-  padding: 0.65rem 1rem 0.65rem 0;   /* v7: tighter row rhythm */
+  padding: 0.7rem 1.2rem 0.7rem 0;   /* v12: slightly more breathing */
   white-space: nowrap;
-  font-size: 0.82rem;
-  letter-spacing: 0.01em;
+  font-size: 0.8rem;                  /* v12: 0.82 → 0.8, more demure date column */
+  letter-spacing: 0.015em;
 }
 .news table.table td {
-  padding: 0.65rem 0;
+  padding: 0.7rem 0;
   vertical-align: top;
-  font-size: 0.95rem;
+  font-size: 0.94rem;                 /* v12: 0.95 → 0.94 */
+  line-height: 1.55;
+}
+.news table.table td em {
+  color: var(--global-text-color);
+  font-weight: 500;                    /* v12: gentle emphasis on paper titles */
+  font-style: italic;
 }
 
 /* ============================================================
@@ -551,27 +588,33 @@ footer a:hover {
 }
 
 /* ============================================================
-   11b. ANGLE BLOCKS — v6 Research section: claim + paper (no arrow)
+   11b. ANGLE BLOCKS (v12) — Research claim + paper pairing
+   ----------------------------------------------------------
+   v12: tighter coupling between claim and paper; navy rule
+   only on paper line; slightly larger claim breathing-room
    ============================================================ */
 
 .post p.angle {
-  margin-top: 1.3rem;
-  margin-bottom: 0.15rem;
+  margin-top: 1.45rem;
+  margin-bottom: 0.2rem;
   font-weight: 400;
   color: var(--global-text-color);
+  line-height: 1.55;
 }
 
 .post p.angle-paper {
   margin-top: 0;
   margin-bottom: 0;
-  padding-left: 1.5rem;
+  padding-left: 1.1rem;
   color: var(--global-text-color-light);
-  font-size: 0.94rem;
-  border-left: 2px solid var(--global-theme-color);   /* v6.1: navy accent instead of barely-visible divider */
+  font-size: 0.92rem;
+  line-height: 1.5;
+  border-left: 2px solid var(--global-theme-color);
 }
 
 .post p.angle-paper em {
   color: var(--global-text-color);
+  font-weight: 500;
 }
 
 /* ============================================================
@@ -712,25 +755,25 @@ h2[id="news"] {
 .post .desc,
 .post p.desc,
 .about .desc {
-  margin-bottom: 1.5rem;       /* v7: pull subtitle closer to h1 / loosen below */
-  margin-top: 0.1rem;
+  margin-bottom: 1.85rem;      /* v12: more space between hero block and content */
+  margin-top: 0.15rem;
 }
 
 /* Hero h1 — tighter bottom (subtitle follows) */
 .post h1:first-of-type,
 article h1:first-of-type {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
 }
 
-/* Bio paragraph (first <p> after profile) — tighter line-height for hero feel */
-.post > p:first-of-type {
-  margin-top: 0.5rem;
-  font-size: 1rem;
+/* v12: bio first-paragraph rhythm — slightly larger pulse */
+.clearfix > p:first-of-type {
+  margin-top: 0;
+  font-size: 1.02rem;          /* v12: gentle uplift on the leading sentence */
   line-height: 1.55;
 }
 
-/* "Two angles" intro paragraph — slightly tighter */
-.post > p {
+/* Bio + intro paragraphs */
+.clearfix > p {
   margin-top: 0.95em;
   margin-bottom: 0.95em;
 }
@@ -741,4 +784,59 @@ article h1:first-of-type {
   font-weight: 600;
   color: var(--global-text-color);
   letter-spacing: -0.005em;
+}
+
+/* ============================================================
+   17. V12 — Section-header rhythm + acknowledgement polish
+   ----------------------------------------------------------
+   Establish a consistent vertical drumbeat between hero,
+   research, news, publications, social. Each h2 gets its own
+   thin top-rule (subliminal divider) for cleaner section breaks.
+   ============================================================ */
+
+/* Section h2 headers (news / publications) — subtle top hairline */
+article > h2 {
+  position: relative;
+  padding-top: 1.25rem;
+}
+article > h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5rem;
+  height: 1px;
+  background-color: var(--global-theme-color);
+  opacity: 0.55;
+}
+
+/* Acknowledgement (Xiaoyu Shen 彩蛋) — tighter, italic, dimmer */
+.post p.acknowledgement,
+.clearfix p.acknowledgement {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--global-divider-color);
+  text-align: center;
+  color: var(--global-text-color-light);
+  font-size: 0.84rem;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post p.acknowledgement small,
+.clearfix p.acknowledgement small {
+  font-size: 1em;
+}
+
+/* Selected publications: a touch more breathing room */
+.publications ol.bibliography li {
+  margin-bottom: 1.25rem;
+}
+.publications ol.bibliography li:last-child {
+  margin-bottom: 0;
+}
+
+/* Social block — center, more space above */
+.social {
+  margin-top: 3.5rem;
 }
