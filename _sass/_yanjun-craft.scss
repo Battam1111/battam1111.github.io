@@ -1090,15 +1090,18 @@ ul.post-list .post-tags a:hover {
   color: var(--global-theme-color);
 }
 
-/* Single post page — wider reading column, tighter title */
-.post > .post-header h1.post-title {
+/* Single post page — wider reading column, tighter title.
+   v19.3: scoped to .single-post (added in post.liquid) so these rules
+   don't bleed into the About / News / Publications pages which share
+   the .post > article structure. */
+.single-post > .post-header h1.post-title {
   font-size: clamp(1.85rem, 1.2rem + 1.2vw, 2.4rem);
   letter-spacing: -0.018em;
   line-height: 1.12;
   margin-bottom: 0.4rem;
   margin-top: 0.25rem;
 }
-.post > .post-header .post-meta {
+.single-post > .post-header .post-meta {
   font-family: var(--font-body);
   font-size: 0.86rem;
   color: var(--global-text-color-light);
@@ -1106,38 +1109,38 @@ ul.post-list .post-tags a:hover {
   margin: 0.1rem 0 0.3rem 0;
   font-variant-numeric: tabular-nums;
 }
-.post > .post-header .post-tags {
+.single-post > .post-header .post-tags {
   font-family: var(--font-body);
   font-size: 0.86rem;
   color: var(--global-text-color-light);
   margin: 0 0 2.25rem 0;
 }
-.post > .post-header .post-tags a {
+.single-post > .post-header .post-tags a {
   color: var(--global-text-color-light);
   text-decoration: none;
 }
-.post > .post-header .post-tags a:hover {
+.single-post > .post-header .post-tags a:hover {
   color: var(--global-theme-color);
 }
 
 /* Single-post article — readable column width */
-.post > article {
+.single-post > article {
   max-width: 66ch;
 }
-.post > article p,
-.post > article ul,
-.post > article ol,
-.post > article blockquote {
+.single-post > article p,
+.single-post > article ul,
+.single-post > article ol,
+.single-post > article blockquote {
   font-size: 1.02rem;
   line-height: 1.7;
 }
-.post > article h2 {
+.single-post > article h2 {
   margin-top: 2.5rem;
   margin-bottom: 0.6rem;
 }
-.post > article h3 {
+.single-post > article h3 {
   margin-top: 1.8rem;
 }
-.post > article hr {
+.single-post > article hr {
   margin: 2.5rem 0;
 }
