@@ -108,7 +108,19 @@
                     {%- assign url = p.url -%}
                   {%- endif %}
                   <a class="nav-link" href="{{ url | relative_url }}">
-                    {{- p.title }}
+                    {%- if p.title == 'About' -%}
+                      <span lang="en">About</span><span lang="zh">关于</span><span lang="ja">プロフィール</span>
+                    {%- elsif p.title == 'Publications' -%}
+                      <span lang="en">Publications</span><span lang="zh">论文</span><span lang="ja">論文</span>
+                    {%- elsif p.title == 'News' -%}
+                      <span lang="en">News</span><span lang="zh">近况</span><span lang="ja">お知らせ</span>
+                    {%- elsif p.title == 'Blog' -%}
+                      <span lang="en">Blog</span><span lang="zh">博客</span><span lang="ja">ブログ</span>
+                    {%- elsif p.title == 'Projects' -%}
+                      <span lang="en">Projects</span><span lang="zh">项目</span><span lang="ja">プロジェクト</span>
+                    {%- else -%}
+                      {{- p.title }}
+                    {%- endif -%}
                     {% if page.url contains p.url %}
                       <span class="sr-only">(current)</span>
                     {% endif %}
@@ -125,6 +137,14 @@
               </button>
             </li>
           {% endif %}
+          <!-- v17: trilingual language switcher (EN / 中 / 日) -->
+          <li class="nav-item lang-toggle-wrap">
+            <div class="lang-toggle" role="group" aria-label="Language switcher">
+              <button type="button" data-lang="en" title="English">EN</button>
+              <button type="button" data-lang="zh" title="中文">中</button>
+              <button type="button" data-lang="ja" title="日本語">日</button>
+            </div>
+          </li>
           {% if site.enable_darkmode %}
             <!-- Toogle theme mode -->
             <li class="toggle-container">

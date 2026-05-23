@@ -918,3 +918,70 @@ article > h2::before {
 .social {
   margin-top: 3.5rem;
 }
+
+/* ============================================================
+   18. V17 — Trilingual language switcher (EN / 中 / 日)
+   ----------------------------------------------------------
+   Hide non-matching lang blocks based on <html lang="..."> attribute.
+   Default lang is en (set in _config.yml + head.liquid). User clicks
+   the EN / 中 / 日 pill to switch; choice persists via localStorage.
+   Each translatable text is wrapped in <span lang="en|zh|ja"> or
+   <div lang="..." markdown="1"> blocks (about.md uses div wrappers
+   so Kramdown can still render markdown inside each language).
+   ============================================================ */
+
+/* Hide spans/divs whose lang doesn't match the page's current lang */
+html[lang="en"] [lang]:not([lang="en"]) { display: none !important; }
+html[lang="zh"] [lang]:not([lang="zh"]) { display: none !important; }
+html[lang="ja"] [lang]:not([lang="ja"]) { display: none !important; }
+
+/* Pill switcher in navbar */
+.lang-toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  overflow: hidden;
+  background: transparent;
+  height: 1.6rem;
+}
+.lang-toggle button {
+  background: transparent;
+  border: 0;
+  padding: 0 0.55rem;
+  height: 100%;
+  color: var(--global-text-color-light);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.lang-toggle button + button {
+  border-left: 1px solid var(--global-divider-color);
+}
+.lang-toggle button:hover {
+  color: var(--global-text-color);
+}
+.lang-toggle button.active {
+  color: var(--global-bg-color);
+  background-color: var(--global-theme-color);
+}
+.lang-toggle button.active:hover {
+  color: var(--global-bg-color);
+}
+
+/* CJK glyph slightly larger to visually match Latin EN width */
+.lang-toggle button[data-lang="zh"],
+.lang-toggle button[data-lang="ja"] {
+  font-size: 0.88rem;
+  padding: 0 0.5rem;
+}

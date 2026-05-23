@@ -7,7 +7,7 @@ first_name: Yanjun
 middle_name:
 last_name: Chen
 contact_note: >
-  Best reached by email. I am open to collaborations on Environment-Centric AI, RLHF, reasoning, and embodied agents.
+  <span lang="en">Best reached by email. I am open to collaborations on Environment-Centric AI, RLHF, reasoning, and embodied agents.</span><span lang="zh">邮件是联系我最好的方式。我对 Environment-Centric AI、RLHF、推理与具身智能体相关的合作持开放态度。</span><span lang="ja">ご連絡はメールが最適です。Environment-Centric AI、RLHF、推論、身体性エージェントに関する共同研究を歓迎します。</span>
 description: >
   Yanjun Chen (陈彦筠), second-year PhD student at The Hong Kong Polytechnic University. I work on Environment-Centric AI: the design of environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
 footer_text: >
