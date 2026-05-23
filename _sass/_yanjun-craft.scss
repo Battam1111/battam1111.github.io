@@ -279,6 +279,16 @@ a:hover, a:focus, table.table a:hover {
   max-width: 180px;
 }
 
+/* v11 CRITICAL FIX (from real screenshot): Research h2 was visually OVERLAPPING
+   the email block because .profile.float-left created vertical float space that
+   subsequent h2 wrapped around. Force clear so each new section starts fresh. */
+.post > h2,
+.post > h3,
+.post > hr,
+.post > p.acknowledgement {
+  clear: both;
+}
+
 /* Mobile: stack profile above bio, center it */
 @media (max-width: 767px) {
   .profile.float-left,
