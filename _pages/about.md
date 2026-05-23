@@ -37,11 +37,11 @@ latest_posts:
 
 I am drawn to **Environment-Centric AI**: the design of environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
 
-I am a second-year PhD student in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
+I am a second-year PhD student in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
 ## Research
 
-I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two early angles:
+I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two concrete angles so far:
 
 **Reward-model accuracy as environment design.** Moderate reward models train better language models than highly accurate ones on relevance, factuality, and completeness.
 {: .angle }
@@ -55,7 +55,7 @@ I work on **Environment-Centric AI**: treating the training environment of intel
 
 ### Where I'm going
 
-These are early steps. My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
+These pieces feed into a longer arc. My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen, whose ongoing mentorship has shaped much of this work.</em></small></p>
 
@@ -65,11 +65,11 @@ These are early steps. My bet: **environments themselves must scale, train, and 
 
 我关注 **Environment-Centric AI**: 智能体在其中学习的环境的设计，跨越大语言模型、强化学习与具身智能系统。
 
-我是 [香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/) 的二年级博士生，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 博士。
+我是 [香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/) 的二年级博士生，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
 ## 研究方向
 
-我研究 **Environment-Centric AI**: 将智能体的训练环境视为可设计的对象。环境不是给定的，它由若干部件构成（奖励、反馈、观测、评估），这些部件可以被分析、被重新设计。目前两个起步方向：
+我研究 **Environment-Centric AI**: 将智能体的训练环境视为可设计的对象。环境不是给定的，它由若干部件构成（奖励、反馈、观测、评估），这些部件可以被分析、被重新设计。目前已落地的两个具体方向：
 
 **奖励模型准确率作为一种环境设计选择。** 在相关性、事实性、完整性任务上，中等准确率的奖励模型训练出的语言模型反而优于高准确率的。
 {: .angle }
@@ -83,7 +83,7 @@ These are early steps. My bet: **environments themselves must scale, train, and 
 
 ### 后续方向
 
-这些只是起点。我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 这才是抬升 AI 系统上限的真正杠杆。
+这些工作都指向更长远的目标。我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 这才是抬升 AI 系统上限的真正杠杆。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师持续的指导，这项工作的许多面向都源于他的影响。</em></small></p>
 
@@ -93,11 +93,11 @@ These are early steps. My bet: **environments themselves must scale, train, and 
 
 私が関心を持つのは **Environment-Centric AI**: 知的エージェントが学習する環境そのものを設計対象とすることです。大規模言語モデル、強化学習、身体性 AI を横断します。
 
-[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/) の博士課程 2 年生で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 博士の指導を受けています。
+[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/) の博士課程 2 年生で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
 ## 研究内容
 
-私が研究しているのは **Environment-Centric AI**: 知的エージェントの訓練環境を「設計対象」として扱うことです。環境は所与のものではなく、複数の構成要素（報酬、フィードバック、観測、評価）から成り、それらは分析と再設計が可能です。現時点で 2 つの出発点があります:
+私が研究しているのは **Environment-Centric AI**: 知的エージェントの訓練環境を「設計対象」として扱うことです。環境は所与のものではなく、複数の構成要素（報酬、フィードバック、観測、評価）から成り、それらは分析と再設計が可能です。現在進めている二つの具体的な方向は次の通りです:
 
 **報酬モデルの精度を環境設計として捉える。** 関連性、事実性、完全性のタスクにおいて、中程度の精度の報酬モデルが高精度のものよりも優れた言語モデルを訓練します。
 {: .angle }
@@ -111,7 +111,7 @@ These are early steps. My bet: **environments themselves must scale, train, and 
 
 ### これから
 
-いずれも出発点に過ぎません。私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** それこそが AI システムの到達点を引き上げる梃子になります。
+これらの仕事はより長期的な目標へとつながっています。私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** それこそが AI システムの到達点を引き上げる梃子になります。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生からの継続的なご指導に深く感謝いたします。本研究の多くは先生のご示唆によるものです。</em></small></p>
 

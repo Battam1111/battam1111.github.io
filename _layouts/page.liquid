@@ -10,7 +10,11 @@ layout: default
 
 <div class="post">
   <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
+    <h1 class="post-title">
+      <span lang="en">{{ page.title }}</span>
+      {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
+      {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
+    </h1>
     <p class="post-description">{{ page.description }}</p>
   </header>
 
