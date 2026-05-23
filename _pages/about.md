@@ -41,7 +41,7 @@ I am a second-year PhD student in the [Department of Computing](https://www.poly
 
 ## Research
 
-I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two concrete angles so far:
+I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two concrete works so far:
 
 **Reward-model accuracy as environment design.** Moderate reward models train better language models than highly accurate ones on relevance, factuality, and completeness.
 {: .angle }
@@ -69,7 +69,7 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 ## 研究方向
 
-我研究 **Environment-Centric AI**: 将智能体的训练环境视为可设计的对象。环境不是给定的，它由若干部件构成（奖励、反馈、观测、评估），这些部件可以被分析、被重新设计。目前已落地的两个具体方向：
+我研究 **Environment-Centric AI**: 将智能体的训练环境视为可设计的对象。环境不是给定的，它由若干部件构成（奖励、反馈、观测、评估），这些部件可以被分析、被重新设计。目前已展开的两项具体工作：
 
 **奖励模型准确率作为一种环境设计选择。** 在相关性、事实性、完整性任务上，中等准确率的奖励模型训练出的语言模型反而优于高准确率的。
 {: .angle }
@@ -97,7 +97,7 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 ## 研究内容
 
-私が研究しているのは **Environment-Centric AI**: 知的エージェントの訓練環境を「設計対象」として扱うことです。環境は所与のものではなく、複数の構成要素（報酬、フィードバック、観測、評価）から成り、それらは分析と再設計が可能です。現在進めている二つの具体的な方向は次の通りです:
+私が研究しているのは **Environment-Centric AI**: 知的エージェントの訓練環境を「設計対象」として扱うことです。環境は所与のものではなく、複数の構成要素（報酬、フィードバック、観測、評価）から成り、それらは分析と再設計が可能です。これまでに進めた二つの具体的な研究は次の通りです:
 
 **報酬モデルの精度を環境設計として捉える。** 関連性、事実性、完全性のタスクにおいて、中程度の精度の報酬モデルが高精度のものよりも優れた言語モデルを訓練します。
 {: .angle }
