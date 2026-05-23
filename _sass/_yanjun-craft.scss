@@ -255,28 +255,28 @@ a:hover, a:focus, table.table a:hover {
   max-width: 70ch;
 }
 
-/* Profile image — smaller (160px), softer treatment, no border (let bg breathe) */
+/* Profile image — v8: 140px (Tri Dao tier), no border, softer shadow */
 .profile figure img,
 .profile picture img,
 .profile img.img-fluid,
 .profile .img-fluid {
-  max-width: 160px !important;
+  max-width: 140px !important;
   width: 100% !important;
   height: auto !important;
   border-radius: 4px !important;
   border: 0 !important;
-  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
-/* v7: profile aligned LEFT (user request 2026-05-23) */
+/* v8: profile LEFT, slimmer wrapper */
 .profile.float-left {
-  padding-right: 2rem;       /* breathing between headshot and prose */
+  padding-right: 2rem;
   padding-left: 0;
-  max-width: 200px;
+  max-width: 180px;
 }
 .profile.float-right {
   padding-left: 2rem;
-  max-width: 200px;
+  max-width: 180px;
 }
 
 /* Mobile: stack profile above bio, center it */
@@ -517,10 +517,10 @@ footer a:hover {
 .post p.desc,
 .about .desc {
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.86rem;        /* v8: smaller, more demure */
   color: var(--global-text-color-light);
-  margin-bottom: 2rem;
-  letter-spacing: 0;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.005em;
   font-style: normal;
   font-weight: 400;
 }
