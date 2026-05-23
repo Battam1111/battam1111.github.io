@@ -1127,6 +1127,135 @@ ul.post-list .post-tags a:hover {
 .single-post > article {
   max-width: 66ch;
 }
+
+/* ============================================================
+   20. V20 — Mobile responsiveness pass
+   ----------------------------------------------------------
+   Fixes:
+   (1) Home page mobile navbar shows brand "Yanjun Chen" next to
+       the hamburger (header.liquid always renders brand now;
+       on desktop home we hide it via .navbar-brand-mobile-only).
+   (2) Hamburger menu has an opaque background so underlying
+       hero content doesn't bleed through.
+   (3) Lang switcher pill aligns with other nav items in the
+       collapsed menu (right-aligned, full-width row).
+   (4) Touch targets enlarged.
+   (5) Headshot grows slightly on mobile.
+   ============================================================ */
+
+/* On desktop home page, hide the brand (hero h1 stands alone).
+   On mobile (collapsed nav), always show. */
+@media (min-width: 576px) {
+  .navbar-brand-mobile-only { display: none !important; }
+}
+
+/* Opaque background for collapsed mobile menu */
+@media (max-width: 575.98px) {
+  #navbar .navbar-collapse {
+    background-color: var(--global-bg-color);
+    margin: 0 -1rem -0.5rem;
+    padding: 0.5rem 1rem 1rem;
+    border-top: 1px solid var(--global-divider-color);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* All menu items: left-align (match brand position), bigger tap targets */
+  #navbar .navbar-collapse .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  #navbar .navbar-collapse .nav-item {
+    width: 100%;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  #navbar .navbar-collapse .nav-item:last-child {
+    border-bottom: 0;
+  }
+  #navbar .navbar-collapse .nav-link,
+  #navbar .navbar-collapse #search-toggle,
+  #navbar .navbar-collapse #light-toggle {
+    padding: 0.85rem 0 !important;
+    font-size: 1rem;
+    width: 100%;
+    text-align: left !important;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: 0;
+  }
+
+  /* Search button on mobile — show "Ctrl K" but make it work as a button */
+  #navbar .navbar-collapse #search-toggle .nav-link {
+    padding: 0 !important;
+  }
+
+  /* Theme toggle on mobile — make icons inline with label area */
+  #navbar .navbar-collapse .toggle-container {
+    width: 100%;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  #navbar .navbar-collapse #light-toggle {
+    color: var(--global-text-color-light);
+  }
+
+  /* Lang switcher pill — center-align inside its own row, not floating */
+  #navbar .navbar-collapse .lang-toggle-wrap {
+    width: 100%;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  #navbar .navbar-collapse .lang-toggle {
+    height: 1.85rem;
+  }
+  #navbar .navbar-collapse .lang-toggle button {
+    font-size: 0.85rem;
+    padding: 0 0.7rem;
+  }
+
+  /* Brand "Yanjun Chen" in mobile navbar */
+  #navbar .navbar-brand {
+    font-size: 1.05rem;
+    color: var(--global-text-color);
+  }
+
+  /* Hamburger icon a bit larger for tap target */
+  #navbar .navbar-toggler {
+    padding: 0.5rem;
+  }
+}
+
+/* Headshot size on mobile — bump from 144 -> 168 for more presence */
+@media (max-width: 767px) {
+  .profile figure img,
+  .profile picture img,
+  .profile img.img-fluid,
+  .profile .img-fluid {
+    max-width: 168px !important;
+  }
+  .profile.float-left,
+  .profile.float-right {
+    max-width: 200px !important;
+  }
+}
+
+/* Publications year watermark — smaller on narrow mobile */
+@media (max-width: 575.98px) {
+  .publications h2.year {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* News table — date column slightly less wide on narrow mobile, tighter */
+@media (max-width: 575.98px) {
+  .news table.table th {
+    padding: 0.55rem 0.75rem 0.55rem 0 !important;
+    font-size: 0.74rem;
+  }
+  .news table.table td {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
 .single-post > article p,
 .single-post > article ul,
 .single-post > article ol,
