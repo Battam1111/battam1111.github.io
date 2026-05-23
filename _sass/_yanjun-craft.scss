@@ -281,12 +281,27 @@ a:hover, a:focus, table.table a:hover {
 
 /* v11 CRITICAL FIX (from real screenshot): Research h2 was visually OVERLAPPING
    the email block because .profile.float-left created vertical float space that
-   subsequent h2 wrapped around. Force clear so each new section starts fresh. */
-.post > h2,
-.post > h3,
-.post > hr,
-.post > p.acknowledgement {
-  clear: both;
+   subsequent h2 wrapped around. Force clear with broad selector + !important. */
+.post h2,
+.post h3,
+.post hr,
+.post p.acknowledgement,
+article h2,
+article h3 {
+  clear: both !important;
+}
+
+/* v11.1: also ensure the bio paragraph block doesn't wrap above profile bottom —
+   use overflow:auto on the post container so the float is "contained" */
+.post {
+  overflow: visible;
+}
+
+/* v11.1: make sure profile wrapper has a bottom margin so it doesn't immediately
+   collide with the next non-cleared element (covers edge cases) */
+.profile.float-left,
+.profile.float-right {
+  margin-bottom: 2rem;
 }
 
 /* Mobile: stack profile above bio, center it */
