@@ -39,7 +39,7 @@
   {% endif %}
 </title>
 <meta name="author" content="{{ author_name }}">
-<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta name="description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
 {% if page.keywords or site.keywords %}
   <meta name="keywords" content="{% if page.keywords %}{{ page.keywords }}{% else %}{{ site.keywords }}{% endif %}">
 {% endif %}
@@ -52,23 +52,45 @@
 {% endif %}
 
 {% if site.serve_og_meta %}
+  {% comment %} v23: resolve og_image to an ABSOLUTE URL (Twitter / Slack / OG validators reject relative paths). {% endcomment %}
+  {% if page.og_image %}
+    {% assign og_image_url = page.og_image %}
+  {% elsif site.og_image %}
+    {% capture og_image_url %}{{ site.og_image | prepend: '/assets/img/' | absolute_url }}{% endcapture %}
+  {% endif %}
+
+  {% comment %} v23: clean homepage og:title — "Yanjun Chen" not "Yanjun Chen | About". {% endcomment %}
+  {% if page.url == '/' %}
+    {% capture og_title %}{{ title }}{% endcapture %}
+    {% capture tw_title %}{{ title }}{% endcapture %}
+  {% elsif page.title %}
+    {% capture og_title %}{{ page.title }} | {{ title }}{% endcapture %}
+    {% capture tw_title %}{{ page.title }} | {{ title }}{% endcapture %}
+  {% else %}
+    {% capture og_title %}{{ title }}{% endcapture %}
+    {% capture tw_title %}{{ title }}{% endcapture %}
+  {% endif %}
+
   <!-- OpenGraph -->
   <meta property="og:site_name" content="{{ title }}">
   <meta property="og:type" content="{% if is_blog_post %}article{% else %}website{% endif %}">
-  <meta property="og:title" content="{% if page.title %}{{ title }} | {{ page.title }}{% else %}{{ title }}{% endif %}">
+  <meta property="og:title" content="{{ og_title }}">
   <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url | remove_first: 'index.html' }}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  {% if page.og_image or site.og_image %}
-    <meta property="og:image" content="{% if page.og_image %}{{ page.og_image }}{% else %}{{ site.og_image }}{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
+  {% if og_image_url %}
+    <meta property="og:image" content="{{ og_image_url }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ author_name }} — {{ site.description | strip_newlines | truncate: 120 }}">
   {% endif %}
   <meta property="og:locale" content="{{ site.lang }}">
 
-  <!-- Twitter card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  {% if page.og_image or site.og_image %}
-    <meta name="twitter:image" content="{% if page.og_image %}{{ page.og_image }}{% else %}{{ site.og_image }}{% endif %}">
+  <!-- Twitter card — v23: summary_large_image when og_image present (renders 2:1 card instead of small thumbnail). -->
+  <meta name="twitter:card" content="{% if og_image_url %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ tw_title }}">
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
+  {% if og_image_url %}
+    <meta name="twitter:image" content="{{ og_image_url }}">
   {% endif %}
   {% if site.x_username %}
     <meta name="twitter:site" content="@{{ site.x_username }}">
@@ -226,22 +248,69 @@
     {% endcase %}
   {% endfor %}
 
-  <script type="application/ld+json">
-    {
-        "author":
-        {
-            "@type": "Person",
-            "name": "{{ author_name }}"
-        },
-        "url": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
-        "@type": "{% if is_blog_post %}BlogPosting{% else %}WebSite{% endif %}",
-        "description": "{% if page.description %}{{ page.description }}{% else if site.description %}{{ site.description }}{% endif %}",
-        "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
-        {% if sameaslinks != blank %}
-        "sameAs": {{ sameaslinks | jsonify }},
-        {% endif %}
+  {% comment %}
+    v23: Three schema branches, instead of al-folio's one-size-fits-all:
+      - Homepage (page.url == '/'): emit a Person schema with affiliation,
+        jobTitle, email, alumniOf, and image — what Google's Knowledge Graph
+        actually expects for a researcher's hub page.
+      - Blog post: BlogPosting (unchanged from before).
+      - Else: WebSite (about the site as a whole).
+  {% endcomment %}
+  {% if page.url == '/' %}
+    {% capture site_url %}{{ site.url | append: site.baseurl }}{% endcapture %}
+    {% capture og_img_for_ld %}{% if site.og_image %}{{ site.og_image | prepend: '/assets/img/' | absolute_url }}{% endif %}{% endcapture %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
         "name": "{{ author_name }}",
-        "@context": "https://schema.org"
-    }
-  </script>
+        "alternateName": "陈彦筠",
+        "url": "{{ site_url }}",
+        "image": "{{ og_img_for_ld }}",
+        "jobTitle": "PhD Student",
+        "description": "{{ site.description | strip_newlines | strip }}",
+        "email": "mailto:{{ site.data.socials.email }}",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "The Hong Kong Polytechnic University",
+          "department": "Department of Computing",
+          "url": "https://www.polyu.edu.hk/en/comp/"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Jinan University",
+          "url": "https://english.jnu.edu.cn/"
+        },
+        "knowsAbout": [
+          "Environment-Centric AI",
+          "Reinforcement Learning from Human Feedback",
+          "Reward Modeling",
+          "Large Language Models",
+          "Multi-Agent Reinforcement Learning",
+          "Credit Assignment",
+          "Embodied AI"
+        ]{% if sameaslinks != blank %},
+        "sameAs": {{ sameaslinks | jsonify }}{% endif %}
+      }
+    </script>
+  {% else %}
+    <script type="application/ld+json">
+      {
+          "author":
+          {
+              "@type": "Person",
+              "name": "{{ author_name }}"
+          },
+          "url": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
+          "@type": "{% if is_blog_post %}BlogPosting{% else %}WebSite{% endif %}",
+          "description": "{% if page.description %}{{ page.description }}{% else if site.description %}{{ site.description }}{% endif %}",
+          "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
+          {% if sameaslinks != blank %}
+          "sameAs": {{ sameaslinks | jsonify }},
+          {% endif %}
+          "name": "{{ author_name }}",
+          "@context": "https://schema.org"
+      }
+    </script>
+  {% endif %}
 {% endif %}

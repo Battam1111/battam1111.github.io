@@ -9,6 +9,20 @@
   {% if site.last_updated %}
     <span lang="en">Last updated: {{ 'now' | date: '%B %d, %Y' }}.</span><span lang="zh">最近更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span><span lang="ja">最終更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span>
   {% endif %}
+  {% if site.goatcounter_username and site.goatcounter_username != "" and site.goatcounter_show_counter %}
+    {%- comment -%}
+      v23: Discrete visit counter. Renders an inline SVG from GoatCounter.
+      Styled to match footer text size and color so it sits quietly at the end of the line.
+    {%- endcomment -%}
+    <span class="visit-counter" aria-label="Visits">
+      <span lang="en">·&nbsp;</span><span lang="zh">·&nbsp;</span><span lang="ja">·&nbsp;</span>
+      <img
+        src="https://{{ site.goatcounter_username }}.goatcounter.com/counter/TOTAL.svg?style=plain&nofont"
+        alt="visits"
+        loading="lazy"
+        decoding="async">
+    </span>
+  {% endif %}
 {% endcapture %}
 
 {% if site.footer_fixed %}

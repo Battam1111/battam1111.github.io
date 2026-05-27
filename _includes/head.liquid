@@ -12,7 +12,7 @@
 </script>
 
 <!-- v17: Language switcher behaviour (deferred — wires up after DOM ready) -->
-<script defer src="{{ '/assets/js/lang-toggle.js' | relative_url }}?v={{ site.asset_version | default: 'v17' }}"></script>
+<script defer src="{{ '/assets/js/lang-toggle.js' | relative_url }}?v={{ site.asset_version | default: 'v23' }}"></script>
 
 <!-- Security: Content Security Policy -->
 <!-- Permissive CSP suitable for academic websites. Allows external images, videos, and common embed services. -->
@@ -101,8 +101,15 @@
   <link rel="shortcut icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}">
 {% endif %}
 <!-- v12: explicit cache-bust because bust_css_cache hashes pre-Sass (always empty MD5). -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v22' }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v23' }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+
+{% if site.goatcounter_username and site.goatcounter_username != "" %}
+  <!-- v23: GoatCounter — privacy-friendly, cookieless analytics (no PII). Async load. -->
+  <script
+    data-goatcounter="https://{{ site.goatcounter_username }}.goatcounter.com/count"
+    async src="//gc.zgo.at/count.js"></script>
+{% endif %}
 
 {% if site.enable_darkmode %}
   <!-- Dark Mode -->
