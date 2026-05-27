@@ -11,17 +11,37 @@
   {% endif %}
   {% if site.goatcounter_username and site.goatcounter_username != "" and site.goatcounter_show_counter %}
     {%- comment -%}
-      v23: Discrete visit counter. Renders an inline SVG from GoatCounter.
-      Styled to match footer text size and color so it sits quietly at the end of the line.
+      v23.1: Discrete visit counter. Fetches the JSON counter endpoint and inlines a plain
+      number — no bordered widget, no embedded font. Matches the rest of the footer text
+      exactly because it IS text, just dynamically updated.
+      Hidden by `data-vc-hidden` until the fetch resolves, so we never flash a placeholder
+      on first paint. Fails silently if GoatCounter is down or the endpoint isn't public.
     {%- endcomment -%}
-    <span class="visit-counter" aria-label="Visits">
+    <span class="visit-counter" aria-label="Total unique visitors" data-vc-hidden>
       <span lang="en">·&nbsp;</span><span lang="zh">·&nbsp;</span><span lang="ja">·&nbsp;</span>
-      <img
-        src="https://{{ site.goatcounter_username }}.goatcounter.com/counter/TOTAL.svg?style=plain&nofont"
-        alt="visits"
-        loading="lazy"
-        decoding="async">
+      <span class="vc-count" data-vc-count></span>
+      <span class="vc-unit" lang="en">&nbsp;views</span><span class="vc-unit" lang="zh">&nbsp;次访问</span><span class="vc-unit" lang="ja">&nbsp;回</span>
     </span>
+    <script>
+      (function () {
+        var host = "https://{{ site.goatcounter_username }}.goatcounter.com";
+        fetch(host + "/counter/TOTAL.json")
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (!d) return;
+            // GoatCounter returns count as a string; coerce + locale-format
+            var n = parseInt(d.count_unique || d.count || "0", 10);
+            if (isNaN(n)) return;
+            var el = document.querySelector("[data-vc-count]");
+            var wrap = document.querySelector(".visit-counter");
+            if (el && wrap) {
+              el.textContent = n.toLocaleString();
+              wrap.removeAttribute("data-vc-hidden");
+            }
+          })
+          .catch(function () { /* fail silently — counter just stays hidden */ });
+      })();
+    </script>
   {% endif %}
 {% endcapture %}
 

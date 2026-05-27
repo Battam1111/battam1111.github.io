@@ -1379,28 +1379,29 @@ ul.post-list .post-tags a:hover {
 /* ============================================================
    23. V23 — Discrete visit counter in footer (GoatCounter)
    ----------------------------------------------------------
-   Goal: track visits, display as quietly as possible. Render the
-   counter SVG inline at footer-text size, no border, no badge —
-   just an unobtrusive number trailing the "Last updated" line.
+   Goal: track visits, display as quietly as possible. Footer JS
+   fetches GoatCounter's JSON counter endpoint and inlines just
+   the number — no widget border, no badge, no embedded font.
+   Until the fetch resolves the whole span is hidden so we don't
+   flash a placeholder on first paint.
    ============================================================ */
 
 .visit-counter {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.15em;
   color: var(--global-text-color-light);
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
   opacity: 0.85;
 }
-.visit-counter img {
-  height: 1em;
-  width: auto;
-  vertical-align: -0.05em;
-  /* Force GoatCounter's plain SVG to inherit footer color (its plain style is dark text on transparent). */
-  filter: var(--visit-counter-filter, none);
+.visit-counter[data-vc-hidden] {
+  /* Hidden until JSON resolves. Use visibility (not display:none) so
+     we don't reflow the footer text when the number arrives. */
+  visibility: hidden;
 }
-html[data-theme="dark"] .visit-counter img {
-  /* In dark mode the SVG's default dark fill is invisible — invert to a light gray. */
-  --visit-counter-filter: invert(0.86) hue-rotate(180deg);
+.visit-counter .vc-count {
+  font-weight: 500;
+  color: var(--global-text-color);
+}
+.visit-counter .vc-unit {
+  /* Already covered by inherited footer color; just tighten letter-spacing. */
+  letter-spacing: 0.01em;
 }
