@@ -940,6 +940,74 @@ article > h2::before {
 }
 
 /* ============================================================
+   20. V22 — Teaching & Service section
+   ----------------------------------------------------------
+   Visual treatment mirrors News table (tabular-num year/sem
+   column + content column). H3 subsections "Teaching" / "Reviewing"
+   with small affiliation note inline. Matches the existing News
+   table style for visual consistency.
+   ============================================================ */
+
+.teaching-service {
+  /* same vertical rhythm as News + Publications */
+}
+.teaching-service .ts-sub {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--global-text-color);
+  letter-spacing: -0.008em;
+  font-variation-settings: "opsz" 20;
+}
+.teaching-service .ts-sub:first-child {
+  margin-top: 0.5rem;
+}
+.teaching-service .ts-affil {
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--global-text-color-light);
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  margin-left: 0.25em;
+}
+
+/* service-table — mirror .news table style */
+.teaching-service .service-table {
+  margin: 0;
+}
+.teaching-service .service-table tr {
+  border-bottom: 1px solid var(--global-divider-color);
+}
+.teaching-service .service-table tr:last-child {
+  border-bottom: 0;
+}
+.teaching-service .service-table th {
+  font-weight: 400 !important;
+  color: var(--global-text-color-light);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  vertical-align: top;
+  padding: 0.7rem 1.2rem 0.7rem 0;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  letter-spacing: 0.015em;
+}
+.teaching-service .service-table td {
+  padding: 0.7rem 0;
+  vertical-align: top;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+.teaching-service .service-table td code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--global-theme-color);
+  background-color: transparent;
+  padding: 0;
+}
+
+/* ============================================================
    18. V17 — Trilingual language switcher (EN / 中 / 日)
    ----------------------------------------------------------
    Hide non-matching lang blocks based on <html lang="..."> attribute.
