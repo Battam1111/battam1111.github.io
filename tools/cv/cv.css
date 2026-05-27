@@ -1,8 +1,10 @@
 /* ============================================================
    Yanjun Chen — CV stylesheet
-   Print-targeted. Matches homepage visual register:
-   Inter, cool ink #1A1A1A, Princeton blue #003366, warm off-white.
-   Single-column, A4, ~0.7in margins.
+   Print-targeted. Pure grayscale palette (no blue): cool ink #1A1A1A
+   body / light gray #595959 secondary / pure black #000 for section
+   heads. Distinct from the homepage's Princeton blue accent — CV stays
+   classical academic register, black-and-gray only.
+   Single-column, A4, tight margins.
    ============================================================ */
 
 @page {
@@ -14,7 +16,7 @@
   --ink: #1A1A1A;
   --ink-light: #595959;
   --rule: rgba(0, 0, 0, 0.12);
-  --accent: #003366;
+  --accent: #000000;
   --bg: #FFFFFF;
 }
 
