@@ -90,8 +90,8 @@ openpanel_analytics: # your Openpanel analytics client ID (format: XXXXXXXX-XXXX
 #        2) get a domain like battam1111.goatcounter.com
 #        3) fill in `goatcounter_username: battam1111` below — tracking starts on next deploy
 # Leave empty to disable tracking entirely. No data is sent until this is set.
-goatcounter_username:                  # e.g. battam1111 (without .goatcounter.com)
-goatcounter_show_counter: false        # set true to display a discrete visit counter in the footer
+goatcounter_username: battam1111       # e.g. battam1111 (without .goatcounter.com)
+goatcounter_show_counter: true        # set true to display a discrete visit counter in the footer
 
 # For Google Search Console, see https://support.google.com/webmasters/answer/9008080?hl=en#meta_tag_verification&zippy=%2Chtml-tag
 google_site_verification: # your google-site-verification ID (Google Search Console)
