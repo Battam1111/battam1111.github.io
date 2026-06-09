@@ -202,8 +202,16 @@ exclude:
   - _pages/about_einstein.md
   - purgecss.config.js
   - README.md
+  - DEVELOPMENT.md
   - readme_preview/
   - vendor
+  # v24: never publish internal/dev material to the public _site.
+  # docs/ is gone from the repo (moved to a private sibling), but keep the
+  # rule as a guard. tools/ holds the CV->PDF source (tools/cv/) + gitignored
+  # dev scratch; it is build-time-irrelevant (Jekyll never runs the Python
+  # pipeline) so it must not leak. Both were previously published (HTTP 200).
+  - docs/
+  - tools/
 keep_files:
   - CNAME
   - .nojekyll

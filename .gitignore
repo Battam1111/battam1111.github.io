@@ -13,11 +13,16 @@ assets/rendercv/rendercv_output/*.typ
 Gemfile.lock
 node_modules/
 vendor
-# Local snapshot/dev tools (not deployed) — keep CV source under tools/cv/
+# tools/ holds the CV->PDF pipeline SOURCE (tools/cv/{cv.html,cv.css,build_cv.py}), which IS tracked.
+# Everything else under tools/ is local dev scratch (version screenshots, verify logs, snapshot
+# scripts) and must never be committed. The *.png / *.txt globs catch all of it, so per-version
+# dirs (v12, v13, ... v23-dark) need no individual rules.
 tools/**/*.png
-tools/*.png
+tools/**/*.txt
 tools/snapshot*.py
-tools/snapshot_*.py
-tools/review/
-tools/v15/
 tools/cv/cv-preview.png
+
+# Private, never-published material lives OUTSIDE this repo in a sibling dir
+# (../_homepage-rebuild-private/). Guard against it ever being copied back in.
+_homepage-rebuild-private/
+docs/homepage-rebuild/
