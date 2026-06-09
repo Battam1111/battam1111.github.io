@@ -1,2 +1,7 @@
+# Normalize all text files to LF in the repo (the site builds on a Linux GHA
+# runner; canonical-LF is correct and silences the recurring "LF will be
+# replaced by CRLF" warning on Windows commits). Binary files are auto-detected.
+* text=auto eol=lf
+
 # Force LF line endings, needed for Docker to work on Windows
 *.sh text eol=lf
