@@ -1,9 +1,12 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
-
-"PhysRev":
-  url: https://journals.aps.org/
-
-"Vision":
-  color: "#009f36"
+# Venue abbr -> {name, url, color} map. _layouts/bib.liquid (~lines 7-19) colors and
+# links the venue badge on the publications page when a paper's `abbr` matches a key here.
+# Emptied in v24 (was al-folio physics-journal demo data). The badges already render with
+# default styling without this; populate to add per-venue color + link. Example:
+#
+#   "EMNLP":
+#     name: Conference on Empirical Methods in Natural Language Processing
+#     url: https://2024.emnlp.org/
+#     color: "#0B6E4F"
+#   "NAACL":
+#     url: https://2025.naacl.org/
+#     color: "#1F4E79"
