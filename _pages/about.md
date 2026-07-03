@@ -35,7 +35,7 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-I want to make the training environment **trainable**, the way models are, and with it to lift the ceiling of what AI can become. Today it is not: environments are assembled from **reward models**, **verifiers**, and **curricula** that nobody can properly measure. My work builds that measurement first.
+I want to make the environment **trainable**, the way models are, and with it to lift the ceiling of what AI can become. Today the environment is not even a single thing: a **reward model** here, a **verifier** there, a **curriculum** somewhere else, each built and judged on its own. My work begins with measurement: what does each piece actually contribute to the model it trains.
 
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
@@ -62,7 +62,7 @@ One problem, three faces: the models that train a model must be judged from insi
 
 ### Where I'm going
 
-My bet: **environments themselves must scale, train, and generalize the way models have.** The road ahead trains these components themselves (reward model, verifier, curriculum) as one team serving one model, and extends beyond text toward embodied systems.
+My bet: **environments themselves must scale, train, and generalize the way models have.** The environment today is pieces; the road ahead trains those pieces (reward model, verifier, curriculum) as one team serving one model, and extends beyond text toward embodied systems.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen and Dawei Zhu, whose ongoing mentorship and guidance have shaped much of how I think about research.</em></small></p>
 
@@ -70,7 +70,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="zh" markdown="1">
 
-我想让训练环境像模型一样**能训练起来**，并以此把 AI 的上限抬上去。今天它还不能：环境由 **reward model**、**verifier**、**curriculum** 拼装而成，没有人能真正测量它们各自做了什么。我的工作先把这把尺子造出来。
+我想让环境像模型一样**能训练起来**，并以此把 AI 的上限抬上去。今天的环境甚至还不是一个整体：这边一个 **reward model**，那边一个 **verifier**，再加一个 **curriculum**，各自被单独构建、单独评判。我的工作从测量开始：每个部件到底为它训练的模型贡献了什么。
 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
@@ -97,7 +97,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 ### 后续方向
 
-我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 今后的方向是把这些部件本身（reward model、verifier、curriculum）作为服务同一个模型的一支团队来训练，并从文本走向具身系统。
+我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 今天的环境还是一堆部件；今后的方向是把这些部件（reward model、verifier、curriculum）训练成服务同一个模型的一支团队，并从文本走向具身系统。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
@@ -105,7 +105,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="ja" markdown="1">
 
-私は、訓練環境そのものを、モデルと同じように**訓練できるもの**にしたい。そしてそれによって、AI の到達点を引き上げたいのです。今はまだできません。環境は **reward model**、**verifier**、**curriculum** から組み上げられていますが、それぞれが何をしているのかを正しく測定できる人はいません。私の研究は、まずその物差しを作ります。
+私は、環境そのものを、モデルと同じように**訓練できるもの**にしたい。そしてそれによって、AI の到達点を引き上げたいのです。今日の環境は、まだ一つのまとまりですらありません。こちらに **reward model**、あちらに **verifier**、さらに **curriculum**。それぞれが別々に作られ、別々に評価されています。私の研究は測定から始めます。各部品が、訓練するモデルに実際に何を貢献しているのか。
 
 [香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
@@ -132,7 +132,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 ### これから
 
-私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** 今後の道筋は、これらの構成要素そのもの（reward model、verifier、curriculum）を一つのモデルに仕える一つのチームとして訓練し、テキストを超えて身体性システムへと拡張することです。
+私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** 今日の環境はまだばらばらの部品です。今後の道筋は、これらの部品（reward model、verifier、curriculum）を一つのモデルに仕える一つのチームへと訓練し、テキストを超えて身体性システムへと拡張することです。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 
