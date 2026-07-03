@@ -158,7 +158,6 @@ p.lede em { color: var(--ink); font-style: italic; }
   margin: 0 0 0.35rem 0;
   font-style: italic;
 }
-.legend .first-marker { color: var(--accent); font-style: normal; }
 .legend .self { color: var(--ink); font-weight: 600; font-style: normal; }
 
 ol.pubs {
@@ -188,11 +187,6 @@ ol.pubs li::before {
 ol.pubs li .self {
   color: var(--ink);
   font-weight: 600;
-}
-ol.pubs li .first-marker {
-  color: var(--accent);
-  font-weight: 600;
-  margin-right: 0.15em;
 }
 ol.pubs li .title {
   color: var(--ink);
