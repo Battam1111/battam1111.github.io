@@ -17,6 +17,7 @@
   --ink-light: #595959;
   --rule: rgba(0, 0, 0, 0.12);
   --accent: #000000;
+  --sep: #A0A0A0;
   --bg: #FFFFFF;
 }
 
@@ -31,7 +32,6 @@ html, body {
   font-size: 9.7pt;
   line-height: 1.36;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
-  font-variation-settings: "opsz" 14;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -53,7 +53,6 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
   letter-spacing: -0.022em;
   line-height: 1.05;
-  font-variation-settings: "opsz" 32;
   color: var(--ink);
 }
 .cv-header .role {
@@ -69,7 +68,7 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.005em;
 }
 .cv-header .contact .sep {
-  color: var(--rule);
+  color: var(--sep);
   margin: 0 0.35em;
 }
 .cv-header .contact a { color: var(--ink); }
@@ -102,6 +101,7 @@ h3.pub-cat {
   color: var(--ink);
   margin: 0.5rem 0 0.18rem 0;
 }
+h3.pub-cat:first-of-type { margin-top: 0.22rem; }
 
 p { margin: 0 0 0.35rem 0; }
 
@@ -109,7 +109,7 @@ p.lede {
   margin-top: 0.05rem;
   margin-bottom: 0.4rem;
   font-size: 10pt;
-  line-height: 1.5;
+  line-height: 1.42;
   max-width: 100%;
 }
 p.lede strong { font-weight: 600; }
@@ -239,7 +239,7 @@ ul.honors .what {
 dl.skills {
   margin: 0;
   display: grid;
-  grid-template-columns: 6rem 1fr;
+  grid-template-columns: 6.75rem 1fr;
   row-gap: 0.12rem;
   column-gap: 0.85rem;
 }
