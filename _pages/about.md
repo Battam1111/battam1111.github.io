@@ -35,7 +35,7 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-Training surrounds a model with helpers: **reward models**, **verifiers**, **curricula**, shaping aids. I measure what each helper actually contributes, from inside training, and count only what the model keeps once the helpers are withdrawn.
+A model is trained by other models now: a **reward model** scores it, **verifiers** check it, a **curriculum** decides what it sees. I measure what each of them actually contributes, and whether the model keeps it once they are gone.
 
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
@@ -58,11 +58,11 @@ Three fields have hit the same wall in their own vocabularies.
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-One problem, three faces: a learner's helpers must be judged from inside training, by their measured effect on the learner, and kept only for the help the learner absorbs.
+One problem, three faces: the models that train a model must be judged from inside training, by their measured effect on it, and kept only for the help it absorbs.
 
 ### Where I'm going
 
-My bet: **environments themselves must scale, train, and generalize the way models have.** The road ahead trains the helpers themselves (reward model, verifier, curriculum) as one team serving one learner, and extends beyond text toward embodied learners.
+My bet: **environments themselves must scale, train, and generalize the way models have.** The road ahead trains these components themselves (reward model, verifier, curriculum) as one team serving one model, and extends beyond text toward embodied systems.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen and Dawei Zhu, whose ongoing mentorship and guidance have shaped much of how I think about research.</em></small></p>
 
@@ -70,7 +70,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="zh" markdown="1">
 
-训练用一组帮手环绕一个模型：**reward model**、**verifier**、**curriculum**、shaping 辅助。我在训练内部测量每个帮手的实际贡献，只计入帮手撤走后模型仍保有的那部分。
+如今，模型由其他模型来训练：**reward model** 给它打分，**verifier** 给它把关，**curriculum** 决定它看到什么。我测量它们每一个真正贡献了什么，以及模型在它们离场之后还剩下什么。
 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
@@ -93,11 +93,11 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-同一个问题的三张面孔：learner 的帮手必须在训练内部被评判，按它们对 learner 的可测量效果来衡量，并且只在 learner 真正吸收了帮助时才被保留。
+同一个问题的三张面孔：训练模型的那些模型，必须在训练内部、按它们对模型的实测效果来评判，并且只为被模型吸收的帮助而保留。
 
 ### 后续方向
 
-我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 今后的方向是把帮手本身（reward model、verifier、curriculum）作为服务同一个 learner 的一支团队来训练，并从文本向具身 learner 延伸。
+我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 今后的方向是把这些部件本身（reward model、verifier、curriculum）作为服务同一个模型的一支团队来训练，并从文本走向具身系统。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
@@ -105,7 +105,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="ja" markdown="1">
 
-訓練はモデルを補助で取り囲みます。**reward model**、**verifier**、**curriculum**、shaping 補助。私は各補助が実際に何を貢献しているかを訓練の内部から測定し、補助を取り除いた後にモデルが保持しているものだけを計数します。
+モデルはいま、別のモデルたちによって訓練されています。**reward model** が採点し、**verifier** が検証し、**curriculum** が見るものを決めます。私はそれぞれが実際に何を貢献したのか、そしてそれらが去った後にモデルに何が残るのかを測定します。
 
 [香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
@@ -128,11 +128,11 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-一つの問題、三つの顔。learner の補助は訓練の内部で評価されなければなりません。その評価は、補助が learner に及ぼした測定可能な効果に基づき、learner が実際に吸収した助けだけが保持されるべきです。
+一つの問題、三つの顔。モデルを訓練するモデルたちは、訓練の内部で、モデルへの実測された効果によって評価されなければなりません。そして、モデルが吸収した助けのためにのみ保持されるべきです。
 
 ### これから
 
-私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** 今後の道筋は、補助そのもの（reward model、verifier、curriculum）を一つの learner に仕える一つのチームとして訓練し、テキストを超えて身体性 learner へと拡張することです。
+私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** 今後の道筋は、これらの構成要素そのもの（reward model、verifier、curriculum）を一つのモデルに仕える一つのチームとして訓練し、テキストを超えて身体性システムへと拡張することです。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 
