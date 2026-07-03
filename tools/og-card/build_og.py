@@ -13,7 +13,18 @@ with sync_playwright() as p:
     page = browser.new_page(viewport={"width": 1200, "height": 630})
     page.goto(SRC.as_uri())
     page.wait_for_load_state("networkidle")
-    page.wait_for_timeout(800)  # let webfonts settle
+    # Deterministic font activation (same hardening as tools/cv/build_cv.py):
+    # force-load the webfonts instead of hoping a fixed sleep is long enough.
+    page.evaluate(
+        """async () => {
+            const wants = ['400 16px "Inter"', '500 16px "Inter"', '800 16px "Inter"',
+                           '500 16px "JetBrains Mono"'];
+            await Promise.all(wants.map(w => document.fonts.load(w)));
+            await document.fonts.ready;
+        }"""
+    )
+    page.wait_for_function('document.fonts.check(\'400 16px "Inter"\')', timeout=15000)
+    page.wait_for_timeout(300)
     page.screenshot(path=str(OUT))
     browser.close()
 

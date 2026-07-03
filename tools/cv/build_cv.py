@@ -24,9 +24,24 @@ def build():
         ctx = browser.new_context()
         page = ctx.new_page()
         page.goto(SRC.as_uri(), wait_until="networkidle")
-        # Force fonts loaded; explicit timeout
-        page.evaluate("document.fonts.ready")
-        page.wait_for_timeout(500)
+        # Force the webfonts to actually download and activate. Without the explicit
+        # FontFaceSet.load() calls, headless Chromium can reach networkidle and even
+        # resolve document.fonts.ready BEFORE any Inter request has started, and the
+        # PDF silently embeds Segoe UI (this was a latent bug from day one: every CV
+        # built before 2026-07-03 shipped Segoe, never Inter).
+        page.evaluate(
+            """async () => {
+                const wants = [
+                    '300 16px "Inter"', '400 16px "Inter"', '500 16px "Inter"',
+                    '600 16px "Inter"', '700 16px "Inter"',
+                    '400 12px "JetBrains Mono"', '500 12px "JetBrains Mono"',
+                ];
+                await Promise.all(wants.map(w => document.fonts.load(w)));
+                await document.fonts.ready;
+            }"""
+        )
+        page.wait_for_function('document.fonts.check(\'400 16px "Inter"\')', timeout=15000)
+        page.wait_for_timeout(300)
         page.emulate_media(media="print")
         page.pdf(
             path=str(OUT),

@@ -3,9 +3,19 @@
 <head>
 <meta charset="utf-8">
 <title>Yanjun Chen Curriculum Vitae</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Self-hosted STATIC Inter weights (tools/fonts/) so the headless PDF build is
+     deterministic AND embeds properly named TrueType subsets. History: the old
+     Google-Fonts link never actually delivered Inter in headless Chromium (every
+     CV before 2026-07-03 silently embedded Segoe UI), and the variable
+     InterVariable.woff2 embeds as anonymous Type3 glyph programs, which is worse
+     for ATS/PDF parsers. Static weights are the correct choice for a document. */
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: block; }
+</style>
 <link rel="stylesheet" href="cv.css">
 </head>
 <body>
