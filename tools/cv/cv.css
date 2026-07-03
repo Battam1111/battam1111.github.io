@@ -152,14 +152,6 @@ p.lede em { color: var(--ink); font-style: italic; }
    PUBLICATIONS
    ---------------------------------------------------------- */
 
-.legend {
-  font-size: 8.5pt;
-  color: var(--ink-light);
-  margin: 0 0 0.35rem 0;
-  font-style: italic;
-}
-.legend .self { color: var(--ink); font-weight: 600; font-style: normal; }
-
 ol.pubs {
   list-style: none;
   margin: 0 0 0.3rem 0;
