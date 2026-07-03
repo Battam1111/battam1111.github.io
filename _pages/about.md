@@ -35,7 +35,7 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-A model is trained by other models now: a **reward model** scores it, **verifiers** check it, a **curriculum** decides what it sees. I measure what each of them actually contributes, and whether the model keeps it once they are gone.
+I want to make the training environment **trainable**, the way models are, and with it to lift the ceiling of what AI can become. Today it is not: environments are assembled from **reward models**, **verifiers**, and **curricula** that nobody can properly measure. My work builds that measurement first.
 
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
@@ -70,7 +70,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="zh" markdown="1">
 
-如今，模型由其他模型来训练：**reward model** 给它打分，**verifier** 给它把关，**curriculum** 决定它看到什么。我测量它们每一个真正贡献了什么，以及模型在它们离场之后还剩下什么。
+我想让训练环境像模型一样**能训练起来**，并以此把 AI 的上限抬上去。今天它还不能：环境由 **reward model**、**verifier**、**curriculum** 拼装而成，没有人能真正测量它们各自做了什么。我的工作先把这把尺子造出来。
 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
@@ -105,7 +105,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="ja" markdown="1">
 
-モデルはいま、別のモデルたちによって訓練されています。**reward model** が採点し、**verifier** が検証し、**curriculum** が見るものを決めます。私はそれぞれが実際に何を貢献したのか、そしてそれらが去った後にモデルに何が残るのかを測定します。
+私は、訓練環境そのものを、モデルと同じように**訓練できるもの**にしたい。そしてそれによって、AI の到達点を引き上げたいのです。今はまだできません。環境は **reward model**、**verifier**、**curriculum** から組み上げられていますが、それぞれが何をしているのかを正しく測定できる人はいません。私の研究は、まずその物差しを作ります。
 
 [香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
