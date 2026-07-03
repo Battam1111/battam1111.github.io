@@ -3,7 +3,7 @@ layout: about
 title: About
 permalink: /
 subtitle: >
-  <span lang="en">PhD Student, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 计算学系</a> 博士生。</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 計算学科</a> 博士課程。</span>
+  <span lang="en">PhD Candidate, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 计算学系</a> 博士候选人。</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 計算学科</a> 博士候補者。</span>
 
 profile:
   align: left
@@ -35,27 +35,34 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-I am drawn to **Environment-Centric AI**: the design of environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
+A learner is trained inside an apparatus of helpers: a **reward model** that scores it, **verifiers** that check it, a **curriculum** that feeds it, shaping aids that steer it. The learner is the one model that ships; the helpers stay behind, and their own scores do not tell you what they did to it. My work makes these helpers accountable: their effect on the learner measured from inside training rather than assumed, and their contribution counted by what the learner can still do once they are withdrawn.
 
-I am a second-year PhD student in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
+I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
 ## Research
 
-I work on **Environment-Centric AI**: treating the training environment of intelligent agents as a designed object. The environment is not a given, it has pieces (reward, feedback, observation, evaluation), and those pieces can be analyzed and re-designed. Two concrete works so far:
+Three fields have hit the same wall in their own vocabularies.
 
-**Reward-model accuracy as environment design.** Moderate reward models train better language models than highly accurate ones on relevance, factuality, and completeness.
+**Reward-model evaluation in RLHF.** A reward model's benchmark accuracy fails to predict the policy it trains: varying only accuracy, my first study found an interior optimum, with the real signal in the training dynamics.
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**Exact multi-agent RL for cooperative LLMs.** Cooperative LLM histories are deterministic, so per-agent counterfactual credit is exactly computable. This delivers both a learning algorithm that outperforms every approximate multi-agent RL alternative and the first method-agnostic auditing tool for credit quality. Substrate for the longer goal.
+**Withdrawable shaping on the action interface.** Aids added to the action interface carry no invariance guarantee, and existing methods keep the correction forever: my second study co-trains a gated shaping aid whose absorption into the base policy is itself measured, so withdrawal is measured rather than hoped for.
+{: .angle }
+*Under review* (2026).
+{: .angle-paper }
+
+**Exact credit for cooperative LLM agents.** One shared outcome hides each decision's share: my third study shows the transcript makes every decision replayable, so per-decision credit is measured exactly instead of estimated.
 {: .angle }
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
+One problem, three faces: a learner's helpers must be judged from inside training, by their measured effect on the learner, and kept only for the help the learner absorbs.
+
 ### Where I'm going
 
-These pieces feed into a longer arc. My bet: **environments themselves must scale, train, and generalize the way models have.** This is the lever that lifts what AI systems can become.
+My bet: **environments themselves must scale, train, and generalize the way models have.** The road ahead trains the helpers themselves (reward model, verifier, curriculum) as one team serving one learner, and extends beyond text toward embodied learners.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen and Dawei Zhu, whose ongoing mentorship and guidance have shaped much of how I think about research.</em></small></p>
 
@@ -63,27 +70,34 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 <div lang="zh" markdown="1">
 
-我关注 **Environment-Centric AI**: 智能体在其中学习的环境的设计，跨越大语言模型、强化学习与具身智能系统。
+learner 在一组帮手中被训练：打分的 **reward model**、把关的 **verifier**、编排材料的 **curriculum**、修正动作的 shaping 辅助。learner 是最终上线的那一个模型；帮手们留在训练过程里，而它们自己的指标并不能告诉你它们对 learner 做了什么。我的工作让这些帮手可问责：它们对 learner 的效果在训练内部被测量，而非被假设；它们的贡献按 learner 在帮手撤走之后仍能做到的事来计数。
 
-我是 [香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/) 的二年级博士生，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
+我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
 ## 研究方向
 
-我研究 **Environment-Centric AI**: 将智能体的训练环境视为可设计的对象。环境不是给定的，它由若干部件构成（奖励、反馈、观测、评估），这些部件可以被分析、被重新设计。目前已展开的两项具体工作：
+三个领域用各自的术语撞上了同一堵墙。
 
-**奖励模型准确率作为一种环境设计选择。** 在相关性、事实性、完整性任务上，中等准确率的奖励模型训练出的语言模型反而优于高准确率的。
+**RLHF 中的 reward model 评估。** reward model 在 benchmark 上的准确率无法预测它训练出的 policy：仅改变准确率，我的第一项研究发现了一个内部最优点，真正的信号藏在训练动态之中。
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**协作式 LLM 系统的精确多智能体强化学习。** 协作式 LLM 的交互历史是确定性的，因此每个智能体的反事实贡献度可被精确计算。由此既得到一种超越所有近似多智能体 RL 方法的学习算法，也得到首个不依赖具体方法的可信度审计工具。这是更长远目标的底层基础。
+**action interface 上可撤回的 shaping。** 加在 action interface 上的辅助不附带不变性保证，而现有方法永远保留这一修正。我的第二项研究联合训练一个门控 shaping 辅助，其吸收到 base policy 的过程本身被测量，使得撤回是被测量的，而非被寄望的。
+{: .angle }
+*Under review* (2026).
+{: .angle-paper }
+
+**协作式 LLM agent 的精确 credit。** 一个共享的结果隐藏了每个决策的贡献份额。我的第三项研究表明，transcript 使得每个决策均可重放，因此 per-decision credit 是被精确测量的，而非被估算的。
 {: .angle }
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
+同一个问题的三张面孔：learner 的帮手必须在训练内部被评判，按它们对 learner 的可测量效果来衡量，并且只在 learner 真正吸收了帮助时才被保留。
+
 ### 后续方向
 
-这些工作都指向更长远的目标。我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 这才是抬升 AI 系统上限的真正杠杆。
+我的判断: **环境自身必须像模型一样可扩展、可训练、可泛化。** 今后的方向是把帮手本身（reward model、verifier、curriculum）作为服务同一个 learner 的一支团队来训练，并从文本向具身 learner 延伸。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
@@ -91,27 +105,34 @@ These pieces feed into a longer arc. My bet: **environments themselves must scal
 
 <div lang="ja" markdown="1">
 
-私が関心を持つのは **Environment-Centric AI**: 知的エージェントが学習する環境そのものを設計対象とすることです。大規模言語モデル、強化学習、身体性 AI を横断します。
+learner は一群の補助の中で訓練されます。採点する **reward model**、検証する **verifier**、教材を配する **curriculum**、行動を修正する shaping 補助。learner こそが最終的に実用へ送り出されるモデルであり、補助は訓練の中に留まります。そして、補助自身のスコアからは、それらが learner に何をしたかは分かりません。私の研究はこれらの補助に説明責任を持たせます。補助が learner に及ぼした効果を、仮定ではなく訓練内部で測定し、補助の貢献を、補助を取り除いた後に learner がなお発揮できる能力によって計数します。
 
-[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/) の博士課程 2 年生で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
+[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
 ## 研究内容
 
-私が研究しているのは **Environment-Centric AI**: 知的エージェントの訓練環境を「設計対象」として扱うことです。環境は所与のものではなく、複数の構成要素（報酬、フィードバック、観測、評価）から成り、それらは分析と再設計が可能です。これまでに進めた二つの具体的な研究は次の通りです:
+三つの分野が、それぞれの用語で同じ壁にぶつかっています。
 
-**報酬モデルの精度を環境設計として捉える。** 関連性、事実性、完全性のタスクにおいて、中程度の精度の報酬モデルが高精度のものよりも優れた言語モデルを訓練します。
+**RLHF における reward model の評価。** reward model の benchmark 精度は、それが訓練する policy を予測できません。精度のみを変化させた私の最初の研究は、内側に最適点が存在することを見出し、真の信号は訓練のダイナミクスにあることを示しました。
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**協調的 LLM のための厳密な多エージェント強化学習。** 協調的 LLM の相互作用履歴は決定的であるため、各エージェントの反事実的貢献度は厳密に計算可能です。この性質から、近似的な多エージェント RL を全て凌駕する学習アルゴリズムと、信用割当の品質を測る初の手法非依存な監査ツールが得られます。長期目標への基盤となります。
+**action interface 上の撤回可能な shaping。** action interface に付加された補助には不変性の保証がなく、既存の手法は修正を永続的に保持します。私の第二の研究は、ゲート付き shaping 補助を共同訓練し、base policy への吸収過程そのものを測定することで、撤回を希望的観測ではなく測定対象にします。
+{: .angle }
+*Under review* (2026).
+{: .angle-paper }
+
+**協調的 LLM agent の厳密な credit。** 一つの共有された結果は、各決定の寄与分を隠してしまいます。私の第三の研究は、transcript により全ての決定が再現可能であることを示し、per-decision credit を推定ではなく厳密に測定します。
 {: .angle }
 *Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
+一つの問題、三つの顔。learner の補助は訓練の内部で評価されなければなりません。その評価は、補助が learner に及ぼした測定可能な効果に基づき、learner が実際に吸収した助けだけが保持されるべきです。
+
 ### これから
 
-これらの仕事はより長期的な目標へとつながっています。私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** それこそが AI システムの到達点を引き上げる梃子になります。
+私の賭けはこうです: **環境そのものが、モデルと同じようにスケールし、訓練され、汎化される必要があります。** 今後の道筋は、補助そのもの（reward model、verifier、curriculum）を一つの learner に仕える一つのチームとして訓練し、テキストを超えて身体性 learner へと拡張することです。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 

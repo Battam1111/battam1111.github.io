@@ -7,12 +7,12 @@ first_name: Yanjun
 middle_name:
 last_name: Chen
 contact_note: >
-  <span lang="en">Best reached by email. I am open to collaborations on Environment-Centric AI, RLHF, reasoning, and embodied agents.</span><span lang="zh">邮件是联系我最好的方式。我对 Environment-Centric AI、RLHF、推理与具身智能体相关的合作持开放态度。</span><span lang="ja">ご連絡はメールが最適です。Environment-Centric AI、RLHF、推論、身体性エージェントに関する共同研究を歓迎します。</span>
+  <span lang="en">Best reached by email. I am open to collaborations on training-time helpers (reward models, verifiers, curricula), credit assignment, and reinforcement learning across LLMs and embodied systems.</span><span lang="zh">邮件是最好的联系方式。我对训练中的帮手（reward model、verifier、curriculum）、credit assignment 以及跨 LLM 与具身系统的强化学习方面的合作持开放态度。</span><span lang="ja">ご連絡はメールが最適です。訓練時の補助（reward model、verifier、curriculum）、credit assignment、そして LLM と身体性システムにまたがる強化学習に関する共同研究を歓迎します。</span>
 description: >
-  Yanjun Chen (陈彦筠), second-year PhD student at The Hong Kong Polytechnic University. I work on Environment-Centric AI: the design of environments in which intelligent agents learn, across LLMs, reinforcement learning, and embodied systems.
+  Yanjun Chen (陈彦筠), PhD candidate at The Hong Kong Polytechnic University. I measure what the helpers around a model (reward models, verifiers, curricula) contribute during training, and count only what the model keeps once the helpers are withdrawn.
 footer_text: >
   <span lang="en"><a href="https://github.com/Battam1111/battam1111.github.io">Source on GitHub</a>.</span><span lang="zh"><a href="https://github.com/Battam1111/battam1111.github.io">源代码在 GitHub</a>。</span><span lang="ja"><a href="https://github.com/Battam1111/battam1111.github.io">ソースは GitHub にて公開</a>。</span>
-keywords: Environment-Centric AI, RLHF, reward modeling, LLM reasoning, multi-agent reinforcement learning, embodied AI, PolyU
+keywords: reward models, verifiers, curriculum, credit assignment, reinforcement learning, RLHF, LLM post-training, training environments, PolyU
 lang: en
 icon: favicon.svg   # v10: typographic Y favicon (al-folio prepends assets/img/ automatically)
 

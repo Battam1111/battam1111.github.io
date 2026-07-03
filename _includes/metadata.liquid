@@ -267,7 +267,7 @@
         "alternateName": "陈彦筠",
         "url": "{{ site_url }}",
         "image": "{{ og_img_for_ld }}",
-        "jobTitle": "PhD Student",
+        "jobTitle": "PhD Candidate",
         "description": "{{ site.description | strip_newlines | strip }}",
         "email": "mailto:{{ site.data.socials.email }}",
         "affiliation": {
@@ -282,12 +282,12 @@
           "url": "https://english.jnu.edu.cn/"
         },
         "knowsAbout": [
-          "Environment-Centric AI",
+          "Training Environments",
+          "Reward Models",
           "Reinforcement Learning from Human Feedback",
-          "Reward Modeling",
+          "Credit Assignment",
           "Large Language Models",
           "Multi-Agent Reinforcement Learning",
-          "Credit Assignment",
           "Embodied AI"
         ]{% if sameaslinks != blank %},
         "sameAs": {{ sameaslinks | jsonify }}{% endif %}
