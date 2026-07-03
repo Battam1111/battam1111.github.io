@@ -35,7 +35,7 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-A learner is trained inside an apparatus of helpers: a **reward model** that scores it, **verifiers** that check it, a **curriculum** that feeds it, shaping aids that steer it. The learner is the one model that ships; the helpers stay behind, and their own scores do not tell you what they did to it. My work makes these helpers accountable: their effect on the learner measured from inside training rather than assumed, and their contribution counted by what the learner can still do once they are withdrawn.
+Training surrounds a model with helpers: **reward models**, **verifiers**, **curricula**, shaping aids. I measure what each helper actually contributes, from inside training, and count only what the model keeps once the helpers are withdrawn.
 
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
 
@@ -70,7 +70,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 <div lang="zh" markdown="1">
 
-learner 在一组帮手中被训练：打分的 **reward model**、把关的 **verifier**、编排材料的 **curriculum**、修正动作的 shaping 辅助。learner 是最终上线的那一个模型；帮手们留在训练过程里，而它们自己的指标并不能告诉你它们对 learner 做了什么。我的工作让这些帮手可问责：它们对 learner 的效果在训练内部被测量，而非被假设；它们的贡献按 learner 在帮手撤走之后仍能做到的事来计数。
+训练用一组帮手环绕一个模型：**reward model**、**verifier**、**curriculum**、shaping 辅助。我在训练内部测量每个帮手的实际贡献，只计入帮手撤走后模型仍保有的那部分。
 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
 
@@ -105,7 +105,7 @@ learner 在一组帮手中被训练：打分的 **reward model**、把关的 **v
 
 <div lang="ja" markdown="1">
 
-learner は一群の補助の中で訓練されます。採点する **reward model**、検証する **verifier**、教材を配する **curriculum**、行動を修正する shaping 補助。learner こそが最終的に実用へ送り出されるモデルであり、補助は訓練の中に留まります。そして、補助自身のスコアからは、それらが learner に何をしたかは分かりません。私の研究はこれらの補助に説明責任を持たせます。補助が learner に及ぼした効果を、仮定ではなく訓練内部で測定し、補助の貢献を、補助を取り除いた後に learner がなお発揮できる能力によって計数します。
+訓練はモデルを補助で取り囲みます。**reward model**、**verifier**、**curriculum**、shaping 補助。私は各補助が実際に何を貢献しているかを訓練の内部から測定し、補助を取り除いた後にモデルが保持しているものだけを計数します。
 
 [香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
 
