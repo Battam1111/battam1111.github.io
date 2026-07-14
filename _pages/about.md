@@ -19,7 +19,7 @@ profile:
       <a href="https://github.com/Battam1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
       <a href="https://x.com/YanjunChen1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
       <a href="https://orcid.org/0009-0001-9065-9137" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i><span>ORCID</span></a>
-      <a class="pl-cv" href="/assets/pdf/cv.pdf" target="_blank"><i class="fa-regular fa-file-pdf"></i><span><span lang="en">CV (PDF)</span><span lang="zh">简历 (PDF)</span><span lang="ja">履歴書 (PDF)</span></span></a>
+      <a class="pl-cv" href="/assets/pdf/cv.pdf" target="_blank"><i class="fa-regular fa-file-pdf"></i><span><span lang="en">CV</span><span lang="zh">简历</span><span lang="ja">履歴書</span></span></a>
     </div>
 
 selected_papers: true
@@ -38,7 +38,7 @@ latest_posts:
 
 I want to make the environment **trainable**, the way models are, and with it to lift the ceiling of what AI can become. Today the environment is not even a single thing: a **reward model** here, a **verifier** there, a **curriculum** somewhere else, each built and judged on its own. My work begins with measurement: what does each piece actually contribute to the model it trains.
 
-I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN).
+I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN), with joint doctoral training at the Eastern Institute of Technology (EIT), Ningbo.
 
 ## Research
 
@@ -73,7 +73,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 我想让环境像模型一样**能训练起来**，并以此把 AI 的上限抬上去。今天的环境甚至还不是一个整体：这边一个 **reward model**，那边一个 **verifier**，再加一个 **curriculum**，各自被单独构建、单独评判。我的工作从测量开始：每个部件到底为它训练的模型贡献了什么。
 
-我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授。
+我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。
 
 ## 研究方向
 
@@ -108,7 +108,7 @@ My bet: **environments themselves must scale, train, and generalize the way mode
 
 私は、環境そのものを、モデルと同じように**訓練できるもの**にしたい。そしてそれによって、AI の到達点を引き上げたいのです。今日の環境は、まだ一つのまとまりですらありません。こちらに **reward model**、あちらに **verifier**、さらに **curriculum**。それぞれが別々に作られ、別々に評価されています。私の研究は測定から始めます。各部品が、訓練するモデルに実際に何を貢献しているのか。
 
-[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導を受けています。
+[香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導のもと、東方理工（EIT、寧波）との共同育成プログラムに参加しています。
 
 ## 研究内容
 
