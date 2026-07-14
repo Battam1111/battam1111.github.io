@@ -39,6 +39,7 @@
   --global-text-color: #1A1A1A;
   --global-text-color-light: #595959;
   --global-divider-color: rgba(0, 0, 0, 0.10);
+  --profile-ring: rgba(0, 0, 0, 0.13);   /* theme-aware headshot edge (v27) */
 
   /* Accent — Princeton/Berkeley blue (used ONLY on links + active nav) */
   --global-theme-color: #003366;
@@ -64,6 +65,7 @@ html[data-theme="dark"] {
   --global-text-color: #E8EAED;
   --global-text-color-light: #9AA0A6;
   --global-divider-color: rgba(255, 255, 255, 0.10);
+  --profile-ring: rgba(255, 255, 255, 0.16);   /* light edge lifts the dark headshot off the dark bg (v27) */
 
   --global-theme-color: #7AB8FF;   /* lifted blue for dark contrast */
   --global-hover-color: #A8CEFF;
@@ -309,18 +311,17 @@ ol.bibliography > li,
   max-width: 220px !important;
   width: 100% !important;
   height: auto !important;
-  border-radius: 4px !important;
-  border: 0 !important;
-  box-shadow:
-    0 2px 16px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
+  border-radius: 8px !important;
+  /* v27: theme-aware hairline ring so the headshot has a crisp edge in BOTH
+     modes. The old pure-black box-shadow was invisible on the dark bg, so a
+     dark night photo bled into the page. --profile-ring flips per theme. */
+  border: 1px solid var(--profile-ring) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 .profile figure img:hover,
 .profile picture img:hover {
-  box-shadow:
-    0 2px 18px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px);
 }
 
@@ -377,12 +378,16 @@ ol.bibliography > li,
     float: none !important;
     margin: 0 auto 1.75rem !important;
     padding: 0 !important;
-    max-width: 144px !important;
+    max-width: 240px !important;   /* v27: was 144px; the labelled contact list needs room */
     text-align: center;
   }
   .profile.float-left .more-info,
   .profile.float-right .more-info {
     text-align: center;
+  }
+  /* v27: centre the labelled list rows on mobile (divider still spans full width) */
+  .profile .more-info .profile-links {
+    align-items: center;
   }
 }
 
@@ -408,40 +413,68 @@ ol.bibliography > li,
   display: block;
 }
 
-/* v14: profile inline icons row (Scholar / GitHub / X / ORCID / CV) */
-.profile .more-info p.profile-links {
-  margin-top: 0.9rem;
-  display: flex;
-  gap: 0.85rem;
-  align-items: center;
-  font-size: 1.05rem;
-  flex-wrap: wrap;
+/* v27: identity anchor — name + role under the headshot (card is self-contained) */
+.profile .more-info .profile-name {
+  margin: 0.1rem 0 0 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--global-text-color);
 }
-.profile .more-info p.profile-links a {
+.profile .more-info .profile-role {
+  margin: 0.12rem 0 0 0;
+  font-size: 0.8rem;
   color: var(--global-text-color-light);
-  text-decoration: none;
-  transition: color 0.15s ease, transform 0.15s ease;
-  display: inline-flex;
-}
-.profile .more-info p.profile-links a:hover {
-  color: var(--global-theme-color);
-  transform: translateY(-1px);
 }
 
-/* v14: explicit CV link text below icons */
-.profile .more-info p.profile-cv {
-  margin-top: 0.45rem;
-  font-size: 0.84rem;
+/* v27: vertical LABELLED contact list (icon + short label per row).
+   Replaces the old bare horizontal icon row + separate CV text link:
+   self-documenting, one clear CV entry, no icon guessing. */
+.profile .more-info .profile-links {
+  margin: 0.85rem 0 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--global-divider-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.2;
 }
-.profile .more-info p.profile-cv a {
+.profile .more-info .profile-links a,
+.profile .more-info .profile-links .pl-loc {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--global-text-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.profile .more-info .profile-links .pl-mail,
+.profile .more-info .profile-links .pl-loc {
+  color: var(--global-text-color-light);
+}
+.profile .more-info .profile-links .pl-mail span {
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+.profile .more-info .profile-links i {
+  width: 1.2rem;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--global-text-color-light);
+}
+.profile .more-info .profile-links a:hover,
+.profile .more-info .profile-links a:hover i {
   color: var(--global-theme-color);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.16em;
-  font-weight: 500;
 }
-.profile .more-info p.profile-cv a:hover {
-  text-decoration-thickness: 2px;
+.profile .more-info .profile-links .pl-cv,
+.profile .more-info .profile-links .pl-cv i {
+  color: var(--global-theme-color);
+  font-weight: 500;
 }
 
 /* ============================================================

@@ -10,16 +10,17 @@ profile:
   image: prof_pic.jpg
   image_circular: false
   more_info: >
-    <p><i class="fa-regular fa-envelope" style="margin-right:0.4em;color:var(--global-text-color-light);"></i><span style="white-space:nowrap;">yan&#8209;jun.chen@connect.polyu.hk</span></p>
-    <p><span lang="en">Hong Kong</span><span lang="zh">香港</span><span lang="ja">香港</span></p>
-    <p class="profile-links">
-      <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i></a>
-      <a href="https://github.com/Battam1111" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i></a>
-      <a href="https://x.com/YanjunChen1111" title="X / Twitter" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="https://orcid.org/0009-0001-9065-9137" title="ORCID" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i></a>
-      <a href="/assets/pdf/cv.pdf" title="CV (PDF)" target="_blank"><i class="fa-regular fa-file-pdf"></i></a>
-    </p>
-    <p class="profile-cv"><a href="/assets/pdf/cv.pdf" target="_blank"><span lang="en">CV (PDF) &rarr;</span><span lang="zh">简历 (PDF) &rarr;</span><span lang="ja">履歴書 (PDF) &rarr;</span></a></p>
+    <p class="profile-name">Yanjun Chen</p>
+    <p class="profile-role"><span lang="en">PhD Candidate, PolyU</span><span lang="zh">博士候选人 · 理大</span><span lang="ja">博士候補者 · PolyU</span></p>
+    <div class="profile-links">
+      <a class="pl-mail" href="mailto:yan-jun.chen@connect.polyu.hk"><i class="fa-regular fa-envelope"></i><span>yan&#8209;jun.chen@connect.polyu.hk</span></a>
+      <span class="pl-loc"><i class="fa-solid fa-location-dot"></i><span><span lang="en">Hong Kong</span><span lang="zh">香港</span><span lang="ja">香港</span></span></span>
+      <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i><span>Google Scholar</span></a>
+      <a href="https://github.com/Battam1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
+      <a href="https://x.com/YanjunChen1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
+      <a href="https://orcid.org/0009-0001-9065-9137" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i><span>ORCID</span></a>
+      <a class="pl-cv" href="/assets/pdf/cv.pdf" target="_blank"><i class="fa-regular fa-file-pdf"></i><span><span lang="en">CV (PDF)</span><span lang="zh">简历 (PDF)</span><span lang="ja">履歴書 (PDF)</span></span></a>
+    </div>
 
 selected_papers: true
 social: true

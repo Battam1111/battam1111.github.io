@@ -72,7 +72,7 @@ og_image: og-card.png    # 1200x630 social share card (assets/img/og-card.png)
 
 # v23: manual cache-bust (al-folio's bust_css_cache is broken — emits empty MD5 because it
 # hashes pre-Sass source). Bumped on every visual/content change so browsers pick up new CSS.
-asset_version: v23.1
+asset_version: v27
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
