@@ -17,8 +17,18 @@ nav_order: 2
 
 {% include bib_search.liquid %}
 
+## Peer-reviewed
+
 <div class="publications">
 
-{% bibliography %}
+{% bibliography --query @*[pub_type=peer_reviewed] %}
+
+</div>
+
+## Preprints & under review
+
+<div class="publications">
+
+{% bibliography --query @*[pub_type=preprint] %}
 
 </div>
