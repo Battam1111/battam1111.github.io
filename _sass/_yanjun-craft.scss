@@ -389,6 +389,14 @@ ol.bibliography > li,
   .profile .more-info .profile-links {
     align-items: center;
   }
+  /* v27.1: hide the card's name + role on mobile. When stacked, the page h1
+     (name) and subtitle (role) sit right above the card, so repeating them here
+     is a stutter. Desktop keeps them (the h1 is a full-width header away from
+     the left sidebar card, so the anchor is not redundant there). */
+  .profile .more-info .profile-name,
+  .profile .more-info .profile-role {
+    display: none;
+  }
 }
 
 /* Profile figure — align top of image with first line of bio (asymmetric) */
