@@ -35,7 +35,13 @@ html, body {
   font-family: var(--font-body);
   font-size: 9.7pt;
   line-height: 1.4;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
+  /* CRITICAL for the PDF text layer / ATS: any OpenType feature that SUBSTITUTES
+     a glyph (liga, calt, ss01, cv11, ...) makes Chromium emit a Private-Use-Area
+     codepoint in the PDF ToUnicode map (the substituted glyph has no cmap entry),
+     so copy/paste and ATS parsers get garbage (e.g. every "a" became U+E02C).
+     Keep only kern (pure spacing, no substitution). Do NOT re-enable liga/ss/cv. */
+  font-feature-settings: "kern" 1, "liga" 0, "clig" 0, "calt" 0, "ss01" 0, "cv11" 0;
+  font-variant-ligatures: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -147,7 +153,7 @@ p.lede em { color: var(--ink); font-style: italic; }
 .entry-head .entry-where { color: var(--ink); }
 .entry-head .entry-when {
   color: var(--ink-light);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: normal;
   white-space: nowrap;
   font-size: 9pt;
 }
@@ -201,7 +207,7 @@ ol.pubs li::before {
   position: absolute;
   left: 0;
   top: 0;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: normal;
   color: var(--ink-light);
   font-size: 9.2pt;
 }
@@ -249,7 +255,7 @@ ul.honors .what {
 }
 ul.honors .when {
   color: var(--ink-light);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: normal;
   white-space: nowrap;
   font-size: 9pt;
 }
