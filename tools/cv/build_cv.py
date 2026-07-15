@@ -36,7 +36,6 @@ def build():
                     '600 16px "Inter"', '700 16px "Inter"',
                     'italic 400 16px "Inter"',
                     '600 24px "Newsreader"',
-                    'italic 400 16px "Newsreader"',
                 ];
                 await Promise.all(wants.map(w => document.fonts.load(w)));
                 await document.fonts.ready;
@@ -44,7 +43,6 @@ def build():
         )
         page.wait_for_function('document.fonts.check(\'400 16px "Inter"\')', timeout=15000)
         page.wait_for_function('document.fonts.check(\'600 24px "Newsreader"\')', timeout=15000)
-        page.wait_for_function('document.fonts.check(\'italic 400 16px "Newsreader"\')', timeout=15000)
         page.wait_for_timeout(300)
         page.emulate_media(media="print")
         page.pdf(
