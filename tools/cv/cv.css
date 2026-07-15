@@ -19,6 +19,10 @@
   --accent: #000000;
   --sep: #AAAAAA;
   --bg: #FFFFFF;
+  /* Type identity mirrors the homepage: Newsreader serif for display (name +
+     section heads), Inter sans for everything read in running text. */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -28,7 +32,7 @@ html, body {
   padding: 0;
   color: var(--ink-mid);
   background: var(--bg);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body);
   font-size: 9.7pt;
   line-height: 1.4;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
@@ -37,6 +41,11 @@ html, body {
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+/* Italic runs (venues, cited titles, the thesis, the under-review line) render
+   in Newsreader italic, the classic serif-italic academic convention. Sans body
+   keeps names and titles scannable; serif italic carries the cited works. */
+em, ol.pubs li.plain { font-family: var(--font-display); font-style: italic; }
 
 /* ----------------------------------------------------------
    HEADER — name + role + contact strip
@@ -48,11 +57,12 @@ a:hover { text-decoration: underline; }
   border-bottom: 0.75pt solid rgba(0, 0, 0, 0.25);
 }
 .cv-header .name {
-  margin: 0 0 0.22rem 0;
-  font-size: 24pt;
-  font-weight: 700;
-  letter-spacing: -0.018em;
-  line-height: 1.05;
+  margin: 0 0 0.24rem 0;
+  font-family: var(--font-display);
+  font-size: 26pt;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.02;
   color: var(--ink);
 }
 .cv-header .role {
@@ -86,13 +96,13 @@ section:first-of-type { margin-top: 0.3rem; }
 
 h2 {
   display: flex;
-  align-items: center;
-  gap: 0.5em;
+  align-items: baseline;
+  gap: 0.55em;
   margin: 0 0 0.2rem 0;
-  font-size: 10pt;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 13pt;
+  font-weight: 600;
+  letter-spacing: -0.004em;
   color: var(--ink);
   break-after: avoid;
 }
@@ -101,7 +111,7 @@ h2::after {
   flex: 1;
   border-bottom: 0.75pt solid var(--rule);
   position: relative;
-  top: 0.5pt;
+  bottom: 0.14em;
 }
 
 h3.pub-cat {

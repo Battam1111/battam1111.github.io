@@ -15,6 +15,12 @@
   @font-face { font-family: "Inter"; src: url("../fonts/Inter-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
   @font-face { font-family: "Inter"; src: url("../fonts/Inter-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
   @font-face { font-family: "Inter"; src: url("../fonts/Inter-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: block; }
+  /* Newsreader (static SemiBold) for the name + section heads, mirroring the
+     homepage identity (Newsreader serif display + Inter sans body). Self-hosted
+     for the same reason as Inter: headless Chromium cannot reliably fetch Google
+     Fonts at build time. Static weight avoids the anonymous-Type3 export problem. */
+  @font-face { font-family: "Newsreader"; src: url("../fonts/Newsreader-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: "Newsreader"; src: url("../fonts/Newsreader-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: block; }
 </style>
 <link rel="stylesheet" href="cv.css">
 </head>
@@ -94,7 +100,7 @@
       <span class="title">The Accuracy Paradox in RLHF: When Better Reward Models Don&rsquo;t Yield Better Language Models.</span>
       <em>EMNLP 2024</em>.
     </li>
-    <li class="plain">One further first&#8209;author manuscript under review, 2026.</li>
+    <li class="plain">One further first-author manuscript under review, 2026.</li>
   </ol>
 
   <h3 class="pub-cat">Co&#8209;authored</h3>
@@ -181,7 +187,7 @@
       <a href="https://huggingface.co/datasets/Battam/3D-CoT">huggingface.co/datasets/Battam/3D&#8209;CoT</a>
     </div>
     <div class="entry-body">
-      Chain&#8209;of&#8209;thought annotations for 3D vision&#8209;language alignment, released with <em>Integrating Chain&#8209;of&#8209;Thought for Multimodal Alignment</em> (arXiv:2503.06232).
+      Chain&#8209;of&#8209;thought annotations for 3D vision&#8209;language alignment, released with <em>Integrating Chain-of-Thought for Multimodal Alignment</em> (arXiv:2503.06232).
     </div>
   </div>
 </section>
@@ -201,7 +207,7 @@
   <dl class="skills">
     <dt>Programming</dt><dd>Python, C/C++, Bash; Git, Linux.</dd>
     <dt>Frameworks</dt><dd>PyTorch, Hugging&nbsp;Face Transformers / TRL / Datasets.</dd>
-    <dt>Languages</dt><dd>Mandarin (native), English (professional).</dd>
+    <dt>Languages</dt><dd>Mandarin (native), English (professional), Japanese (elementary).</dd>
   </dl>
 </section>
 

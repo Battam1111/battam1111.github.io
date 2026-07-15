@@ -32,15 +32,19 @@ def build():
         page.evaluate(
             """async () => {
                 const wants = [
-                    '300 16px "Inter"', '400 16px "Inter"', '500 16px "Inter"',
+                    '400 16px "Inter"', '500 16px "Inter"',
                     '600 16px "Inter"', '700 16px "Inter"',
-                    '400 12px "JetBrains Mono"', '500 12px "JetBrains Mono"',
+                    'italic 400 16px "Inter"',
+                    '600 24px "Newsreader"',
+                    'italic 400 16px "Newsreader"',
                 ];
                 await Promise.all(wants.map(w => document.fonts.load(w)));
                 await document.fonts.ready;
             }"""
         )
         page.wait_for_function('document.fonts.check(\'400 16px "Inter"\')', timeout=15000)
+        page.wait_for_function('document.fonts.check(\'600 24px "Newsreader"\')', timeout=15000)
+        page.wait_for_function('document.fonts.check(\'italic 400 16px "Newsreader"\')', timeout=15000)
         page.wait_for_timeout(300)
         page.emulate_media(media="print")
         page.pdf(
