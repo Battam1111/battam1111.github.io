@@ -1,23 +1,23 @@
 /* ============================================================
    Yanjun Chen — CV stylesheet
-   Print-targeted. Pure grayscale palette (no blue): cool ink #1A1A1A
-   body / light gray #595959 secondary / pure black #000 for section
-   heads. Distinct from the homepage's Princeton blue accent — CV stays
-   classical academic register, black-and-gray only.
-   Single-column, A4, tight margins.
+   Print-targeted. Single-column, A4, pure grayscale (no color).
+   v2 (2026-07): three-tier grayscale + leader-line section heads +
+   wider type scale + breathing rhythm. Elegance via hierarchy and
+   whitespace, not ornament. Runs 2 pages (13 publications).
    ============================================================ */
 
 @page {
   size: A4;
-  margin: 0.4in 0.7in 0.35in 0.7in;
+  margin: 0.5in 0.7in 0.45in 0.7in;
 }
 
 :root {
-  --ink: #1A1A1A;
-  --ink-light: #595959;
-  --rule: rgba(0, 0, 0, 0.12);
+  --ink: #111111;        /* tier 1: name, headers, titles, self-name, institutions */
+  --ink-mid: #404040;    /* tier 2: body prose, author lists, venues, role */
+  --ink-light: #6B6B6B;  /* tier 3: dates, contact strip, dt labels, counters */
+  --rule: rgba(0, 0, 0, 0.22);
   --accent: #000000;
-  --sep: #A0A0A0;
+  --sep: #AAAAAA;
   --bg: #FFFFFF;
 }
 
@@ -26,11 +26,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  color: var(--ink);
+  color: var(--ink-mid);
   background: var(--bg);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 9.7pt;
-  line-height: 1.33;
+  line-height: 1.4;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
   -webkit-font-smoothing: antialiased;
 }
@@ -43,22 +43,22 @@ a:hover { text-decoration: underline; }
    ---------------------------------------------------------- */
 
 .cv-header {
-  margin-bottom: 0.42rem;
-  padding-bottom: 0.42rem;
-  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.75pt solid rgba(0, 0, 0, 0.25);
 }
 .cv-header .name {
-  margin: 0 0 0.18rem 0;
-  font-size: 22pt;
+  margin: 0 0 0.22rem 0;
+  font-size: 24pt;
   font-weight: 700;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.018em;
   line-height: 1.05;
   color: var(--ink);
 }
 .cv-header .role {
-  margin: 0 0 0.4rem 0;
+  margin: 0 0 0.42rem 0;
   font-size: 10pt;
-  color: var(--ink-light);
+  color: var(--ink-mid);
   font-weight: 400;
 }
 .cv-header .contact {
@@ -71,59 +71,73 @@ a:hover { text-decoration: underline; }
   color: var(--sep);
   margin: 0 0.35em;
 }
-.cv-header .contact a { color: var(--ink); }
+.cv-header .contact a { color: var(--ink-mid); }
 .cv-header .contact a:hover { color: var(--accent); }
 
 /* ----------------------------------------------------------
-   SECTIONS
+   SECTIONS — leader-line headers (word left, hairline rule to right margin)
    ---------------------------------------------------------- */
 
 section {
-  margin-top: 0.08rem;
-  margin-bottom: 0.05rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.08rem;
 }
+section:first-of-type { margin-top: 0.3rem; }
 
 h2 {
-  font-size: 9.5pt;
-  font-weight: 600;
-  letter-spacing: 0.09em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 0 0.2rem 0;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin: 0.2rem 0 0.12rem 0;
-  padding-bottom: 0.1rem;
-  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  break-after: avoid;
+}
+h2::after {
+  content: "";
+  flex: 1;
+  border-bottom: 0.75pt solid var(--rule);
+  position: relative;
+  top: 0.5pt;
 }
 
 h3.pub-cat {
-  font-size: 9pt;
+  font-size: 9.2pt;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--ink);
-  margin: 0.34rem 0 0.14rem 0;
+  padding-left: 0.4rem;
+  border-left: 2.5pt solid rgba(0, 0, 0, 0.28);
+  margin: 0.34rem 0 0.16rem 0;
+  break-after: avoid;
 }
-h3.pub-cat:first-of-type { margin-top: 0.14rem; }
+h3.pub-cat:first-of-type { margin-top: 0.12rem; }
 
 p { margin: 0 0 0.35rem 0; }
 
 p.lede {
   margin-top: 0.05rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
   font-size: 10pt;
-  line-height: 1.36;
+  line-height: 1.42;
+  color: var(--ink-mid);
   max-width: 100%;
 }
-p.lede strong { font-weight: 600; }
+p.lede strong { font-weight: 600; color: var(--ink); }
 p.lede em { color: var(--ink); font-style: italic; }
 
 /* ----------------------------------------------------------
-   ENTRY — two-line block (head row + body)
-   Used for Education + Open Source
+   ENTRY — two-line block (head row + body). Education + Open Source.
    ---------------------------------------------------------- */
 
 .entry {
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.3rem;
+  break-inside: avoid;
 }
-.entry:last-child { margin-bottom: 0.1rem; }
+.entry:last-child { margin-bottom: 0.12rem; }
 .entry-head {
   display: flex;
   justify-content: space-between;
@@ -142,9 +156,9 @@ p.lede em { color: var(--ink); font-style: italic; }
 .entry-head a:hover { color: var(--accent); text-decoration: underline; }
 .entry-body {
   font-size: 9.6pt;
-  color: var(--ink-light);
-  margin-top: 0.08rem;
-  line-height: 1.36;
+  color: var(--ink-mid);
+  margin-top: 0.1rem;
+  line-height: 1.4;
 }
 .entry-body em { color: var(--ink); font-style: italic; }
 
@@ -152,19 +166,35 @@ p.lede em { color: var(--ink); font-style: italic; }
    PUBLICATIONS
    ---------------------------------------------------------- */
 
+p.pub-note {
+  margin: 0.05rem 0 0.28rem 0;
+  font-size: 8.6pt;
+  color: var(--ink-light);
+  letter-spacing: 0.005em;
+}
+p.pub-note .self { font-weight: 700; color: var(--ink); }
+p.pub-note a { color: var(--ink-mid); }
+
 ol.pubs {
   list-style: none;
-  margin: 0 0 0.3rem 0;
+  margin: 0 0 0.25rem 0;
   padding: 0;
   counter-reset: pub;
 }
+ol.pubs li a {
+  color: var(--ink-light);
+  font-size: 8.8pt;
+  white-space: nowrap;
+}
+ol.pubs li a:hover { color: var(--accent); text-decoration: underline; }
 ol.pubs li {
   position: relative;
-  padding-left: 1.05rem;
-  margin-bottom: 0.15rem;
+  padding-left: 1.1rem;
+  margin-bottom: 0.32rem;
   font-size: 9.6pt;
-  line-height: 1.34;
-  color: var(--ink-light);
+  line-height: 1.4;
+  color: var(--ink-mid);
+  break-inside: avoid;
 }
 ol.pubs li::before {
   counter-increment: pub;
@@ -176,16 +206,22 @@ ol.pubs li::before {
   color: var(--ink-light);
   font-size: 9.2pt;
 }
+ol.pubs li.plain {
+  padding-left: 1.1rem;
+  color: var(--ink-light);
+  font-style: italic;
+}
+ol.pubs li.plain::before { content: ""; counter-increment: none; }
 ol.pubs li .self {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 700;
 }
 ol.pubs li .title {
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 600;
 }
 ol.pubs li em {
-  color: var(--ink-light);
+  color: var(--ink-mid);
   font-style: italic;
 }
 
@@ -202,12 +238,13 @@ ul.honors li {
   display: flex;
   gap: 0.85rem;
   align-items: baseline;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
   font-size: 9.6pt;
-  line-height: 1.32;
+  line-height: 1.38;
+  break-inside: avoid;
 }
 ul.honors .when {
-  flex: 0 0 4.5rem;
+  flex: 0 0 5rem;
   color: var(--ink-light);
   font-variant-numeric: tabular-nums;
   font-size: 8.8pt;
@@ -226,7 +263,7 @@ dl.skills {
   margin: 0;
   display: grid;
   grid-template-columns: 6.75rem 1fr;
-  row-gap: 0.07rem;
+  row-gap: 0.14rem;
   column-gap: 0.85rem;
 }
 dl.skills dt {
@@ -237,24 +274,5 @@ dl.skills dt {
 dl.skills dd {
   margin: 0;
   font-size: 9.6pt;
-  color: var(--ink);
+  color: var(--ink-mid);
 }
-
-/* ----------------------------------------------------------
-   FOOTER
-   ---------------------------------------------------------- */
-
-.cv-footer {
-  margin-top: 0.6rem;
-  padding-top: 0.35rem;
-  border-top: 1px solid var(--rule);
-  font-size: 8pt;
-  color: var(--ink-light);
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.cv-footer .dot { color: var(--rule); }
-.cv-footer a { color: var(--ink-light); }
-.cv-footer a:hover { color: var(--accent); }
