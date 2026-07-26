@@ -171,15 +171,6 @@ p.lede em { color: var(--ink); font-style: italic; }
    PUBLICATIONS
    ---------------------------------------------------------- */
 
-p.pub-note {
-  margin: 0.05rem 0 0.28rem 0;
-  font-size: 8.6pt;
-  color: var(--ink-light);
-  letter-spacing: 0.005em;
-}
-p.pub-note .self { font-weight: 700; color: var(--ink); }
-p.pub-note a { color: var(--ink-mid); }
-
 ol.pubs {
   list-style: none;
   margin: 0 0 0.25rem 0;
@@ -230,35 +221,10 @@ ol.pubs li em {
   font-style: italic;
 }
 
-/* ----------------------------------------------------------
-   HONORS list — date column on left
-   ---------------------------------------------------------- */
-
-ul.honors {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-ul.honors li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: baseline;
-  margin-bottom: 0.2rem;
-  font-size: 9.6pt;
-  line-height: 1.38;
-  break-inside: avoid;
-}
-ul.honors .what {
-  color: var(--ink);
-  flex: 1;
-}
-ul.honors .when {
-  color: var(--ink-light);
-  font-variant-numeric: normal;
-  white-space: nowrap;
-  font-size: 9pt;
-}
+/* No Honors section: both awards are pre-PhD, so they live as an "Awards:"
+   sub-line inside the Jinan entry (the early-career fold, 5/11 of the
+   reference sample's early-career tier). When PhD-era awards land, restore a
+   dedicated section after Publications (11/11 of the later-stage tier has one). */
 
 /* ----------------------------------------------------------
    SKILLS dl
