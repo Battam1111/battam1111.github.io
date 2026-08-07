@@ -42,24 +42,22 @@ In reinforcement learning, models are **trainable**. The environments that train
 
 ## Research
 
-Three fields have hit the same wall in their own vocabularies.
+What does the environment actually do to the model it trains?
 
-**Reward-model evaluation in RLHF.** A reward model's benchmark accuracy fails to predict the policy it trains: varying only accuracy, my first study found an interior optimum, with the real signal in the training dynamics.
+**Reward-model evaluation in RLHF.** A more accurate reward model does not always train a better policy.
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**Withdrawable shaping on the action interface.** Aids added to the action interface carry no invariance guarantee, and existing methods keep the correction forever: my second study co-trains a gated shaping aid whose absorption into the base policy is itself measured, so withdrawal is measured rather than hoped for.
+**Withdrawable shaping on the action interface.** Shaping aids are added to help the agent learn, then kept forever.
 {: .angle }
 *Under review* (2026).
 {: .angle-paper }
 
-**Exact credit for cooperative LLM agents.** One shared outcome hides each decision's share: my third study shows the transcript makes every decision replayable, so per-decision credit is measured exactly instead of estimated.
+**Exact credit for cooperative LLM agents.** When agents cooperate, a shared outcome hides what each decision contributed.
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*Exact Is Easier* (arXiv:2603.06859, in submission).
 {: .angle-paper }
-
-One problem, three faces: the models that train a model must be judged from inside training, by their measured effect on it, and kept only for the help it absorbs.
 
 ### Where I'm Going
 
@@ -77,24 +75,22 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ## 研究方向
 
-三个领域用各自的术语撞上了同一堵墙。
+环境到底对它训练的模型做了什么？
 
-**RLHF 中的 reward model 评估。** reward model 在 benchmark 上的准确率无法预测它训练出的 policy：仅改变准确率，我的第一项研究发现了一个内部最优点，真正的信号藏在训练动态之中。
+**RLHF 中的 reward model 评估。** 更准确的 reward model，并不总是训练出更好的 policy。
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**action interface 上可撤回的 shaping。** 加在 action interface 上的辅助不附带不变性保证，而现有方法永远保留这一修正。我的第二项研究联合训练一个门控 shaping 辅助，其吸收到 base policy 的过程本身被测量，使得撤回是被测量的，而非被寄望的。
+**action interface 上可撤回的 shaping。** Shaping 辅助被加入来帮助 agent 学习，然后永远留了下来。
 {: .angle }
 *Under review* (2026).
 {: .angle-paper }
 
-**协作式 LLM agent 的精确 credit。** 一个共享的结果隐藏了每个决策的贡献份额。我的第三项研究表明，transcript 使得每个决策均可重放，因此 per-decision credit 是被精确测量的，而非被估算的。
+**协作式 LLM agent 的精确 credit。** 当 agent 协作时，一个共享的结果隐藏了每个决策的实际贡献。
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*Exact Is Easier* (arXiv:2603.06859, in submission).
 {: .angle-paper }
-
-同一个问题的三张面孔：训练模型的那些模型，必须在训练内部、按它们对模型的实测效果来评判，并且只为被模型吸收的帮助而保留。
 
 ### 后续方向
 
@@ -112,24 +108,22 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ## 研究内容
 
-三つの分野が、それぞれの用語で同じ壁にぶつかっています。
+環境は、訓練するモデルに実際のところ何をしているのか。
 
-**RLHF における reward model の評価。** reward model の benchmark 精度は、それが訓練する policy を予測できません。精度のみを変化させた私の最初の研究は、内側に最適点が存在することを見出し、真の信号は訓練のダイナミクスにあることを示しました。
+**RLHF における reward model の評価。** より精度の高い reward model が、必ずしもより良い policy を訓練するわけではない。
 {: .angle }
 *The Accuracy Paradox in RLHF* (EMNLP 2024).
 {: .angle-paper }
 
-**action interface 上の撤回可能な shaping。** action interface に付加された補助には不変性の保証がなく、既存の手法は修正を永続的に保持します。私の第二の研究は、ゲート付き shaping 補助を共同訓練し、base policy への吸収過程そのものを測定することで、撤回を希望的観測ではなく測定対象にします。
+**action interface 上の撤回可能な shaping。** Shaping 補助は agent の学習を助けるために加えられ、そのまま永久に残される。
 {: .angle }
 *Under review* (2026).
 {: .angle-paper }
 
-**協調的 LLM agent の厳密な credit。** 一つの共有された結果は、各決定の寄与分を隠してしまいます。私の第三の研究は、transcript により全ての決定が再現可能であることを示し、per-decision credit を推定ではなく厳密に測定します。
+**協調的 LLM agent の厳密な credit。** Agent が協調するとき、共有された結果は各決定の実際の寄与を隠してしまう。
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*Exact Is Easier* (arXiv:2603.06859, in submission).
 {: .angle-paper }
-
-一つの問題、三つの顔。モデルを訓練するモデルたちは、訓練の内部で、モデルへの実測された効果によって評価されなければなりません。そして、モデルが吸収した助けのためにのみ保持されるべきです。
 
 ### これから
 
