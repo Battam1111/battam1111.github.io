@@ -38,7 +38,7 @@ latest_posts:
 
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN), with joint doctoral training at the Eastern Institute of Technology (EIT), Ningbo.
 
-I work on reinforcement learning for large language models and embodied agents, on the side usually taken as given: the environment a model trains in. I want to make that environment **trainable**, the way models are, and with it to lift the ceiling of what AI can become. My work begins with measurement: what does each piece actually contribute to the model it trains.
+In reinforcement learning, models are **trainable**. The environments that train them are **not**. I want to make the environment trainable, the way models are, and with it to lift the ceiling of what AI can become.
 
 ## Research
 
@@ -63,7 +63,7 @@ One problem, three faces: the models that train a model must be judged from insi
 
 ### Where I'm Going
 
-Each of these works makes one piece of the environment measurable from inside training. What comes next is assembly: the pieces co-trained as one team serving one model, from language to embodied agents.
+The destination: an environment that learns alongside the model it trains, from language to embodied agents.
 
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen and Dawei Zhu, whose ongoing mentorship and guidance have shaped much of how I think about research.</em></small></p>
 
@@ -73,7 +73,7 @@ Each of these works makes one piece of the environment measurable from inside tr
 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，导师为 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。
 
-我研究面向 LLM 与具身智能体的强化学习，做的是通常被当作给定的那一侧：模型在其中训练的环境。我想让环境像模型一样**能训练起来**，并以此把 AI 的上限抬上去。我的工作从测量开始：每个部件到底为它训练的模型贡献了什么。
+在强化学习中，模型是**能训练的**。训练模型的环境，**还不是**。我想让环境也能训练起来，像模型一样，并以此把 AI 的上限抬上去。
 
 ## 研究方向
 
@@ -98,7 +98,7 @@ Each of these works makes one piece of the environment measurable from inside tr
 
 ### 后续方向
 
-这几项工作各自让环境的一个部件在训练内部变得可测。接下来是组装：把这些部件共同训练成服务同一个模型的一支团队，从语言走向具身智能体。
+终局：环境与模型一起学习，从语言走向具身智能体。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
@@ -108,7 +108,7 @@ Each of these works makes one piece of the environment measurable from inside tr
 
 [香港理工大学 計算学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導のもと、東方理工（EIT、寧波）との共同育成プログラムに参加しています。
 
-私は、LLM と身体性エージェントのための強化学習を研究しています。対象は、ふつう所与とされる側、つまりモデルがその中で訓練される環境です。その環境を、モデルと同じように**訓練できるもの**にしたい。そしてそれによって、AI の到達点を引き上げたいのです。私の研究は測定から始めます。各部品が、訓練するモデルに実際に何を貢献しているのか。
+強化学習において、モデルは**訓練できる**。モデルを訓練する環境は、**まだできない**。私はその環境を、モデルと同じように訓練できるものにしたい。そしてそれによって、AI の到達点を引き上げたいのです。
 
 ## 研究内容
 
@@ -133,7 +133,7 @@ Each of these works makes one piece of the environment measurable from inside tr
 
 ### これから
 
-これらの研究は、環境の各部品を訓練の内部から測定可能にするものです。次は組み立てです。部品たちを、一つのモデルに仕える一つのチームとして共同訓練し、言語から身体性エージェントへと広げていきます。
+目指す先は、モデルとともに学ぶ環境です。言語から身体性エージェントへ。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 
