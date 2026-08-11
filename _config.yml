@@ -99,7 +99,7 @@ goatcounter_username: battam1111       # e.g. battam1111 (without .goatcounter.c
 goatcounter_show_counter: true        # set true to display a discrete visit counter in the footer
 
 # For Google Search Console, see https://support.google.com/webmasters/answer/9008080?hl=en#meta_tag_verification&zippy=%2Chtml-tag
-google_site_verification: # your google-site-verification ID (Google Search Console)
+google_site_verification: scxGXudtC95e-B0Fh_9REfoWQb_5B364DgFSjnDAwUY # Google Search Console, URL-prefix property https://battam1111.github.io/
 bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 
 # -----------------------------------------------------------------------------
