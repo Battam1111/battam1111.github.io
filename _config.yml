@@ -100,7 +100,7 @@ goatcounter_show_counter: true        # set true to display a discrete visit cou
 
 # For Google Search Console, see https://support.google.com/webmasters/answer/9008080?hl=en#meta_tag_verification&zippy=%2Chtml-tag
 google_site_verification: scxGXudtC95e-B0Fh_9REfoWQb_5B364DgFSjnDAwUY # Google Search Console, URL-prefix property https://battam1111.github.io/
-bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
+bing_site_verification: DB9366C57C5757063B5011E912343CAA # Bing Webmaster Tools (also feeds DuckDuckGo and some AI search)
 
 # -----------------------------------------------------------------------------
 # Blog
