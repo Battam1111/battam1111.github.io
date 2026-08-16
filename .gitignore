@@ -21,8 +21,13 @@ tools/**/*.png
 tools/**/*.txt
 tools/snapshot*.py
 tools/cv/cv-preview.png
+# Transient apply-variant HTML (contact details injected at build time from the
+# private sibling dir); must never be committed even if a build crashes mid-way.
+tools/cv/cv_apply.html
 
 # Private, never-published material lives OUTSIDE this repo in a sibling dir
 # (../_homepage-rebuild-private/). Guard against it ever being copied back in.
 _homepage-rebuild-private/
 docs/homepage-rebuild/
+# Apply-variant PDF staging dir (contact details inside; never publish).
+tools/cv/out/

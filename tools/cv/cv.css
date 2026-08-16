@@ -3,7 +3,13 @@
    Print-targeted. Single-column, A4, pure grayscale (no color).
    v2 (2026-07): three-tier grayscale + leader-line section heads +
    wider type scale + breathing rhythm. Elegance via hierarchy and
-   whitespace, not ornament. Runs 2 pages (13 publications).
+   whitespace, not ornament.
+   v3 (2026-08): Chinese name beside the Latin name (self-hosted three-glyph
+   Noto Serif SC subset); co-authored papers compressed to one summary line
+   (first-author itemized, 4 + 1 under review); Technical Skills moved before
+   Teaching & Service. Runs 2 pages: page 1 ends at Open Source, page 2 holds
+   Skills + Teaching whole. An apply variant (built by build_cv.py from a
+   private sibling-dir config) adds phone + WeChat to the contact strip.
    ============================================================ */
 
 @page {
@@ -67,6 +73,17 @@ a:hover { text-decoration: underline; }
   letter-spacing: -0.012em;
   line-height: 1.02;
   color: var(--ink);
+}
+/* Chinese name beside the Latin name. Must name the CJK subset family explicitly:
+   Newsreader carries no CJK glyphs, and an implicit fallback would grab a system
+   font (SimSun / YaHei), breaking the font assertion. CJK squares run visually
+   larger than Latin caps at equal pt, hence the slight downsize. */
+.cv-header .name .name-zh {
+  font-family: "Noto Serif SC", var(--font-display);
+  font-size: 21.5pt;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-left: 0.12em;
 }
 .cv-header .role {
   margin: 0 0 0.42rem 0;
@@ -236,6 +253,10 @@ dl.skills {
   grid-template-columns: 6.75rem 1fr;
   row-gap: 0.14rem;
   column-gap: 0.85rem;
+  /* Never split a skills table across the page break: a beheaded grid (two rows
+     on one page, three on the next) reads as a layout accident. Combined with
+     h2's break-after: avoid, the whole section moves to the next page as one. */
+  break-inside: avoid;
 }
 dl.skills dt {
   font-size: 9.2pt;

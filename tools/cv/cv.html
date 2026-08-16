@@ -20,16 +20,21 @@
      for the same reason as Inter: headless Chromium cannot reliably fetch Google
      Fonts at build time. Static weight avoids the anonymous-Type3 export problem. */
   @font-face { font-family: "Newsreader"; src: url("../fonts/Newsreader-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  /* Three-glyph Noto Serif SC subset (SemiBold) carrying exactly the Chinese name
+     in the header. Same self-hosting rationale as above: a bare CJK string would
+     otherwise fall back to whatever system font the build machine has (SimSun /
+     YaHei), breaking both the font assertion and cross-machine determinism. */
+  @font-face { font-family: "Noto Serif SC"; src: url("../fonts/NotoSerifSC-SemiBold-name.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
 </style>
 <link rel="stylesheet" href="cv.css">
 </head>
 <body>
 
 <header class="cv-header">
-  <h1 class="name">Yanjun Chen</h1>
+  <h1 class="name">Yanjun Chen <span class="name-zh" lang="zh">陈彦筠</span></h1>
   <p class="role">PhD Candidate · Department of Computing · The Hong Kong Polytechnic University</p>
   <p class="contact">
-    <a href="mailto:yan-jun.chen@connect.polyu.hk">yan-jun.chen@connect.polyu.hk</a>
+    <!--APPLY_CONTACT--><a href="mailto:yan-jun.chen@connect.polyu.hk">yan-jun.chen@connect.polyu.hk</a>
     <span class="sep">·</span>
     <a href="https://battam1111.github.io">battam1111.github.io</a>
     <span class="sep">·</span>
@@ -103,51 +108,7 @@
 
   <h3 class="pub-cat">Co&#8209;Authored</h3>
   <ol class="pubs">
-    <li>
-      Yunuo&nbsp;Liu, Dawei&nbsp;Zhu, Zena&nbsp;Al&#8209;Khalili, Dai&nbsp;Cheng, <span class="self">Yanjun&nbsp;Chen</span>, Dietrich&nbsp;Klakow, Wei&nbsp;Zhang, Xiaoyu&nbsp;Shen.
-      <span class="title">PricingLogic: Evaluating LLMs Reasoning on Complex Tourism Pricing Tasks.</span>
-      <em>EMNLP 2025</em>.
-    </li>
-    <li>
-      Xinghao&nbsp;Chen, Zhixin&nbsp;Sun, Wenjin&nbsp;Guo, Miao&nbsp;Zhang, <span class="self">Yanjun&nbsp;Chen</span>, Yirong&nbsp;Sun, Hao&nbsp;Su, Yu&nbsp;Pan, et&nbsp;al.
-      <span class="title">Unveiling the Key Factors for Distilling Chain&#8209;of&#8209;Thought Reasoning.</span>
-      <em>Findings of ACL 2025</em>.
-    </li>
-    <li>
-      Yirong&nbsp;Sun, Dawei&nbsp;Zhu, <span class="self">Yanjun&nbsp;Chen</span>, Eric&nbsp;Xiao, Xinghao&nbsp;Chen, Xiaoyu&nbsp;Shen.
-      <span class="title">Fine&#8209;Grained and Multi&#8209;Dimensional Metrics for Document&#8209;Level Machine Translation.</span>
-      <em>NAACL 2025</em>.
-    </li>
-    <li>
-      Jun&nbsp;Xue, Junze&nbsp;Wang, Shanze&nbsp;Wang, Xinming&nbsp;Zhang, <span class="self">Yanjun&nbsp;Chen</span>, Wei&nbsp;Zhang.
-      <span class="title">FastDSAC: Unlocking the Potential of Maximum Entropy RL in High&#8209;Dimensional Humanoid Control.</span>
-      <em>arXiv:2603.12612</em>, 2026.
-    </li>
-    <li>
-      Yirong&nbsp;Sun, <span class="self">Yanjun&nbsp;Chen</span>, Xin&nbsp;Qiu, Gang&nbsp;Zhang, Hongyu&nbsp;Chen, Daokuan&nbsp;Wu, Chengming&nbsp;Li, Min&nbsp;Yang, Dawei&nbsp;Zhu, Wei&nbsp;Zhang, Xiaoyu&nbsp;Shen.
-      <span class="title">SonicBench: Dissecting the Physical Perception Bottleneck in Large Audio Language Models.</span>
-      <em>arXiv:2601.11039</em>, 2026.
-    </li>
-    <li>
-      Yirong&nbsp;Sun, Yizhong&nbsp;Geng, Peidong&nbsp;Wei, <span class="self">Yanjun&nbsp;Chen</span>, Jinghan&nbsp;Yang, Rongfei&nbsp;Chen, Wei&nbsp;Zhang, Xiaoyu&nbsp;Shen.
-      <span class="title">LLaSO: A Foundational Framework for Reproducible Research in Large Language and Speech Model.</span>
-      <em>arXiv:2508.15418</em>, 2025.
-    </li>
-    <li>
-      Xinghao&nbsp;Chen, Anhao&nbsp;Zhao, Heming&nbsp;Xia, Xuan&nbsp;Lu, Hanlin&nbsp;Wang, <span class="self">Yanjun&nbsp;Chen</span>, Wei&nbsp;Zhang, Jian&nbsp;Wang, Wenjie&nbsp;Li, et&nbsp;al.
-      <span class="title">Reasoning Beyond Language: A Comprehensive Survey on Latent Chain&#8209;of&#8209;Thought Reasoning.</span>
-      <em>arXiv:2505.16782</em>, 2025.
-    </li>
-    <li>
-      Xianghui&nbsp;Wang, Xinming&nbsp;Zhang, <span class="self">Yanjun&nbsp;Chen</span>, Xiaoyu&nbsp;Shen, Wei&nbsp;Zhang.
-      <span class="title">MA&#8209;ROESL: Motion&#8209;aware Rapid Reward Optimization for Efficient Robot Skill Learning from Single Videos.</span>
-      <em>arXiv:2505.08367</em>, 2025.
-    </li>
-    <li>
-      Yuhan&nbsp;Hu, Yirong&nbsp;Sun, <span class="self">Yanjun&nbsp;Chen</span>, Xinghao&nbsp;Chen, Xiaoyu&nbsp;Shen, Wei&nbsp;Zhang.
-      <span class="title">Breaking the Pre&#8209;Planning Barrier: Adaptive Real&#8209;Time Coordination of Heterogeneous UAVs.</span>
-      <em>arXiv:2501.14488</em>, 2025.
-    </li>
+    <li class="plain">Nine co&#8209;authored papers, including <em>EMNLP&nbsp;2025</em>, <em>Findings of ACL&nbsp;2025</em>, and <em>NAACL&nbsp;2025</em>; full list on <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ">Google&nbsp;Scholar</a>.</li>
   </ol>
 </section>
 
@@ -192,16 +153,6 @@
 </section>
 
 <section>
-  <h2>Teaching &amp; Service</h2>
-  <dl class="skills">
-    <dt>Teaching (TA)</dt>
-    <dd>COMP5221 Software Project Management · COMP1002 Computational Thinking and Problem Solving · COMP1411 Introduction to Computer Systems · COMP5567 Distributed Algorithms and Protocols for Blockchains (2024 to 2026).</dd>
-    <dt>Reviewing</dt>
-    <dd>ACL Rolling Review (ARR) 2026 · IEEE Transactions on Neural Networks and Learning Systems (TNNLS).</dd>
-  </dl>
-</section>
-
-<section>
   <h2>Technical Skills</h2>
   <dl class="skills">
     <dt>Post&#8209;Training</dt><dd>SFT and RLHF; PPO, DPO, GRPO; reward modeling and evaluation; RLVR; SAC and off&#8209;policy RL for continuous control.</dd>
@@ -209,6 +160,16 @@
     <dt>Frameworks</dt><dd>PyTorch, Hugging&nbsp;Face Transformers / Datasets / Accelerate; Weights&nbsp;&amp;&nbsp;Biases.</dd>
     <dt>Programming</dt><dd>Python, C/C++, Bash; Git, Linux.</dd>
     <dt>Languages</dt><dd>Mandarin (native), English (professional), Japanese (elementary).</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Teaching &amp; Service</h2>
+  <dl class="skills">
+    <dt>Teaching (TA)</dt>
+    <dd>COMP5221 Software Project Management · COMP1002 Computational Thinking and Problem Solving · COMP1411 Introduction to Computer Systems · COMP5567 Distributed Algorithms and Protocols for Blockchains (2024 to 2026).</dd>
+    <dt>Reviewing</dt>
+    <dd>ACL Rolling Review (ARR) 2026 · IEEE Transactions on Neural Networks and Learning Systems (TNNLS).</dd>
   </dl>
 </section>
 
