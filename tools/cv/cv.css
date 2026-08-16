@@ -98,14 +98,17 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.003em;
 }
 .cv-header .contact + .contact {
-  margin-top: 0.12rem;
+  margin-top: 0.16rem;
 }
 .cv-header .contact .sep {
   color: var(--sep);
-  margin: 0 0.3em;
+  margin: 0 0.45em;
 }
 .cv-header .contact a { color: var(--ink-mid); white-space: nowrap; }
 .cv-header .contact a:hover { color: var(--accent); }
+/* The WeChat id is plain text (nothing to link) but must sit at the same tone
+   as its neighbours; a lighter token mid-line reads as a typesetting slip. */
+.cv-header .contact .wechat { color: var(--ink-mid); white-space: nowrap; }
 
 /* ----------------------------------------------------------
    SECTIONS — leader-line headers (word left, hairline rule to right margin)
