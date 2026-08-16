@@ -97,6 +97,9 @@ a:hover { text-decoration: underline; }
   color: var(--ink-light);
   letter-spacing: 0.003em;
 }
+.cv-header .contact + .contact {
+  margin-top: 0.12rem;
+}
 .cv-header .contact .sep {
   color: var(--sep);
   margin: 0 0.3em;
