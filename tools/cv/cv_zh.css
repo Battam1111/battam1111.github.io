@@ -1,0 +1,249 @@
+/* ============================================================
+   陈彦筠 CV (Chinese) stylesheet
+   Print-targeted. Single-column, A4, pure grayscale (no color).
+
+   Sibling of cv.css, not a fork of it: same three-tier grayscale, same
+   leader-line section heads, same serif-display / sans-body identity, but
+   retuned for Chinese typesetting.
+     - Line height rises to 1.62 (CJK squares carry no ascender/descender
+       rhythm, so English leading reads cramped).
+     - No negative letter-spacing anywhere: tight tracking that flatters Latin
+       makes CJK glyphs collide.
+     - Every family list puts the Latin face first so Latin runs (paper titles,
+       arXiv ids, urls, framework names) keep Inter/Newsreader and only CJK
+       falls through to the Noto SC subsets.
+   Structure follows the mainland algorithm-intern convention rather than the
+   academic-CV one: 求职意向 up top, 实习经历 and 项目经历 as their own sections
+   (the engineering granularity that the English CV deliberately omits), 荣誉
+   restored as a section. Runs 2 pages.
+   ============================================================ */
+
+@page {
+  size: A4;
+  margin: 0.5in 0.7in 0.45in 0.7in;
+}
+
+:root {
+  --ink: #111111;        /* tier 1: name, headers, titles, institutions */
+  --ink-mid: #404040;    /* tier 2: body prose, venues, role */
+  --ink-light: #6B6B6B;  /* tier 3: dates, contact strip, dt labels, glosses */
+  --rule: rgba(0, 0, 0, 0.22);
+  --accent: #000000;
+  --sep: #AAAAAA;
+  --bg: #FFFFFF;
+  --font-display: "Newsreader", "Noto Serif SC", Georgia, serif;
+  --font-body: "Inter", "Noto Sans SC", -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  color: var(--ink-mid);
+  background: var(--bg);
+  font-family: var(--font-body);
+  font-size: 9.5pt;
+  line-height: 1.62;
+  /* CRITICAL for the PDF text layer / ATS: any OpenType feature that SUBSTITUTES
+     a glyph makes Chromium emit a Private-Use-Area codepoint in the ToUnicode
+     map, so copy/paste and ATS parsers get garbage. Keep only kern. */
+  font-feature-settings: "kern" 1, "liga" 0, "clig" 0, "calt" 0, "ss01" 0, "cv11" 0;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+
+/* ----------------------------------------------------------
+   HEADER
+   ---------------------------------------------------------- */
+
+.cv-header { margin-bottom: 0.6rem; }
+.cv-header .name {
+  margin: 0 0 0.22rem 0;
+  font-family: var(--font-display);
+  font-size: 24pt;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+/* The Latin name rides beside the Chinese one at a smaller size: it is the
+   secondary key here, the mirror image of the English CV's header. */
+.cv-header .name .name-en {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 17pt;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  margin-left: 0.2em;
+  color: var(--ink);
+}
+.cv-header .role {
+  margin: 0 0 0.4rem 0;
+  font-size: 9.8pt;
+  color: var(--ink-mid);
+  font-weight: 400;
+}
+.cv-header .contact {
+  margin: 0;
+  font-size: 8.5pt;
+  color: var(--ink-light);
+}
+.cv-header .contact + .contact { margin-top: 0.16rem; }
+.cv-header .contact .sep { color: var(--sep); margin: 0 0.45em; }
+.cv-header .contact a { color: var(--ink-mid); white-space: nowrap; }
+.cv-header .contact .wechat { color: var(--ink-mid); white-space: nowrap; }
+
+/* ----------------------------------------------------------
+   SECTIONS
+   ---------------------------------------------------------- */
+
+section {
+  margin-top: 0.5rem;
+  margin-bottom: 0.08rem;
+}
+section:first-of-type { margin-top: 0.3rem; }
+
+h2 {
+  margin: 0 0 0.22rem 0;
+  padding-bottom: 0.1rem;
+  border-bottom: 0.75pt solid var(--rule);
+  font-family: var(--font-display);
+  font-size: 12.5pt;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  break-after: avoid;
+}
+
+h3.pub-cat {
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--ink);
+  padding-left: 0.4rem;
+  border-left: 2.5pt solid rgba(0, 0, 0, 0.28);
+  margin: 0.3rem 0 0.14rem 0;
+  line-height: 1.35;
+  break-after: avoid;
+}
+h3.pub-cat:first-of-type { margin-top: 0.1rem; }
+
+p { margin: 0 0 0.32rem 0; }
+
+p.lede {
+  margin-top: 0.04rem;
+  margin-bottom: 0.3rem;
+  font-size: 9.6pt;
+  color: var(--ink-mid);
+}
+p.lede strong { font-weight: 600; color: var(--ink); }
+
+/* ----------------------------------------------------------
+   ENTRY blocks: 教育背景 / 实习经历 / 项目经历
+   ---------------------------------------------------------- */
+
+.entry {
+  margin-bottom: 0.3rem;
+  break-inside: avoid;
+}
+.entry:last-child { margin-bottom: 0.12rem; }
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 9.5pt;
+  line-height: 1.45;
+}
+.entry-head .entry-where { color: var(--ink); }
+.entry-head .entry-when {
+  color: var(--ink-light);
+  white-space: nowrap;
+  font-size: 8.8pt;
+}
+.entry-body {
+  font-size: 9.5pt;
+  color: var(--ink-mid);
+  margin-top: 0.08rem;
+  line-height: 1.6;
+}
+.entry-body em { color: var(--ink); font-style: italic; }
+
+/* Inline label opening each line of a project block. A hanging label column
+   would strand the label on its own line whenever the body wraps; keeping it
+   inline with a fixed inline-block width holds the left edge steady. */
+.entry-body .proj-label {
+  display: inline-block;
+  width: 2.9em;
+  color: var(--ink-light);
+  font-size: 8.8pt;
+}
+
+/* ----------------------------------------------------------
+   PUBLICATIONS
+   ---------------------------------------------------------- */
+
+ol.pubs {
+  list-style: none;
+  margin: 0 0 0.22rem 0;
+  padding: 0;
+  counter-reset: pub;
+}
+ol.pubs li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.28rem;
+  font-size: 9.5pt;
+  line-height: 1.55;
+  color: var(--ink-mid);
+  break-inside: avoid;
+}
+ol.pubs li::before {
+  counter-increment: pub;
+  content: counter(pub) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--ink-light);
+  font-size: 9pt;
+}
+ol.pubs li.plain { color: var(--ink-light); }
+ol.pubs li.plain::before { content: ""; counter-increment: none; }
+ol.pubs li .title { color: var(--ink); font-weight: 600; }
+ol.pubs li em { color: var(--ink-mid); font-style: italic; }
+/* One-line Chinese gloss under a paper: the reason a non-specialist screener
+   can tell what the work is about without opening the paper. */
+ol.pubs li .gloss {
+  display: block;
+  color: var(--ink-light);
+  font-size: 9pt;
+  line-height: 1.55;
+}
+
+/* ----------------------------------------------------------
+   SKILLS / HONORS dl
+   ---------------------------------------------------------- */
+
+dl.skills {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 7.4rem 1fr;
+  row-gap: 0.16rem;
+  column-gap: 0.8rem;
+  /* Never split a labelled table across the page break: a beheaded grid reads
+     as a layout accident. */
+  break-inside: avoid;
+}
+dl.skills dt {
+  font-size: 9pt;
+  color: var(--ink-light);
+  /* A wrapped label reads as a broken table rather than a label; keep the
+     column wide enough for the longest one and forbid the break outright. */
+  white-space: nowrap;
+}
+dl.skills dd {
+  margin: 0;
+  font-size: 9.5pt;
+  color: var(--ink-mid);
+}
+dl.skills dd strong { color: var(--ink); font-weight: 600; }

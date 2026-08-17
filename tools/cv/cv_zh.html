@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>陈彦筠 简历</title>
+<style>
+  /* Latin runs stay on Inter and the Latin display stays on Newsreader, exactly
+     as in the English CV; the CJK families are listed AFTER them in the stack so
+     each script keeps its own designed face. All four are self-hosted subsets
+     built by tools/cv/make_zh_fonts.py, so the headless build is deterministic
+     and never falls back to a system font (SimSun / YaHei). */
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: block; }
+  @font-face { font-family: "Newsreader"; src: url("../fonts/Newsreader-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: "Noto Serif SC"; src: url("../fonts/NotoSerifSC-SemiBold-zh.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: "Noto Sans SC"; src: url("../fonts/NotoSansSC-Regular-zh.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: "Noto Sans SC"; src: url("../fonts/NotoSansSC-Medium-zh.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+  @font-face { font-family: "Noto Sans SC"; src: url("../fonts/NotoSansSC-SemiBold-zh.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+</style>
+<link rel="stylesheet" href="cv_zh.css">
+</head>
+<body>
+
+<header class="cv-header">
+  <h1 class="name">陈彦筠 <span class="name-en">Yanjun Chen</span></h1>
+  <p class="role">香港理工大学 电子计算学系 博士研究生（在读，预计 2028 年 6 月毕业）</p>
+  <p class="contact"><!--APPLY_CONTACT--><a href="mailto:yan-jun.chen@connect.polyu.hk">yan-jun.chen@connect.polyu.hk</a></p>
+  <p class="contact">
+    <a href="https://battam1111.github.io">battam1111.github.io</a>
+    <span class="sep">·</span>
+    <a href="https://github.com/Battam1111">github.com/Battam1111</a>
+    <span class="sep">·</span>
+    <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ">Google&nbsp;Scholar</a>
+  </p>
+</header>
+
+<section>
+  <h2>求职意向</h2>
+  <p class="lede">
+    <strong>大模型算法实习生：后训练 / 强化学习 / 奖励建模方向。</strong>
+  </p>
+</section>
+
+<section>
+  <h2>教育背景</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-where"><strong>香港理工大学</strong>（The Hong Kong Polytechnic University）· 香港</span>
+      <span class="entry-when">2024.09 至今</span>
+    </div>
+    <div class="entry-body">
+      电子计算学系，计算机科学，博士研究生。2026 年 6 月通过博士候选人资格考核。<br>
+      导师：Wenjie Li (Maggie) 教授、Wei Zhang 教授；与宁波东方理工（EIT）联合培养。
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-where"><strong>暨南大学</strong> · 广州</span>
+      <span class="entry-when">2020.09 至 2024.06</span>
+    </div>
+    <div class="entry-body">
+      网络空间安全学院，网络空间安全，工学学士。GPA 88.6 / 100，排名 6 / 62（前 10%），优秀毕业生。
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>科研成果</h2>
+
+  <h3 class="pub-cat">第一作者</h3>
+  <ol class="pubs">
+    <li>
+      <span class="title">The Accuracy Paradox in RLHF: When Better Reward Models Don&rsquo;t Yield Better Language Models.</span>
+      <em>EMNLP 2024</em>。
+      <span class="gloss">发现奖励模型自身准确率与它训练出的策略质量并非单调正相关，指出 RLHF 中以奖励模型准确率为选型依据的可靠性边界。</span>
+    </li>
+    <li>
+      <span class="title">Exact Is Easier: Credit Assignment for Cooperative LLM Agents.</span>
+      <em>arXiv:2603.06859</em>，2026，投稿中。
+      <span class="gloss">面向多智能体 LLM 协作，把稀疏的终局反馈转化为逐决策的精确信用分配，并给出与训练方法无关的信用质量审计方法。</span>
+    </li>
+    <li>
+      <span class="title">Integrating Chain-of-Thought for Multimodal Alignment: A Study on 3D Vision-Language Learning.</span>
+      <em>arXiv:2503.06232</em>，2025。
+      <span class="gloss">面向三维视觉语言对齐的思维链数据构建与训练研究，数据集已开源。</span>
+    </li>
+    <li>
+      <span class="title">Rethinking Soft Actor-Critic in High-Dimensional Action Spaces: The Cost of Ignoring Distribution Shift.</span>
+      <em>arXiv:2410.16739</em>，2024。
+      <span class="gloss">分析高维动作空间中忽略分布偏移给 SAC 带来的代价。</span>
+    </li>
+    <li class="plain">另有一篇第一作者论文投稿中（2026）。</li>
+  </ol>
+
+  <h3 class="pub-cat">合作论文（按发表渠道列出代表作）</h3>
+  <ol class="pubs">
+    <li>
+      <span class="title">PricingLogic: Evaluating LLMs Reasoning on Complex Tourism Pricing Tasks.</span>
+      <em>EMNLP 2025</em>。
+    </li>
+    <li>
+      <span class="title">Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning.</span>
+      <em>Findings of ACL 2025</em>。
+    </li>
+    <li>
+      <span class="title">Fine-Grained and Multi-Dimensional Metrics for Document-Level Machine Translation.</span>
+      <em>NAACL 2025</em>。
+    </li>
+    <li class="plain">另有多篇合作预印本（2024 至 2026），完整列表见 Google Scholar。</li>
+  </ol>
+</section>
+
+<section>
+  <h2>实习经历</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-where"><strong>东方理工高等研究院</strong> · 自然语言处理组（EIT-NLP）· 科研助理</span>
+      <span class="entry-when">2024.01 至 2024.05</span>
+    </div>
+    <div class="entry-body">
+      从事 RLHF 与奖励模型方向研究：构建不同准确率段位的奖励模型库，搭建 RLHF 训练与评估管线，系统考察奖励模型准确率与下游语言模型质量的关系。该工作发展为第一作者论文 <em>The Accuracy Paradox in RLHF</em>（EMNLP 2024），并开源官方实现（github.com/EIT-NLP/AccuracyParadox-RLHF）。
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>项目经历</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-where"><strong>C3</strong>：多智能体 LLM 协作的精确信用分配（第一作者论文官方实现）</span>
+      <span class="entry-when">2025.11 至今</span>
+    </div>
+    <div class="entry-body">
+      <span class="proj-label">问题</span>多个 LLM 智能体协作时只有终局的稀疏反馈，单个智能体每一步决策的实际贡献被整体结果掩盖，是多智能体强化学习训练不稳定的直接来源。<br>
+      <span class="proj-label">方法</span>基于对话轨迹重放的反事实评估与 leave-one-out 基线，将终局奖励还原为逐决策的精确信用；并提出与训练方法无关的信用质量审计（信用保真度、组内方差、智能体间影响三项诊断）。<br>
+      <span class="proj-label">工程</span>在 A100 多卡节点上端到端跑通多智能体 RL 训练全流程；训练栈为 OpenRLHF（二次开发）+ vLLM + DeepSpeed ZeRO-2。针对多模型共存的显存瓶颈，采用训练与推理显存分时、显存占用率调优、micro-batch 与序列长度配平的组合方案；主结果以五个随机种子复现验收。<br>
+      <span class="proj-label">开源</span>github.com/EIT-EAST-Lab/C3（含多智能体编排配置、复现脚本与审计工具）。
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-where"><strong>Myco</strong>：面向 AI 智能体的自进化认知基座（个人独立开源项目）</span>
+      <span class="entry-when">2026.03 至今</span>
+    </div>
+    <div class="entry-body">
+      以 Rust 实现的智能体基础设施，面向 Model Context Protocol（MCP）生态，提供跨会话的持久记忆与知识管理。设计了完整的自迭代循环（吸收、演化、剪枝、再生），使智能体的记忆与能力可以跨模型更替持续积累，并配有一套自检机制保证内部状态的一致性。开源地址：github.com/Battam1111/Myco。
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>专业技能</h2>
+  <dl class="skills">
+    <dt>后训练算法</dt><dd>SFT、RLHF；PPO、DPO、GRPO；奖励建模与奖励模型评测；RLVR；SAC 等 off-policy 连续控制算法。</dd>
+    <dt>训练与推理框架</dt><dd>OpenRLHF（二次开发）、DeepSpeed（ZeRO）、vLLM；verl、Megatron-LM、Hugging&nbsp;Face TRL 使用经验；LoRA / PEFT；多卡分布式训练。</dd>
+    <dt>基础框架</dt><dd>PyTorch，Hugging&nbsp;Face Transformers / Datasets / Accelerate，Weights&nbsp;&amp;&nbsp;Biases。</dd>
+    <dt>编程语言</dt><dd>Python、C/C++、Bash；Git、Linux。</dd>
+    <dt>语言能力</dt><dd>中文（母语）、英语（专业工作语言，论文写作与学术审稿）。</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>荣誉与学术服务</h2>
+  <dl class="skills">
+    <dt>竞赛</dt>
+    <dd>2022 年“强国杯”技术技能大赛区块链技术创新与应用赛项，<strong>全国总决赛本科组一等奖（冠军）</strong>。工业和信息化部教育与考试中心主办，校赛、省赛、全国总决赛三级选拔，全国 101 所高校参赛；省赛亦获一等奖（冠军）。</dd>
+    <dt>学术审稿</dt>
+    <dd>ACL Rolling Review（ARR）2026 · IEEE Transactions on Neural Networks and Learning Systems（TNNLS）。</dd>
+    <dt>助教</dt>
+    <dd>香港理工大学 COMP5221 软件项目管理 · COMP1002 计算思维与问题求解 · COMP1411 计算机系统导论 · COMP5567 区块链分布式算法与协议（2024 至 2026）。</dd>
+  </dl>
+</section>
+
+</body>
+</html>

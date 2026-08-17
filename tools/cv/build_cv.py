@@ -1,19 +1,24 @@
-"""Render the HTML CV to PDF using headless Chromium via Playwright.
+"""Render the HTML CVs to PDF using headless Chromium via Playwright.
 
-Two variants from one source (tools/cv/cv.html):
-  1. PUBLIC  -> ../../assets/pdf/cv.pdf
-     Built from cv.html as-is. No phone / WeChat: this artifact is published on
-     the homepage and indexed by search engines.
-  2. APPLY   -> path given by the private config (job-application attachment)
+Three artifacts from two sources:
+
+  1. PUBLIC (en)  cv.html    -> ../../assets/pdf/cv.pdf
+     Built as-is. No phone / WeChat: this one is published on the homepage and
+     indexed by search engines.
+  2. APPLY (en)   cv.html    -> apply_out from the private config
      Same document with contact details injected at the <!--APPLY_CONTACT-->
-     marker. The details live OUTSIDE the repo in the sibling private dir
-     (../_homepage-rebuild-private/cv_contact_private.json), so no phone number
-     ever enters this public repository or its history. If the config is absent
-     (e.g. a fresh clone), the apply variant is silently skipped.
+     marker.
+  3. APPLY (zh)   cv_zh.html -> apply_out_zh from the private config
+     The Chinese CV, for mainland HR channels that ask for one. Always an apply
+     artifact (never published), so it is skipped entirely without the config.
 
-cv_contact_private.json shape:
-  { "phone_display": "+86 158 ...", "phone_tel": "+86158...",
-    "wechat": "...", "apply_out": "C:/.../CV_YanjunChen.pdf" }
+The contact details live OUTSIDE this repo in the sibling private dir
+(../_homepage-rebuild-private/cv_contact_private.json), so no phone number ever
+enters this public repository or its history:
+
+  { "phone_display": "+86 ...", "phone_tel": "+86...", "wechat": "...",
+    "apply_out": "C:/.../CV_YanjunChen.pdf",
+    "apply_out_zh": "C:/.../CV_陈彦筠_中文.pdf" }
 """
 import json
 import pathlib
@@ -21,48 +26,48 @@ import sys
 
 from playwright.sync_api import sync_playwright
 
-# The apply_out path may contain CJK characters; a cp1252 console must not be
-# able to crash the build's status prints.
+# apply_out paths may contain CJK; a cp1252 console must not crash the build.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = pathlib.Path(__file__).parent.resolve()
-SRC = ROOT / "cv.html"
-OUT = ROOT.parent.parent / "assets" / "pdf" / "cv.pdf"
+SRC_EN = ROOT / "cv.html"
+SRC_ZH = ROOT / "cv_zh.html"
+OUT_PUBLIC = ROOT.parent.parent / "assets" / "pdf" / "cv.pdf"
 PNG = ROOT / "cv-preview.png"
-APPLY_SRC = ROOT / "cv_apply.html"  # transient, gitignored, deleted after build
 PRIVATE_CFG = ROOT.parent.parent.parent / "_homepage-rebuild-private" / "cv_contact_private.json"
 APPLY_MARKER = "<!--APPLY_CONTACT-->"
 
-if not SRC.exists():
-    print(f"Source missing: {SRC}", file=sys.stderr); sys.exit(1)
-OUT.parent.mkdir(parents=True, exist_ok=True)
+# Webfonts that must be active before the page is printed. Chromium can reach
+# networkidle (and even resolve document.fonts.ready) before a single font
+# request has started, which is how every CV built before 2026-07-03 silently
+# shipped Segoe UI instead of Inter.
+FONT_PROBES = {
+    "en": ['400 16px "Inter"', '600 24px "Newsreader"', '600 24px "Noto Serif SC"'],
+    "zh": [
+        '400 16px "Inter"',
+        '600 24px "Newsreader"',
+        '400 16px "Noto Sans SC"',
+        '600 16px "Noto Sans SC"',
+        '600 24px "Noto Serif SC"',
+    ],
+}
 
 
-def render(page, src: pathlib.Path, out: pathlib.Path, png: pathlib.Path | None):
+def render(page, src: pathlib.Path, out: pathlib.Path, png: pathlib.Path | None, lang: str):
+    probes = FONT_PROBES[lang]
     page.goto(src.as_uri(), wait_until="networkidle")
-    # Force the webfonts to actually download and activate. Without the explicit
-    # FontFaceSet.load() calls, headless Chromium can reach networkidle and even
-    # resolve document.fonts.ready BEFORE any Inter request has started, and the
-    # PDF silently embeds Segoe UI (this was a latent bug from day one: every CV
-    # built before 2026-07-03 shipped Segoe, never Inter).
     page.evaluate(
-        """async () => {
-            const wants = [
-                '400 16px "Inter"', '500 16px "Inter"',
-                '600 16px "Inter"', '700 16px "Inter"',
-                'italic 400 16px "Inter"',
-                '600 24px "Newsreader"',
-                '600 24px "Noto Serif SC"',
-            ];
+        """async (wants) => {
             await Promise.all(wants.map(w => document.fonts.load(w)));
             await document.fonts.ready;
-        }"""
+        }""",
+        probes,
     )
-    page.wait_for_function('document.fonts.check(\'400 16px "Inter"\')', timeout=15000)
-    page.wait_for_function('document.fonts.check(\'600 24px "Newsreader"\')', timeout=15000)
-    page.wait_for_function('document.fonts.check(\'600 24px "Noto Serif SC"\')', timeout=15000)
+    for probe in probes:
+        page.wait_for_function(f"document.fonts.check({probe!r})", timeout=15000)
     page.wait_for_timeout(300)
     page.emulate_media(media="print")
+    out.parent.mkdir(parents=True, exist_ok=True)
     page.pdf(
         path=str(out),
         format="A4",
@@ -75,46 +80,56 @@ def render(page, src: pathlib.Path, out: pathlib.Path, png: pathlib.Path | None)
         page.screenshot(path=str(png), full_page=True)
 
 
-def apply_contact_snippet(cfg: dict) -> str:
-    phone_disp = cfg["phone_display"].replace(" ", "\u00a0")
+def contact_snippet(cfg: dict, lang: str) -> str:
+    phone = cfg["phone_display"].replace(" ", "\u00a0")
+    label = "\u5fae\u4fe1" if lang == "zh" else "WeChat"  # 微信
     return (
-        f'<a href="tel:{cfg["phone_tel"]}">{phone_disp}</a>'
+        f'<a href="tel:{cfg["phone_tel"]}">{phone}</a>'
         '<span class="sep">\u00b7</span>'
-        f'<span class="wechat">WeChat\u00a0{cfg["wechat"]}</span>'
+        f'<span class="wechat">{label}\u00a0{cfg["wechat"]}</span>'
         '<span class="sep">\u00b7</span>'
     )
 
 
+def build_apply(page, src: pathlib.Path, out: pathlib.Path, cfg: dict, lang: str):
+    """Inject contact details into a temporary copy, render, then delete it."""
+    tmp = src.with_name(f"{src.stem}_apply.html")
+    html = src.read_text(encoding="utf-8")
+    if APPLY_MARKER not in html:
+        raise SystemExit(f"APPLY_CONTACT marker missing from {src.name}")
+    tmp.write_text(html.replace(APPLY_MARKER, contact_snippet(cfg, lang)), encoding="utf-8")
+    try:
+        render(page, tmp, out, None, lang)
+        print(f"Wrote {out} ({out.stat().st_size:,} bytes)")
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
 def build():
-    apply_cfg = None
-    if PRIVATE_CFG.exists():
-        apply_cfg = json.loads(PRIVATE_CFG.read_text(encoding="utf-8"))
+    if not SRC_EN.exists():
+        print(f"Source missing: {SRC_EN}", file=sys.stderr)
+        return 1
+    cfg = json.loads(PRIVATE_CFG.read_text(encoding="utf-8")) if PRIVATE_CFG.exists() else None
 
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        ctx = browser.new_context()
-        page = ctx.new_page()
+        page = browser.new_context().new_page()
 
-        render(page, SRC, OUT, PNG)
-        print(f"Wrote {OUT} ({OUT.stat().st_size} bytes)")
+        render(page, SRC_EN, OUT_PUBLIC, PNG, "en")
+        print(f"Wrote {OUT_PUBLIC} ({OUT_PUBLIC.stat().st_size:,} bytes)")
 
-        if apply_cfg:
-            html = SRC.read_text(encoding="utf-8")
-            assert APPLY_MARKER in html, "APPLY_CONTACT marker missing from cv.html"
-            APPLY_SRC.write_text(html.replace(APPLY_MARKER, apply_contact_snippet(apply_cfg)), encoding="utf-8")
-            apply_out = pathlib.Path(apply_cfg["apply_out"])
-            apply_out.parent.mkdir(parents=True, exist_ok=True)
-            try:
-                render(page, APPLY_SRC, apply_out, None)
-                print(f"Wrote {apply_out} ({apply_out.stat().st_size} bytes)")
-            finally:
-                APPLY_SRC.unlink(missing_ok=True)
+        if cfg is None:
+            print(f"No private config at {PRIVATE_CFG}; apply variants skipped")
         else:
-            print(f"No private config at {PRIVATE_CFG}; apply variant skipped")
+            build_apply(page, SRC_EN, pathlib.Path(cfg["apply_out"]), cfg, "en")
+            if SRC_ZH.exists() and cfg.get("apply_out_zh"):
+                build_apply(page, SRC_ZH, pathlib.Path(cfg["apply_out_zh"]), cfg, "zh")
 
         browser.close()
+    return 0
 
 
 if __name__ == "__main__":
-    build()
+    code = build()
     print(f"Preview: {PNG}")
+    sys.exit(code)

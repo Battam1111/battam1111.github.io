@@ -31,3 +31,5 @@ _homepage-rebuild-private/
 docs/homepage-rebuild/
 # Apply-variant PDF staging dir (contact details inside; never publish).
 tools/cv/out/
+tools/cv/_fontsrc/
+tools/cv/cv_zh_apply.html
