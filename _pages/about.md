@@ -94,7 +94,7 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ### 往哪里去
 
-终局：环境与模型一起学习，从语言走向具身智能体。去那里的路，经过信用：**信用不该停在 agent 的边界上。** 当可信的学习信号能到达模型周围的组件，环境就能开始学习。
+终局：环境与模型一起学习，从语言走向具身智能体。去那里的路，经过 credit assignment（信用分配）：**credit 不该停在 agent 的边界上。** 当可信的学习信号能到达模型周围的组件，环境就能开始学习。
 
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
@@ -127,7 +127,7 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ### これから
 
-目指す先は、モデルとともに学ぶ環境です。言語から身体性エージェントへ。そこへ至る道はクレジットにあります。**クレジットは agent の境界で止まるべきではない。** 信頼できる学習信号がモデルの周りの構成要素にまで届いたとき、環境は学び始めることができます。
+目指す先は、モデルとともに学ぶ環境です。言語から身体性エージェントへ。そこへ至る道は credit assignment（貢献度の割り当て）にあります。**credit は agent の境界で止まるべきではない。** 信頼できる学習信号がモデルの周りの構成要素にまで届いたとき、環境は学び始めることができます。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 
