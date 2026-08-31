@@ -74,7 +74,7 @@ def audit_en(path: pathlib.Path, expect_phone: bool) -> dict:
         "arxiv_5": text.count("arXiv:") == 5,
         "zh_name": "陈彦筠" in text,
         "first_author_stub": "One further first-author" in text,
-        "coauth_accepted": all(k in text for k in ("PricingLogic", "EMNLP 2025", "NAACL 2025")),
+        "coauth_accepted": all(k in text for k in ("PricingLogic", "EMNLP 2025", "NAACL 2025 SRW")),
         "coauth_stub_countfree": "Additional co" in flat and "Six further" not in flat,
         # Layout: page 1 closes with Open Source, page 2 opens on Technical Skills.
         "myco_on_p1": "Myco" in page1,
