@@ -5,7 +5,7 @@ title: Notes
 title_zh: 笔记
 title_ja: ノート
 description: Long-form essays and short notes. Research thinking, methodology, occasional process retrospectives.
-description_zh: 长篇随笔与短篇笔记。研究思考、方法论、偶尔的过程复盘。
+description_zh: 长文与短记：研究思考、方法论，偶尔也复盘做事的过程。
 description_ja: 長めのエッセイと短い覚え書き。研究の思考過程、方法論、ときどき過程の振り返り。
 nav: true  # v19: enabled — Notes section live
 nav_order: 1

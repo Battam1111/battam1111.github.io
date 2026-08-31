@@ -2,7 +2,7 @@
 layout: page
 title: Projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: Projects by Yanjun Chen.
 nav: false  # v10: hide until projects has content (Tri Dao minimal nav)
 nav_order: 3
 display_categories: [work, fun]
