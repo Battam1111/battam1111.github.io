@@ -17,7 +17,7 @@ nav_order: 2
 
 {% include bib_search.liquid %}
 
-## Peer-reviewed
+## <span lang="en">Peer-reviewed</span><span lang="zh">同行评议论文</span><span lang="ja">査読論文</span>
 
 <div class="publications">
 
@@ -25,7 +25,7 @@ nav_order: 2
 
 </div>
 
-## Preprints & under review
+## <span lang="en">Preprints &amp; under review</span><span lang="zh">预印本与在投稿件</span><span lang="ja">プレプリント・投稿中の原稿</span>
 
 <div class="publications">
 

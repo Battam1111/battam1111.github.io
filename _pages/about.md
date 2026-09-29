@@ -9,12 +9,13 @@ profile:
   align: left
   image: prof_pic.jpg
   image_circular: false
+  # Location shows Singapore during the MSRA internship; switch it back to Hong Kong / 香港 / 香港 when the internship ends.
   more_info: >
     <p class="profile-name">Yanjun Chen</p>
     <p class="profile-role"><span lang="en">PhD Candidate, PolyU</span><span lang="zh">博士候选人 · 理大</span><span lang="ja">博士候補者 · PolyU</span></p>
     <div class="profile-links">
       <a class="pl-mail" href="mailto:yan-jun.chen@connect.polyu.hk"><i class="fa-regular fa-envelope"></i><span>yan&#8209;jun.chen@connect.polyu.hk</span></a>
-      <span class="pl-loc"><i class="fa-solid fa-location-dot"></i><span><span lang="en">Hong Kong</span><span lang="zh">香港</span><span lang="ja">香港</span></span></span>
+      <span class="pl-loc"><i class="fa-solid fa-location-dot"></i><span><span lang="en">Singapore</span><span lang="zh">新加坡</span><span lang="ja">シンガポール</span></span></span>
       <a href="https://scholar.google.com/citations?user=Zg8cX0sAAAAJ" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i><span>Google Scholar</span></a>
       <a href="https://github.com/Battam1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
       <a href="https://x.com/YanjunChen1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
@@ -36,7 +37,7 @@ latest_posts:
 
 <div lang="en" markdown="1">
 
-I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN), with joint doctoral training at the Eastern Institute of Technology (EIT), Ningbo.
+I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN), with joint doctoral training at the Eastern Institute of Technology (EIT), Ningbo. I am currently a research intern at Microsoft Research Asia, Singapore.
 
 In reinforcement learning, models are **trainable**. The environments that train them are **not**. I want to make the environment trainable, the way models are, and with it to lift the ceiling of what AI can become.
 
@@ -51,12 +52,12 @@ What does the environment actually do to the model it trains?
 
 **Exact credit for cooperative LLM agents.** When agents cooperate, a shared outcome hides what each decision contributed.
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
 **Withdrawable shaping on the action interface.** Shaping aids are added to help the agent learn, then kept forever.
 {: .angle }
-*Under review* (2026).
+*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
 
 ### Where I'm Going
@@ -69,7 +70,7 @@ The destination: an environment that learns alongside the model it trains, from 
 
 <div lang="zh" markdown="1">
 
-我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，师从 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。
+我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，师从 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。目前在微软亚洲研究院（新加坡）做研究实习。
 
 在强化学习里，模型是**可以训练的**。训练模型的环境，**还不行**。我想让环境也变得可训练，像模型一样，并以此把 AI 的上限抬上去。
 
@@ -84,12 +85,12 @@ The destination: an environment that learns alongside the model it trains, from 
 
 **协作 LLM agent 的精确 credit。** 多个 agent 协作时，共享的结果把每个决策的真实贡献藏了起来。
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
 **action 接口上可撤回的 shaping。** Shaping 辅助是为了帮 agent 学习才加上的，却从此永远留了下来。
 {: .angle }
-*Under review* (2026).
+*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
 
 ### 往哪里去
@@ -102,7 +103,7 @@ The destination: an environment that learns alongside the model it trains, from 
 
 <div lang="ja" markdown="1">
 
-[香港理工大学 コンピューティング学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導のもと、東方理工（EIT、寧波）との共同育成プログラムに参加しています。
+[香港理工大学 コンピューティング学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導のもと、東方理工（EIT、寧波）との共同育成プログラムに参加しています。現在、Microsoft Research Asia（シンガポール）のリサーチインターンでもあります。
 
 強化学習において、モデルは**訓練できる**。モデルを訓練する環境は、**まだできない**。私はその環境を、モデルと同じように訓練できるものにしたい。そしてそれによって、AI の到達点を引き上げたいのです。
 
@@ -117,12 +118,12 @@ The destination: an environment that learns alongside the model it trains, from 
 
 **協調的 LLM agent の厳密な credit。** Agent が協調するとき、共有された結果は各決定の実際の寄与を隠してしまう。
 {: .angle }
-*Exact Is Easier: Credit Assignment for Cooperative LLM Agents* (arXiv:2603.06859, in submission).
+*The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
 **action interface 上の撤回可能な shaping。** Shaping 補助は agent の学習を助けるために加えられ、そのまま永久に残される。
 {: .angle }
-*Under review* (2026).
+*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
 
 ### これから
