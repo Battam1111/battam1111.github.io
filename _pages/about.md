@@ -43,19 +43,19 @@ In reinforcement learning, models are **trainable**. The environments that train
 
 ## Research
 
-What does the environment actually do to the model it trains?
+Making the pieces around a model trainable starts with knowing what they actually do in training, and which signal can say exactly what each step is worth.
 
-**Reward-model evaluation in RLHF.** A more accurate reward model does not always train a better policy.
+**Reward-model accuracy and training outcomes in RLHF.** The reward model is the most typical piece of a training environment and is usually judged by its accuracy. Yet moderately accurate reward models train better language models than the most accurate ones, so a piece's worth has to be judged inside training.
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
 
-**Exact credit for cooperative LLM agents.** When agents cooperate, a shared outcome hides what each decision contributed.
+**Exact credit for LLM agent teams.** What each message in a team of LLM agents was worth has mostly been predicted, but when the team communicates through a shared context and everything a downstream agent reads is written into the trace, the trace is the state. One message can then be replaced and the run continued to its end, which makes its credit exact. For an LLM, much of the environment arrives as context (retrieved text, tool outputs, prompts), and that is where the same method points next: assigning credit to those pieces as well.
 {: .angle }
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-**Withdrawable shaping on the action interface.** Shaping aids are added to help the agent learn, then kept forever.
+**When a policy absorbs action shaping.** Reward shaping has a theorem guaranteeing that a potential-based term can be removed; the same practice on the action channel, a training-time offset, has none. A trainable policy absorbs an offset its own output layer can reproduce exactly, and once absorbed, the offset can be removed with the return almost unchanged.
 {: .angle }
 *Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
@@ -76,19 +76,19 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ## 研究方向
 
-环境到底对它训练的模型做了什么？
+要让模型周围的组件也能训练，先得知道它们在训练里究竟起什么作用，以及什么信号能精确告诉我们每一步值多少。
 
-**RLHF 里 reward model 的评估。** 更准的 reward model，不一定训出更好的 policy。
+**RLHF 中 reward model 的准确率与训练效果。** reward model 是训练环境里最典型的组件，通常按准确率评判。但中等准确率的 reward model 反而比最准的训出更好的语言模型，所以组件值多少，得放进训练里看。
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
 
-**协作 LLM agent 的精确 credit。** 多个 agent 协作时，共享的结果把每个决策的真实贡献藏了起来。
+**LLM agent 团队的精确 credit。** LLM agent 团队里每条消息值多少，过去大多靠预测；但当团队通过共享上下文交流、下游 agent 读到的一切都写进记录（trace）时，记录就是状态。这时换掉一条消息、真实续跑到结束，它的 credit 就能精确算出。对 LLM 来说，环境大多以上下文的形式到达模型（检索到的文本、工具返回、提示词），同一个办法接下来指向的正是这些组件：给它们也分配 credit。
 {: .angle }
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-**action 接口上可撤回的 shaping。** Shaping 辅助是为了帮 agent 学习才加上的，却从此永远留了下来。
+**action shaping 何时被 policy 吸收。** reward shaping 有定理保证基于势函数的项可以拿掉，action channel 上的同类做法（训练时加的偏移）没有。可训练的 policy 会吸收它自己输出层能精确复现的偏移，吸收后拿掉，回报几乎不变。
 {: .angle }
 *Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
@@ -109,19 +109,19 @@ The destination: an environment that learns alongside the model it trains, from 
 
 ## 研究内容
 
-環境は、訓練するモデルに実際のところ何をしているのか。
+モデルの周りの構成要素まで訓練できるようにするには、まず、それらが訓練の中で実際に何をしているのか、そして一歩ごとの価値をどの信号なら正確に言えるのかを知る必要がある。
 
-**RLHF における reward model の評価。** より精度の高い reward model が、必ずしもより良い policy を訓練するわけではない。
+**RLHF における reward model の精度と訓練結果。** reward model は訓練環境の中で最も典型的な構成要素で、ふつうは精度で評価される。しかし、中程度の精度の reward model のほうが最も精度の高いものより良い言語モデルを訓練するので、構成要素の価値は訓練の内側で判断する必要がある。
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
 
-**協調的 LLM agent の厳密な credit。** Agent が協調するとき、共有された結果は各決定の実際の寄与を隠してしまう。
+**LLM agent チームの厳密な credit。** LLM agent のチームで各メッセージの価値はこれまで主に予測されてきたが、チームが共有コンテキストを通じてやり取りし、下流の agent が読むものがすべて記録（trace）に書き込まれるなら、記録がそのまま状態になる。このとき一つのメッセージを差し替えて最後まで実際に走らせれば、その credit は厳密に求まる。LLM にとって環境の多くはコンテキストとして届く（検索されたテキスト、ツールの返り値、プロンプト）ので、同じ方法が次に向かう先は、こうした構成要素にも credit を割り当てることだ。
 {: .angle }
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-**action interface 上の撤回可能な shaping。** Shaping 補助は agent の学習を助けるために加えられ、そのまま永久に残される。
+**action shaping が policy に吸収されるとき。** reward shaping には、ポテンシャルに基づく項を取り除けることを保証する定理があるが、action channel 上の同じ実践（訓練時に加えるオフセット）にはない。訓練可能な policy は、自分の出力層が正確に再現できるオフセットを吸収し、吸収された後に外してもリターンはほとんど変わらない。
 {: .angle }
 *Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }

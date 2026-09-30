@@ -77,7 +77,7 @@
     <li>
       <span class="title">The Accuracy Paradox in RLHF: When Better Reward Models Don&rsquo;t Yield Better Language Models.</span>
       <em>EMNLP 2024</em>。
-      <span class="gloss">发现奖励模型自身准确率与它训练出的策略质量并非单调正相关，指出 RLHF 中以奖励模型准确率为选型依据的可靠性边界。</span>
+      <span class="gloss">发现奖励模型自身准确率与它训练出的策略质量并非单调正相关，中等准确率的奖励模型反而训出更好的语言模型，说明只看准确率挑选奖励模型有其局限。</span>
     </li>
     <li>
       <span class="title">Action Shaping: Policies Absorb What They Can Express.</span>
@@ -87,7 +87,7 @@
     <li>
       <span class="title">The Trace Is the State: Exact Credit Assignment for LLM Agent Teams.</span>
       <em>arXiv:2603.06859</em>，2026，投稿中。
-      <span class="gloss">指出 LLM agent 团队的共享记录即完整状态，每条消息的 credit 因而无需预测，换掉该消息后真实续跑即可精确得到，并可按偏差与方差检验各类 credit 方法。</span>
+      <span class="gloss">指出 LLM agent 团队读到的一切都写进共享记录时，记录即完整状态，每条消息的 credit 无需预测，换掉该消息真实续跑即可精确得到，并可按偏差、方差与参照一致性检验各类 credit 方法。</span>
     </li>
     <li>
       <span class="title">Integrating Chain-of-Thought for Multimodal Alignment: A Study on 3D Vision-Language Learning.</span>
@@ -160,14 +160,14 @@
 
   <div class="entry">
     <div class="entry-head">
-      <span class="entry-where"><strong>C3</strong>：多智能体 LLM 协作的精确信用分配（第一作者论文官方实现）</span>
+      <span class="entry-where"><strong>C3</strong>：LLM agent 团队的精确 credit assignment（第一作者论文官方实现）</span>
       <span class="entry-when">2025.11 至今</span>
     </div>
     <div class="entry-body">
-      <span class="proj-label">问题</span>多个 LLM 智能体协作时只有终局的稀疏反馈，单个智能体每一步决策的实际贡献被整体结果掩盖，是多智能体强化学习训练不稳定的直接来源。<br>
-      <span class="proj-label">方法</span>基于对话轨迹重放的反事实评估与 leave-one-out 基线，将终局奖励还原为逐决策的精确信用；并提出与训练方法无关的信用质量审计（信用保真度、组内方差、智能体间影响三项诊断）。<br>
-      <span class="proj-label">工程</span>在 A100 多卡节点上端到端跑通多智能体 RL 训练全流程；训练栈为 OpenRLHF（二次开发）+ vLLM + DeepSpeed ZeRO-2。针对多模型共存的显存瓶颈，采用训练与推理显存分时、显存占用率调优、micro-batch 与序列长度配平的组合方案；主结果以五个随机种子复现验收。<br>
-      <span class="proj-label">开源</span>github.com/EIT-EAST-Lab/C3（含多智能体编排配置、复现脚本与审计工具）。
+      <span class="proj-label">问题</span>LLM agent 团队一次运行只留下一条长记录和一个终局结果；要用这个结果训练团队，就得回答记录里每条消息值多少，即 credit assignment（信用分配），这是用终局奖励训练 LLM 团队的核心障碍。以往做法大多靠预测（学出来的 critic、整条轨迹一个分数、或去掉某个 agent 做比较），定义 credit 的那个反事实很少真正跑过。<br>
+      <span class="proj-label">方法</span>下游 agent 读到的一切都写进记录时，记录即状态：在某个决策点换掉一条消息，真实续跑到终局奖励（counterfactual continuation，反事实续跑），得到的 credit 无偏，精确到蒙特卡洛误差。<br>
+      <span class="proj-label">工程</span>在 A800 与 A100 多卡节点上端到端跑通多智能体 RL 训练全流程；训练栈为 OpenRLHF（二次开发）+ vLLM + DeepSpeed ZeRO-2。针对多模型共存的显存瓶颈，采用训练与推理显存分时、显存占用率调优、micro-batch 与序列长度配平的组合方案；主结果以五个随机种子复现验收（单机 8 张 A800），长生成一轮在 4 张 A100 上完成。<br>
+      <span class="proj-label">开源</span>github.com/EIT-EAST-Lab/C3（含多智能体编排配置、复现脚本与诊断工具）。
     </div>
   </div>
 

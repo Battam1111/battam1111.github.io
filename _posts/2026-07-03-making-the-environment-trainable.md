@@ -20,9 +20,9 @@ Now look at the other side of the training run. The environment is not even a si
 
 A pile cannot be trained. That is the honest reason the environment never got the model side's deal, and it is why I do not think of "make the environment trainable" as one problem. It is a stack of problems, each standing on the one below.
 
-**Measurement.** Can you read what a single piece does to the model? Today you mostly cannot. A reward model's benchmark accuracy fails to predict the policy it trains; the effect only shows up inside the training run itself. Until this layer works, everything above it is guesswork.
+**Measurement.** Can you read what a single piece does to the model? Today you mostly cannot. A reward model's benchmark accuracy fails to predict the policy it trains; the effect has to be read inside the training run itself. Until this layer works, everything above it is guesswork.
 
-**Credit.** A model is trained by many pieces at once, and they produce one outcome together. Whose share is whose? Take a piece out and re-run, and you have changed what every other piece sees; the answer comes back wrong in a way more sampling cannot fix. Credit has to be computed, not approximated by deletion.
+**Credit.** A model is trained by many pieces at once, and they produce one outcome together. Whose share is whose? Take a piece out and re-run, and you have changed what every piece downstream of it sees; the answer comes back biased in a way more sampling cannot fix. Credit has to be computed by running the counterfactual, not predicted or approximated by deletion.
 
 **Training a piece.** A measured effect can become the piece's own training signal. This is where the environment stops being infrastructure and starts improving. It carries an obligation the model side never had: the piece must be withdrawable, with the gain staying with the model after it is gone. Otherwise what you improved is not the model but the ensemble around it.
 
@@ -49,9 +49,9 @@ So the bet, stated once more: environments themselves must scale, train, and gen
 
 一堆零件是训练不起来的。这就是环境从未得到那份待遇的诚实原因，也是为什么我不把"让环境训练起来"当成一个问题。它是一叠问题，每一层踩在下一层上。
 
-**测量。** 你能读出单个部件对模型做了什么吗？今天基本不能。reward model 的 benchmark 准确率无法预测它训练出的 policy；效果只在训练过程内部显形。这一层不通，上面的一切都是猜。
+**测量。** 你能读出单个部件对模型做了什么吗？今天基本不能。reward model 的 benchmark 准确率无法预测它训练出的 policy；效果得到训练过程内部去读。这一层不通，上面的一切都是猜。
 
-**Credit。** 模型同时被许多部件训练，它们共同产出一个结果。谁的份额是谁的？把一个部件拿掉重跑，你已经改变了其它所有部件看到的东西；答案会错，而且加样本也修不好。credit 必须被计算出来，不能靠删除去近似。
+**Credit。** 模型同时被许多部件训练，它们共同产出一个结果。谁的份额是谁的？把一个部件拿掉重跑，你已经改变了它下游所有部件看到的东西；答案会带偏差，而且加样本也修不好。credit 得靠真实跑出反事实来计算，不能靠预测，也不能靠删除去近似。
 
 **训练单个部件。** 测得的效果可以变成部件自己的训练信号。环境从这里开始不再是基础设施，开始改进。这一层带着模型那侧从来没有的义务：部件必须可撤除，收益要留在模型身上。否则你改进的就不是模型，而是围着它的那套系统。
 
@@ -78,9 +78,9 @@ So the bet, stated once more: environments themselves must scale, train, and gen
 
 部品の山は訓練できません。これが、環境があの取引を受け取れなかった正直な理由であり、私が「環境を訓練できるものにする」を一つの問題と見なさない理由です。それは問題の積み重ねであり、各層は下の層の上に立っています。
 
-**測定。** 一つの部品がモデルに何をしたか、読み取れますか。今日ではほとんど読み取れません。reward model の benchmark 精度は、それが訓練する policy を予測できません。効果は訓練の過程の内部でしか姿を現しません。この層が機能しない限り、その上のすべては当て推量です。
+**測定。** 一つの部品がモデルに何をしたか、読み取れますか。今日ではほとんど読み取れません。reward model の benchmark 精度は、それが訓練する policy を予測できません。効果は訓練の過程の内部で読み取る必要があります。この層が機能しない限り、その上のすべては当て推量です。
 
-**Credit。** モデルは多くの部品に同時に訓練され、部品たちは一つの結果を共同で生み出します。どの取り分が誰のものか。部品を一つ外して再実行すれば、他のすべての部品が見るものを変えてしまっています。答えは間違い、しかもサンプルを増やしても直らない間違い方をします。credit は計算されなければならず、削除で近似してはいけません。
+**Credit。** モデルは多くの部品に同時に訓練され、部品たちは一つの結果を共同で生み出します。どの取り分が誰のものか。部品を一つ外して再実行すれば、その下流のすべての部品が見るものを変えてしまっています。答えには偏りが生じ、しかもサンプルを増やしても直りません。credit は反実仮想を実際に走らせて計算すべきもので、予測や削除で近似してはいけません。
 
 **部品の訓練。** 測定された効果は、部品自身の訓練信号になりえます。ここから環境はインフラであることをやめ、改善を始めます。ただしこの層には、モデル側にはなかった義務が伴います。部品は撤回可能でなければならず、得られたものは部品が去った後もモデルの側に残らなければなりません。さもなければ、改善したのはモデルではなく、モデルを取り囲むアンサンブルの方です。
 
