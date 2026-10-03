@@ -445,6 +445,10 @@ ol.bibliography > li,
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
+/* Japanese mode shows the name in Japanese kanji forms (陳彦筠) with the JP face;
+   the simplified form (陈彦筠) serves English and Chinese. */
+html[lang="ja"] .name-sc { display: none; }
+.name-zh [lang="ja"] { font-family: "Noto Serif JP", var(--font-display); }
 .profile .more-info .profile-role {
   margin: 0.12rem 0 0 0;
   font-size: 0.8rem;

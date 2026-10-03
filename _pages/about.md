@@ -11,7 +11,7 @@ profile:
   image_circular: false
   # Location shows Singapore during the MSRA internship; switch it back to Hong Kong / 香港 / 香港 when the internship ends.
   more_info: >
-    <p class="profile-name">Yanjun Chen <span class="name-zh">陈彦筠</span></p>
+    <p class="profile-name">Yanjun Chen <span class="name-zh"><span class="name-sc">陈彦筠</span><span lang="ja">陳彦筠</span></span></p>
     <p class="profile-role"><span lang="en">PhD Candidate, PolyU</span><span lang="zh">博士候选人 · 理大</span><span lang="ja">博士候補者 · PolyU</span></p>
     <div class="profile-links">
       <a class="pl-mail" href="mailto:yan-jun.chen@connect.polyu.hk"><i class="fa-regular fa-envelope"></i><span>yan&#8209;jun.chen@connect.polyu.hk</span></a>
