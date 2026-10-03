@@ -165,7 +165,7 @@
     </div>
     <div class="entry-body">
       <span class="proj-label">问题</span>LLM agent 团队一次运行只留下一条长记录和一个终局结果；要用这个结果训练团队，就得回答记录里每条消息值多少，即 credit assignment（信用分配），这是用终局奖励训练 LLM 团队的核心障碍。以往做法大多靠预测（学出来的 critic、整条轨迹一个分数、或去掉某个 agent 做比较），定义 credit 的那个反事实很少真正跑过。<br>
-      <span class="proj-label">方法</span>下游 agent 读到的一切都写进记录时，记录即状态：在某个决策点换掉一条消息，真实续跑到终局奖励（counterfactual continuation，反事实续跑），得到的 credit 无偏，精确到蒙特卡洛误差。<br>
+      <span class="proj-label">方法</span>下游 agent 读到的一切都写进记录时，记录即状态：在某个决策点换掉一条消息，真实续跑到终局奖励（counterfactual continuation，反事实续跑），得到的 credit 无偏，精确到蒙特卡洛误差；并按估计量的标准检验各类 credit 信号：偏差、方差与可靠性、与独立参照的一致性。<br>
       <span class="proj-label">工程</span>在 A800 与 A100 多卡节点上端到端跑通多智能体 RL 训练全流程；训练栈为 OpenRLHF（二次开发）+ vLLM + DeepSpeed ZeRO-2。针对多模型共存的显存瓶颈，采用训练与推理显存分时、显存占用率调优、micro-batch 与序列长度配平的组合方案；主结果以五个随机种子复现验收（单机 8 张 A800），长生成一轮在 4 张 A100 上完成。<br>
       <span class="proj-label">开源</span>github.com/EIT-EAST-Lab/C3（含多智能体编排配置、复现脚本与诊断工具）。
     </div>
