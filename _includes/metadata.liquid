@@ -43,7 +43,7 @@
       every other researcher of that name (DBLP alone lists several), so the
       field and the institution are what let a name query resolve to this page.
     {% endcomment %}
-    {% if page.url == '/' and site.title_suffix and site.title_suffix != '' %}{{ title }} | {{ site.title_suffix }}{% else %}{{ title }}{% endif %}
+    {% if page.url == '/' and site.title_suffix and site.title_suffix != '' %}{{ title }}{% if site.name_zh %} {{ site.name_zh }}{% endif %} | {{ site.title_suffix }}{% else %}{{ title }}{% endif %}
   {% endif %}
 </title>
 <meta name="author" content="{{ author_name }}">

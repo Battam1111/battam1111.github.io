@@ -6,6 +6,10 @@ title: blank # use full name
 first_name: Yanjun
 middle_name:
 last_name: Chen
+# Shown beside the Latin name in the homepage <title>, the page h1 and the
+# profile card, so a search for the Chinese name can match visible text (the
+# CV header uses the same "Yanjun Chen 陈彦筠" form).
+name_zh: 陈彦筠
 # Appended to the HOMEPAGE <title> only (other pages already carry their own
 # page title). "Yanjun Chen" on its own competes with every other researcher of
 # that name; the field plus the institution is what makes a name query resolve
@@ -80,7 +84,7 @@ og_image: og-card.png    # 1200x630 social share card (assets/img/og-card.png)
 
 # v23: manual cache-bust (al-folio's bust_css_cache is broken — emits empty MD5 because it
 # hashes pre-Sass source). Bumped on every visual/content change so browsers pick up new CSS.
-asset_version: v27.1
+asset_version: v27.2
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
