@@ -435,12 +435,14 @@ ol.bibliography > li,
    header. No lang attribute on purpose: the language toggle hides every
    [lang] element that does not match the active language. CJK squares read
    larger than Latin caps at equal size, hence the slight downsize. */
+/* Keep the Latin name on one line so a narrow screen wraps before the Chinese
+   name, never between first and last name. */
+.name-latin { white-space: nowrap; }
 .name-zh {
   font-family: "Noto Serif SC", var(--font-display);
   font-size: 0.86em;
   font-weight: 600;
   letter-spacing: 0.04em;
-  margin-left: 0.18em;
   white-space: nowrap;
 }
 .profile .more-info .profile-role {
