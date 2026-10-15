@@ -22,6 +22,7 @@ profile:
       <a href="https://orcid.org/0009-0001-9065-9137" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i><span>ORCID</span></a>
       <a class="pl-cv" href="/assets/pdf/cv.pdf" target="_blank"><i class="fa-regular fa-file-pdf"></i><span><span lang="en">CV</span><span lang="zh">简历</span><span lang="ja">履歴書</span></span></a>
       <span class="pl-sep" aria-hidden="true"></span>
+      <a href="https://www.xiaohongshu.com/user/profile/640ae5a5000000000f011e55" rel="external nofollow noopener" target="_blank"><i class="fa-regular fa-note-sticky"></i><span><span lang="en">Xiaohongshu (RedNote)</span><span lang="zh">小红书</span><span lang="ja">小紅書（RedNote）</span></span></a>
       <a href="https://space.bilibili.com/8378592" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-bilibili"></i><span><span lang="en">Bilibili</span><span lang="zh">B站</span><span lang="ja">bilibili</span></span></a>
       <a href="https://www.zhihu.com/people/xing-zhe-qian-mian" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-zhihu"></i><span><span lang="en">Zhihu</span><span lang="zh">知乎</span><span lang="ja">Zhihu（知乎）</span></span></a>
       <span class="pl-loc"><i class="fa-brands fa-weixin"></i><span><span lang="en">WeChat: 升云迹</span><span lang="zh">公众号：升云迹</span><span lang="ja">WeChat：升云迹</span></span></span>
