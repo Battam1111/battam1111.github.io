@@ -497,6 +497,12 @@ html[lang="ja"] .name-sc { display: none; }
 .profile .more-info .profile-links a:hover i {
   color: var(--global-theme-color);
 }
+/* Divider between the academic links and the Chinese-platform links. */
+.profile .more-info .profile-links .pl-sep {
+  align-self: stretch;
+  border-top: 1px solid var(--global-divider-color);
+  margin: 0.15rem 0;
+}
 .profile .more-info .profile-links .pl-cv,
 .profile .more-info .profile-links .pl-cv i {
   color: var(--global-theme-color);

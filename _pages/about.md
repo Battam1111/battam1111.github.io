@@ -21,6 +21,10 @@ profile:
       <a href="https://x.com/YanjunChen1111" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
       <a href="https://orcid.org/0009-0001-9065-9137" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i><span>ORCID</span></a>
       <a class="pl-cv" href="/assets/pdf/cv.pdf" target="_blank"><i class="fa-regular fa-file-pdf"></i><span><span lang="en">CV</span><span lang="zh">简历</span><span lang="ja">履歴書</span></span></a>
+      <span class="pl-sep" aria-hidden="true"></span>
+      <a href="https://space.bilibili.com/8378592" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-bilibili"></i><span><span lang="en">Bilibili</span><span lang="zh">B站</span><span lang="ja">bilibili</span></span></a>
+      <a href="https://www.zhihu.com/people/xing-zhe-qian-mian" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-zhihu"></i><span><span lang="en">Zhihu</span><span lang="zh">知乎</span><span lang="ja">Zhihu（知乎）</span></span></a>
+      <span class="pl-loc"><i class="fa-brands fa-weixin"></i><span><span lang="en">WeChat: 升云迹</span><span lang="zh">公众号：升云迹</span><span lang="ja">WeChat：升云迹</span></span></span>
     </div>
 
 selected_papers: true
@@ -48,6 +52,8 @@ Making the pieces around a model trainable starts with knowing what they actuall
 **Reward-model accuracy and training outcomes in RLHF.** The reward model is the most typical piece of a training environment and is usually judged by its accuracy. Yet moderately accurate reward models train better language models than the most accurate ones, so a piece's worth has to be judged inside training.
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
+{: .angle-paper }
+Princeton's *What Makes a Reward Model a Good Teacher?* (NeurIPS 2025) opens with this finding, among others, as evidence for the question it answers; the ACL 2025 tutorial *Synthetic Data in the Era of LLMs* gives it a full slide.
 {: .angle-paper }
 
 **Exact credit for LLM agent teams.** What each message in a team of LLM agents was worth has mostly been predicted, but when the team communicates through a shared context and everything a downstream agent reads is written into the trace, the trace is the state. One message can then be replaced and the run continued to its end, which makes its credit exact. For an LLM, much of the environment arrives as context (retrieved text, tool outputs, prompts), and that is where the same method points next: assigning credit to those pieces as well.
@@ -82,6 +88,8 @@ The destination: an environment that learns alongside the model it trains, from 
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
+普林斯顿的 *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）在开篇把这一发现与其他工作一起，作为它要回答的问题的证据；ACL 2025 教程 *Synthetic Data in the Era of LLMs* 用一整页讲了它。
+{: .angle-paper }
 
 **LLM agent 团队的精确 credit。** LLM agent 团队里每条消息值多少，过去大多靠预测；但当团队通过共享上下文交流、下游 agent 读到的一切都写进记录（trace）时，记录就是状态。这时换掉一条消息、真实续跑到结束，它的 credit 就能精确算出。对 LLM 来说，环境大多以上下文的形式到达模型（检索到的文本、工具返回、提示词），同一个办法接下来指向的正是这些组件：给它们也分配 credit。
 {: .angle }
@@ -114,6 +122,8 @@ The destination: an environment that learns alongside the model it trains, from 
 **RLHF における reward model の精度と訓練結果。** reward model は訓練環境の中で最も典型的な構成要素で、ふつうは精度で評価される。しかし、中程度の精度の reward model のほうが最も精度の高いものより良い言語モデルを訓練するので、構成要素の価値は訓練の内側で判断する必要がある。
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
+{: .angle-paper }
+プリンストンの *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）は冒頭で、この発見をほかの研究とともに、自らが答える問いの根拠として挙げている。ACL 2025 のチュートリアル *Synthetic Data in the Era of LLMs* でも、スライド一枚を割いて取り上げられた。
 {: .angle-paper }
 
 **LLM agent チームの厳密な credit。** LLM agent のチームで各メッセージの価値はこれまで主に予測されてきたが、チームが共有コンテキストを通じてやり取りし、下流の agent が読むものがすべて記録（trace）に書き込まれるなら、記録がそのまま状態になる。このとき一つのメッセージを差し替えて最後まで実際に走らせれば、その credit は厳密に求まる。LLM にとって環境の多くはコンテキストとして届く（検索されたテキスト、ツールの返り値、プロンプト）ので、同じ方法が次に向かう先は、こうした構成要素にも credit を割り当てることだ。
