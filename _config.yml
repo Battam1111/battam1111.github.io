@@ -12,6 +12,12 @@ last_name: Chen
 name_zh: 陈彦筠
 # Japanese text writes Chinese names in Japanese kanji forms (陈 -> 陳).
 name_ja: 陳彦筠
+# Profiles outside _data/socials.yml that belong to the same person; added to the
+# homepage's JSON-LD "sameAs" so search engines tie the Chinese platforms to this site.
+same_as_extra:
+  - https://www.xiaohongshu.com/user/profile/640ae5a5000000000f011e55
+  - https://space.bilibili.com/8378592
+  - https://www.zhihu.com/people/xing-zhe-qian-mian
 # Appended to the HOMEPAGE <title> only (other pages already carry their own
 # page title). "Yanjun Chen" on its own competes with every other researcher of
 # that name; the field plus the institution is what makes a name query resolve

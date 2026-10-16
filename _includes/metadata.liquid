@@ -89,7 +89,7 @@
     <meta property="og:image" content="{{ og_image_url }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ author_name }} — {{ site.description | strip_newlines | truncate: 120 }}">
+    <meta property="og:image:alt" content="{{ author_name }}: {{ site.description | strip_newlines | truncate: 120 }}">
   {% endif %}
   <meta property="og:locale" content="{{ site.lang }}">
 
@@ -272,7 +272,7 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "{{ author_name }}",
-        "alternateName": "陈彦筠",
+        "alternateName": ["陈彦筠", "陳彦筠", "Battam"],
         "url": "{{ site_url }}",
         "image": "{{ og_img_for_ld }}",
         "jobTitle": "PhD Candidate",
@@ -297,7 +297,7 @@
           "Large Language Models",
           "Multi-Agent Reinforcement Learning",
           "Embodied AI"
-        ]{% if sameaslinks != blank %},
+        ]{% if site.same_as_extra %}{% for link in site.same_as_extra %}{% assign sameaslinks = sameaslinks | push: link %}{% endfor %}{% endif %}{% if sameaslinks != blank %},
         "sameAs": {{ sameaslinks | jsonify }}{% endif %}
       }
     </script>
