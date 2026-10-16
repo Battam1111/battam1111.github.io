@@ -36,7 +36,7 @@ layout: default
       {% if tags != '' %}
         &nbsp; &middot; &nbsp;
         {% for tag in page.tags %}
-          {% if url_beginning == '/blog/' %}
+          {% if url_beginning == '/blog/' and site.blog_archive_links %}
             <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}"> <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}</a>
           {% else %}
             <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}
@@ -50,7 +50,7 @@ layout: default
       {% if categories != '' %}
         &nbsp; &middot; &nbsp;
         {% for category in page.categories %}
-          {% if url_beginning == '/blog/' %}
+          {% if url_beginning == '/blog/' and site.blog_archive_links %}
             <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}"> <i class="fa-solid fa-tag fa-sm"></i> {{ category -}}</a>
           {% else %}
             <i class="fa-solid fa-tag fa-sm"></i> {{ category }}

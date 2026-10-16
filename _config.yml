@@ -73,7 +73,7 @@ external_services:
 
 navbar_fixed: true
 footer_fixed: false
-search_enabled: true
+search_enabled: false # the search index (_scripts/search.liquid.js) was never part of this site, so the box always came up empty
 socials_in_search: true
 posts_in_search: true
 bib_search: true
@@ -179,9 +179,9 @@ collections:
   news:
     defaults:
       layout: post
-    output: true
+    output: false # every item is inline on the homepage and /news/; one-sentence pages only add thin URLs
   projects:
-    output: true
+    output: false
   teachings:
     output: true
 
@@ -291,14 +291,15 @@ terser:
 
 jekyll-archives:
   posts:
-    enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
+    enabled: [] # off while Notes has two posts: each archive page would list one or two of them (thin URLs). Turn back on with blog_archive_links: true
     permalinks:
       year: "/blog/:year/"
       tags: "/blog/:type/:name/"
       categories: "/blog/:type/:name/"
   books:
-    enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
+    enabled: []
 
+blog_archive_links: false # tag and category chips link to archive pages only when archives are on
 display_tags: [] # v19: cleared al-folio demo tags; will populate as Notes grow
 display_categories: [] # v19: cleared al-folio demo categories
 

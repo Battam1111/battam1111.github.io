@@ -54,7 +54,7 @@ Making the pieces around a model trainable starts with knowing what they actuall
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
-Princeton's *What Makes a Reward Model a Good Teacher?* (NeurIPS 2025) opens with this finding, among others, as evidence for the question it answers; the ACL 2025 tutorial *Synthetic Data in the Era of LLMs* gives it a full slide.
+Princeton's *What Makes a Reward Model a Good Teacher?* (NeurIPS 2025) opens with this finding; the ACL 2025 tutorial *Synthetic Data in the Era of LLMs* gives it a full slide.
 {: .angle-paper }
 
 **Exact credit for LLM agent teams.** What each message in a team of LLM agents was worth has mostly been predicted, but when the team communicates through a shared context and everything a downstream agent reads is written into the trace, the trace is the state. One message can then be replaced and the run continued to its end, which makes its credit exact. For an LLM, much of the environment arrives as context (retrieved text, tool outputs, prompts), and that is where the same method points next: assigning credit to those pieces as well.
@@ -89,7 +89,7 @@ The destination: an environment that learns alongside the model it trains, from 
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
-普林斯顿的 *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）在开篇把这一发现与其他工作一起，作为它要回答的问题的证据；ACL 2025 教程 *Synthetic Data in the Era of LLMs* 用一整页讲了它。
+普林斯顿的 *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）在开篇引用了这一发现；ACL 2025 教程 *Synthetic Data in the Era of LLMs* 用一整页讲了它。
 {: .angle-paper }
 
 **LLM agent 团队的精确 credit。** LLM agent 团队里每条消息值多少，过去大多靠预测；但当团队通过共享上下文交流、下游 agent 读到的一切都写进记录（trace）时，记录就是状态。这时换掉一条消息、真实续跑到结束，它的 credit 就能精确算出。对 LLM 来说，环境大多以上下文的形式到达模型（检索到的文本、工具返回、提示词），同一个办法接下来指向的正是这些组件：给它们也分配 credit。
@@ -124,7 +124,7 @@ The destination: an environment that learns alongside the model it trains, from 
 {: .angle }
 *The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models* (EMNLP 2024).
 {: .angle-paper }
-プリンストンの *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）は冒頭で、この発見をほかの研究とともに、自らが答える問いの根拠として挙げている。ACL 2025 のチュートリアル *Synthetic Data in the Era of LLMs* でも、スライド一枚を割いて取り上げられた。
+プリンストンの *What Makes a Reward Model a Good Teacher?*（NeurIPS 2025）は冒頭でこの発見を引いている。ACL 2025 のチュートリアル *Synthetic Data in the Era of LLMs* でも、スライド一枚を割いて取り上げられた。
 {: .angle-paper }
 
 **LLM agent チームの厳密な credit。** LLM agent のチームで各メッセージの価値はこれまで主に予測されてきたが、チームが共有コンテキストを通じてやり取りし、下流の agent が読むものがすべて記録（trace）に書き込まれるなら、記録がそのまま状態になる。このとき一つのメッセージを差し替えて最後まで実際に走らせれば、その credit は厳密に求まる。LLM にとって環境の多くはコンテキストとして届く（検索されたテキスト、ツールの返り値、プロンプト）ので、同じ方法が次に向かう先は、こうした構成要素にも credit を割り当てることだ。

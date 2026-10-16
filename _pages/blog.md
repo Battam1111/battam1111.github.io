@@ -169,8 +169,8 @@ pagination:
           {% if tags != "" %}
           &nbsp; &middot; &nbsp;
             {% for tag in post.tags %}
-            <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
-              <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}</a>
+            {% if site.blog_archive_links %}<a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{% endif %}
+              <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}{% if site.blog_archive_links %}</a>{% endif %}
               {% unless forloop.last %}
                 &nbsp;
               {% endunless %}
@@ -180,8 +180,8 @@ pagination:
           {% if categories != "" %}
           &nbsp; &middot; &nbsp;
             {% for category in post.categories %}
-            <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
-              <i class="fa-solid fa-tag fa-sm"></i> {{ category }}</a>
+            {% if site.blog_archive_links %}<a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">{% endif %}
+              <i class="fa-solid fa-tag fa-sm"></i> {{ category }}{% if site.blog_archive_links %}</a>{% endif %}
               {% unless forloop.last %}
                 &nbsp;
               {% endunless %}
