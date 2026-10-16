@@ -94,8 +94,8 @@ pagination:
 
                     <p class="post-meta">
                       {{ read_time }} min read &nbsp; &middot; &nbsp;
-                      <a href="{{ year | prepend: '/blog/' | relative_url }}">
-                        <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </a>
+                      {% if site.blog_archive_links %}<a href="{{ year | prepend: '/blog/' | relative_url }}">{% endif %}
+                        <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} {% if site.blog_archive_links %}</a>{% endif %}
                     </p>
                   </div>
                 </div>
@@ -163,8 +163,8 @@ pagination:
         {% endif %}
       </p>
       <p class="post-tags">
-        <a href="{{ year | prepend: '/blog/' | relative_url }}">
-          <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </a>
+        {% if site.blog_archive_links %}<a href="{{ year | prepend: '/blog/' | relative_url }}">{% endif %}
+          <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} {% if site.blog_archive_links %}</a>{% endif %}
 
           {% if tags != "" %}
           &nbsp; &middot; &nbsp;

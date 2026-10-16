@@ -397,6 +397,34 @@ ol.bibliography > li,
   .profile .more-info .profile-role {
     display: none;
   }
+  /* v27.6: on a phone the one-per-row list (12 rows) pushed the intro below the
+     first screen. Two columns and a smaller photo bring it back up; the email
+     and the divider span both columns. */
+  .profile.float-left,
+  .profile.float-right {
+    max-width: 340px !important;
+  }
+  .profile figure {
+    max-width: 136px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .profile .more-info .profile-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    row-gap: 0.6rem;
+    justify-items: start;
+    text-align: left;
+  }
+  .profile .more-info .profile-links .pl-mail,
+  .profile .more-info .profile-links .pl-sep {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+  .profile .more-info .profile-links .pl-sep {
+    justify-self: stretch;
+  }
 }
 
 /* Profile figure — align top of image with first line of bio (asymmetric) */
