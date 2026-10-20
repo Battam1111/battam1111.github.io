@@ -112,7 +112,12 @@ def build():
     cfg = json.loads(PRIVATE_CFG.read_text(encoding="utf-8")) if PRIVATE_CFG.exists() else None
 
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        try:
+            browser = p.chromium.launch()
+        except Exception:
+            # Playwright's own Chromium is missing (e.g. its cache was cleared); Edge ships the
+            # same engine on Windows, so render with it instead of downloading a browser.
+            browser = p.chromium.launch(channel="msedge")
         page = browser.new_context().new_page()
 
         render(page, SRC_EN, OUT_PUBLIC, PNG, "en")

@@ -3,7 +3,7 @@ layout: about
 title: About
 permalink: /
 subtitle: >
-  <span lang="en">PhD Candidate, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 计算学系</a> 博士候选人。</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 コンピューティング学科</a> 博士候補者。</span>
+  <span lang="en">PhD Candidate, <a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>.</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 计算学系</a> 博士生。</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">香港理工大学 コンピューティング学科</a> 博士候補者。</span>
 
 profile:
   align: left
@@ -12,7 +12,7 @@ profile:
   # Location shows Singapore during the MSRA internship; switch it back to Hong Kong / 香港 / 香港 when the internship ends.
   more_info: >
     <p class="profile-name">Yanjun Chen <span class="name-zh"><span class="name-sc">陈彦筠</span><span lang="ja">陳彦筠</span></span></p>
-    <p class="profile-role"><span lang="en">PhD Candidate, PolyU</span><span lang="zh">博士候选人 · 理大</span><span lang="ja">博士候補者 · PolyU</span></p>
+    <p class="profile-role"><span lang="en">PhD Candidate, PolyU</span><span lang="zh">博士生 · 理大</span><span lang="ja">博士候補者 · PolyU</span></p>
     <div class="profile-links">
       <a class="pl-mail" href="mailto:yan-jun.chen@connect.polyu.hk"><i class="fa-regular fa-envelope"></i><span>yan&#8209;jun.chen@connect.polyu.hk</span></a>
       <span class="pl-loc"><i class="fa-solid fa-location-dot"></i><span><span lang="en">Singapore</span><span lang="zh">新加坡</span><span lang="ja">シンガポール</span></span></span>
@@ -77,7 +77,7 @@ The destination: an environment that learns alongside the model it trains, from 
 
 <div lang="zh" markdown="1">
 
-我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士候选人，师从 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。目前在微软亚洲研究院（新加坡）做研究实习。
+我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士生，师从 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。目前在微软亚洲研究院（新加坡）做研究实习。
 
 在强化学习里，模型是**可以训练的**。训练模型的环境，**还不行**。我想让环境也变得可训练，像模型一样，并以此把 AI 的上限抬上去。
 
