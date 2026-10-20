@@ -13,7 +13,7 @@ Three artifacts from two sources:
      artifact (never published), so it is skipped entirely without the config.
 
 The contact details live OUTSIDE this repo in the sibling private dir
-(../_homepage-rebuild-private/cv_contact_private.json), so no phone number ever
+(../03_private/cv_contact_private.json), so no phone number ever
 enters this public repository or its history:
 
   { "phone_display": "+86 ...", "phone_tel": "+86...", "wechat": "...",
@@ -34,7 +34,7 @@ SRC_EN = ROOT / "cv.html"
 SRC_ZH = ROOT / "cv_zh.html"
 OUT_PUBLIC = ROOT.parent.parent / "assets" / "pdf" / "cv.pdf"
 PNG = ROOT / "cv-preview.png"
-PRIVATE_CFG = ROOT.parent.parent.parent / "_homepage-rebuild-private" / "cv_contact_private.json"
+PRIVATE_CFG = ROOT.parent.parent.parent / "03_private" / "cv_contact_private.json"
 APPLY_MARKER = "<!--APPLY_CONTACT-->"
 
 # Webfonts that must be active before the page is printed. Chromium can reach

@@ -26,8 +26,9 @@ tools/cv/cv-preview.png
 tools/cv/cv_apply.html
 
 # Private, never-published material lives OUTSIDE this repo in a sibling dir
-# (../_homepage-rebuild-private/). Guard against it ever being copied back in.
+# (../03_private/). Guard against it ever being copied back in.
 _homepage-rebuild-private/
+03_private/
 docs/homepage-rebuild/
 # Apply-variant PDF staging dir (contact details inside; never publish).
 tools/cv/out/

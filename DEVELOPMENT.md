@@ -163,7 +163,6 @@ deliberate placeholder.
 ## 12. Private material
 
 The design-history corpus (peer analysis, rebuild manual, adversarial design critiques) lives
-**outside this repo** at `../_homepage-rebuild-private/homepage-rebuild/` (a local sibling dir, not
+**outside this repo** at `../03_private/homepage-rebuild/` (a local sibling dir, not
 git-tracked here). It was previously published by accident; it must never return to this public
-repo. The longer-form working state and decisions also live in the session memory at
-`~/.claude/projects/.../memory/`.
+repo. The current working state lives beside it in `../CONTINUATION.md` (also outside this repo).

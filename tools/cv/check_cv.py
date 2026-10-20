@@ -29,7 +29,7 @@ PUBLIC = REPO / "assets" / "pdf" / "cv.pdf"
 HTML_EN = ROOT / "cv.html"
 HTML_ZH = ROOT / "cv_zh.html"
 BIB = REPO / "_bibliography" / "papers.bib"
-PRIVATE_CFG = REPO.parent / "_homepage-rebuild-private" / "cv_contact_private.json"
+PRIVATE_CFG = REPO.parent / "03_private" / "cv_contact_private.json"
 
 # Contact values come ONLY from the private config; hardcoding either of them
 # here would put them straight into the public repo, which is exactly what this
