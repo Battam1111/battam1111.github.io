@@ -19,6 +19,20 @@
 
 {% capture author_name %}{{ site.first_name }}{% if site.middle_name %} {{ site.middle_name }}{% endif %} {{ site.last_name }}{% endcapture %}
 
+{% comment %}
+  One URL per language (jekyll-polyglot): the Chinese and Japanese builds use the page's own title_zh / title_ja and
+  description_zh / description_ja when it has them, else the English ones; lang_prefix is "/zh" or "/ja" there, "" at /.
+{% endcomment %}
+{% assign page_title = page.title %}
+{% assign page_description = page.description %}
+{% if site.active_lang and site.active_lang != site.default_lang %}
+  {% assign lang_key = 'title_' | append: site.active_lang %}
+  {% if page[lang_key] %}{% assign page_title = page[lang_key] %}{% endif %}
+  {% assign lang_key = 'description_' | append: site.active_lang %}
+  {% if page[lang_key] %}{% assign page_description = page[lang_key] %}{% endif %}
+{% endif %}
+{% capture lang_prefix %}{% if site.active_lang and site.active_lang != site.default_lang %}/{{ site.active_lang }}{% endif %}{% endcapture %}
+
 <!-- Standard metadata -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,12 +44,12 @@
     {% capture title %}{{ site.title }}{% endcapture %}
   {% endif %}
   {% if page.url == '/blog/index.html' %}
-    {{ page.title }} | {{ title }}
+    {{ page_title }} | {{ title }}
   {% elsif page.title != 'blank' and page.url != '/' %}
     {% if page.title == null or page.title == '' %}
       {{ page.date | date: '%Y' }} | {{ title }}
     {% else %}
-      {{ page.title }} | {{ title }}
+      {{ page_title }} | {{ title }}
     {% endif %}
   {% else %}
     {% comment %}
@@ -47,7 +61,7 @@
   {% endif %}
 </title>
 <meta name="author" content="{{ author_name }}">
-<meta name="description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
+<meta name="description" content="{% if page_description %}{{ page_description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
 {% if page.keywords or site.keywords %}
   <meta name="keywords" content="{% if page.keywords %}{{ page.keywords }}{% else %}{{ site.keywords }}{% endif %}">
 {% endif %}
@@ -72,8 +86,8 @@
     {% capture og_title %}{{ title }}{% endcapture %}
     {% capture tw_title %}{{ title }}{% endcapture %}
   {% elsif page.title %}
-    {% capture og_title %}{{ page.title }} | {{ title }}{% endcapture %}
-    {% capture tw_title %}{{ page.title }} | {{ title }}{% endcapture %}
+    {% capture og_title %}{{ page_title }} | {{ title }}{% endcapture %}
+    {% capture tw_title %}{{ page_title }} | {{ title }}{% endcapture %}
   {% else %}
     {% capture og_title %}{{ title }}{% endcapture %}
     {% capture tw_title %}{{ title }}{% endcapture %}
@@ -83,20 +97,20 @@
   <meta property="og:site_name" content="{{ title }}">
   <meta property="og:type" content="{% if is_blog_post %}article{% else %}website{% endif %}">
   <meta property="og:title" content="{{ og_title }}">
-  <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url | remove_first: 'index.html' }}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
+  <meta property="og:url" content="{{ page.url | prepend: lang_prefix | prepend: site.baseurl | prepend: site.url | remove_first: 'index.html' }}">
+  <meta property="og:description" content="{% if page_description %}{{ page_description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
   {% if og_image_url %}
     <meta property="og:image" content="{{ og_image_url }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="{{ author_name }}: {{ site.description | strip_newlines | truncate: 120 }}">
   {% endif %}
-  <meta property="og:locale" content="{{ site.lang }}">
+  <meta property="og:locale" content="{{ site.active_lang | default: site.lang }}">
 
   <!-- Twitter card — v23: summary_large_image when og_image present (renders 2:1 card instead of small thumbnail). -->
   <meta name="twitter:card" content="{% if og_image_url %}summary_large_image{% else %}summary{% endif %}">
   <meta name="twitter:title" content="{{ tw_title }}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
+  <meta name="twitter:description" content="{% if page_description %}{{ page_description | strip_newlines | strip }}{% else %}{{ site.description | strip_newlines | strip }}{% endif %}">
   {% if og_image_url %}
     <meta name="twitter:image" content="{{ og_image_url }}">
   {% endif %}
@@ -309,10 +323,11 @@
               "@type": "Person",
               "name": "{{ author_name }}"
           },
-          "url": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
+          "url": "{{ page.url | prepend: lang_prefix | prepend: site.baseurl | prepend: site.url }}",
           "@type": "{% if is_blog_post %}BlogPosting{% else %}WebSite{% endif %}",
-          "description": "{% if page.description %}{{ page.description }}{% else if site.description %}{{ site.description }}{% endif %}",
-          "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
+          "description": "{% if page_description %}{{ page_description }}{% else if site.description %}{{ site.description }}{% endif %}",
+          "headline": "{% if page_title %}{{ page_title }}{% else %}{{ site.title }}{% endif %}",
+          "inLanguage": "{{ site.active_lang | default: site.lang }}",
           {% if sameaslinks != blank %}
           "sameAs": {{ sameaslinks | jsonify }},
           {% endif %}

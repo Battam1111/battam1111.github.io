@@ -1,0 +1,30 @@
+---
+layout: null
+permalink: /sitemap.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+{% comment %}
+  One entry per page per language (jekyll-polyglot builds English at /, Chinese under /zh/, Japanese under /ja/),
+  each naming all the versions with hreflang, which Google reads from sitemaps as it does from page heads.
+  The pages are the ones jekyll-sitemap listed before: HTML pages and the documents of collections with output,
+  leaving out sitemap: false and the 404 page. Built once, at the root (exclude_from_localization).
+{% endcomment %}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% assign entries = site.html_pages | where_exp: "p", "p.sitemap != false" | where_exp: "p", "p.url != '/404.html'" %}
+{% for collection in site.collections %}{% if collection.output %}
+  {% assign docs = collection.docs | where_exp: "d", "d.sitemap != false" %}
+  {% assign entries = entries | concat: docs %}
+{% endif %}{% endfor %}
+{% for e in entries %}
+  {% capture path %}{{ e.url | replace: 'index.html', '' }}{% endcapture %}
+  {% for lang in site.languages %}
+  <url>
+    <loc>{{ site.url }}{{ site.baseurl }}{% if lang != site.default_lang %}/{{ lang }}{% endif %}{{ path }}</loc>
+    {% if e.last_modified_at %}<lastmod>{{ e.last_modified_at | date_to_xmlschema }}</lastmod>{% elsif e.date %}<lastmod>{{ e.date | date_to_xmlschema }}</lastmod>{% endif %}
+    {% for alt in site.languages %}<xhtml:link rel="alternate" hreflang="{{ alt }}" href="{{ site.url }}{{ site.baseurl }}{% if alt != site.default_lang %}/{{ alt }}{% endif %}{{ path }}"/>
+    {% endfor %}<xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ site.baseurl }}{{ path }}"/>
+  </url>
+  {% endfor %}
+{% endfor %}
+</urlset>

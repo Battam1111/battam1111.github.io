@@ -34,6 +34,16 @@ footer_text: >
   <span lang="en"><a href="https://github.com/Battam1111/battam1111.github.io">Source on GitHub</a>.</span><span lang="zh"><a href="https://github.com/Battam1111/battam1111.github.io">源代码在 GitHub</a>。</span><span lang="ja"><a href="https://github.com/Battam1111/battam1111.github.io">ソースは GitHub にて公開</a>。</span>
 keywords: reinforcement learning, RLHF, RLVR, reward models, verifiers, curriculum, credit assignment, LLM post-training, RL environments, embodied AI, PolyU
 lang: en
+# jekyll-polyglot: every page is written once per language from the same source, English at the root,
+# Chinese under /zh/ and Japanese under /ja/. Each build keeps only its own language's <span lang> and
+# <div lang> blocks (_plugins/lang-blocks.rb); head.liquid links the versions with hreflang, sitemap.xml lists them all.
+languages: ["en", "zh", "ja"]
+default_lang: "en"
+# Written once at the root and never prefixed: the asset tree (css, js, images, PDFs, films) and the root
+# files that only make sense once.
+exclude_from_localization: ["assets", "robots.txt", "sitemap.xml", "feed.xml", "b7d3bf4ebb505c273f1876f024b317a2.txt"]
+# Serial: polyglot's own advice when other plugins share the build.
+parallel_localization: false
 icon: favicon.svg   # v10: typographic Y favicon (al-folio prepends assets/img/ automatically)
 
 url: https://battam1111.github.io
@@ -92,7 +102,7 @@ og_image: og-card.png    # 1200x630 social share card (assets/img/og-card.png)
 
 # v23: manual cache-bust (al-folio's bust_css_cache is broken — emits empty MD5 because it
 # hashes pre-Sass source). Bumped on every visual/content change so browsers pick up new CSS.
-asset_version: v27.8
+asset_version: v27.9
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -249,9 +259,9 @@ plugins:
   - jekyll-link-attributes
   - jekyll-minifier
   - jekyll-paginate-v2
+  - jekyll-polyglot
   - jekyll-regex-replace
   - jekyll/scholar
-  - jekyll-sitemap
   - jekyll-socials
   - jekyll-tabs
   - jekyll-terser

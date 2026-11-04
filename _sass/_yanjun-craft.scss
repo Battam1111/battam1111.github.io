@@ -1141,7 +1141,10 @@ html[lang="ja"] [lang]:not([lang="ja"]) { display: none !important; }
   background: transparent;
   height: 1.6rem;
 }
-.lang-toggle button {
+/* Each pill is a link to this page in that language (one URL per language). */
+.lang-toggle a {
+  display: inline-flex;
+  align-items: center;
   background: transparent;
   border: 0;
   padding: 0 0.55rem;
@@ -1153,25 +1156,27 @@ html[lang="ja"] [lang]:not([lang="ja"]) { display: none !important; }
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1;
+  text-decoration: none;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
-.lang-toggle button + button {
+.lang-toggle a + a {
   border-left: 1px solid var(--global-divider-color);
 }
-.lang-toggle button:hover {
+.lang-toggle a:hover {
   color: var(--global-text-color);
+  text-decoration: none;
 }
-.lang-toggle button.active {
+.lang-toggle a.active {
   color: var(--global-bg-color);
   background-color: var(--global-theme-color);
 }
-.lang-toggle button.active:hover {
+.lang-toggle a.active:hover {
   color: var(--global-bg-color);
 }
 
 /* CJK glyph slightly larger to visually match Latin EN width */
-.lang-toggle button[data-lang="zh"],
-.lang-toggle button[data-lang="ja"] {
+.lang-toggle a[data-lang="zh"],
+.lang-toggle a[data-lang="ja"] {
   font-size: 0.88rem;
   padding: 0 0.5rem;
 }
@@ -1405,7 +1410,7 @@ ul.post-list .post-tags a:hover {
   #navbar .navbar-collapse .lang-toggle {
     height: 1.85rem;
   }
-  #navbar .navbar-collapse .lang-toggle button {
+  #navbar .navbar-collapse .lang-toggle a {
     font-size: 0.85rem;
     padding: 0 0.7rem;
   }

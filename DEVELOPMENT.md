@@ -46,7 +46,7 @@ al-folio's `bust_css_cache` filter is broken in this setup (it hashes the pre-Sa
 always emits an empty MD5). We replace it with a **manual** version string:
 
 - `_config.yml` -> `asset_version: vXX`
-- `_includes/head.liquid` loads `main.css?v={{ site.asset_version }}` and the trilingual JS the same way.
+- `_includes/head.liquid` loads `main.css?v={{ site.asset_version }}`.
 
 **Whenever you change anything that alters the compiled CSS or a served JS asset, bump
 `asset_version`** (e.g. `v23.1` -> `v24`). Pure file removals that do not change `main.css`
@@ -61,11 +61,12 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 | `_sass/_yanjun-craft.scss` | The ~1400-line custom visual override layer. `@use`d **LAST** in `assets/css/main.scss` so its rules win the cascade over al-folio defaults. This is where the editorial type system, hero grid, dark-mode palette, trilingual hide rules, footer counter, etc. live. |
 | `_layouts/about.liquid` | Custom homepage: CSS-grid hero + Bio + Research + News + Selected Publications + **Teaching & Service** + Social. Not the stock al-folio about layout. |
 | `_layouts/page.liquid`, `_layouts/post.liquid` | Customized for trilingual `<h1>` and single-post scoping (the `single-post` class prevents post CSS bleeding onto the homepage). |
-| `_includes/head.liquid` | Trilingual early-paint script, manual cache-bust, GoatCounter snippet, dark-mode FOUC fix, font preconnects. |
-| `_includes/header.liquid` | Navbar with always-render brand (mobile drawer fix) + trilingual nav + the EN/中/日 language pill. |
+| `_includes/head.liquid` | Per-language canonical and hreflang links, manual cache-bust, GoatCounter snippet, dark-mode FOUC fix, font preconnects. |
+| `_includes/header.liquid` | Navbar with always-render brand (mobile drawer fix) + trilingual nav + the EN/中/日 language pill (links to this page in each language). |
 | `_includes/footer.liquid` | Trilingual footer + the GoatCounter visit counter (JSON-fetched inline number). |
-| `_includes/metadata.liquid` | SEO: absolute-URL OpenGraph, `summary_large_image` Twitter card, homepage **Person** JSON-LD (affiliation/alumniOf/jobTitle/knowsAbout/sameAs), per-page descriptions. |
-| `assets/js/lang-toggle.js` | The custom EN/中/日 switcher (persists choice to `localStorage`). |
+| `_includes/metadata.liquid` | SEO: absolute-URL OpenGraph, `summary_large_image` Twitter card, homepage **Person** JSON-LD (affiliation/alumniOf/jobTitle/knowsAbout/sameAs), per-page and per-language titles and descriptions. |
+| `_plugins/lang-blocks.rb` | Keeps only the build's own language in each page (section 6). |
+| `sitemap.xml` | Every page in every language, each entry naming all versions with hreflang (replaces jekyll-sitemap). |
 | `tools/cv/` | The CV->PDF pipeline (see section 7). Source, run manually; not part of the Jekyll build. |
 | `_data/socials.yml` | The one real `_data` file (email, ORCID, Scholar, GitHub, X). |
 | `_bibliography/papers.bib` | Real publications. |
@@ -82,14 +83,24 @@ pulls cleaner).
 
 ## 6. Trilingual system (EN / 中 / 日)
 
-Default language is English. The navbar pill switches and persists to `localStorage`.
+One URL per language (since v27.9): [jekyll-polyglot](https://github.com/untra/polyglot) builds every page
+three times from the same source, English at `/`, Chinese under `/zh/`, Japanese under `/ja/` (`_config.yml`:
+`languages`, `default_lang`, `exclude_from_localization`). The navbar pill links to the same page in each language.
 
 - **Markup**: wrap each translatable string in `<span lang="en">…</span><span lang="zh">…</span><span lang="ja">…</span>`,
   or for Markdown blocks `<div lang="en" markdown="1">…</div>` (so Kramdown still renders inside).
-- **Hiding**: `_yanjun-craft.scss` has `html[lang="en"] [lang]:not([lang="en"]) { display:none }`
-  (and zh/ja). The `<html lang>` attribute is set early in `head.liquid` from `localStorage`.
+- **One language per page**: `<html lang>` is the build's language (`site.active_lang`), and
+  `_plugins/lang-blocks.rb` drops from `<body>` every element whose `lang` is another language, exactly the
+  elements that `_yanjun-craft.scss` hides (`html[lang="en"] [lang]:not([lang="en"]) { display:none }`, and zh/ja).
+  So **never put a `lang` attribute on anything that must show in every language**; it disappears from the other two builds.
 - **Front matter**: subpage titles/descriptions use parallel keys `title` / `title_zh` / `title_ja`
-  and `description` / `description_zh` / `description_ja` (see `_pages/blog.md`, `_posts/`).
+  and `description` / `description_zh` / `description_ja` (see `_pages/blog.md`, `_posts/`); `metadata.liquid`
+  puts the build's own pair into `<title>`, the description and OpenGraph.
+- **Links**: write site links as usual (`/blog/`); polyglot prefixes them with `/zh` or `/ja` in those builds,
+  except paths in `exclude_from_localization` (`/assets/`, feeds). A link that must point at a *given* language
+  (the pill, hreflang, canonical) goes inside `{% static_href %}href="..."{% endstatic_href %}`.
+- **Search engines**: each page is canonical for itself and names the three versions plus `x-default` (the
+  English root) with hreflang, in `<head>` and in `sitemap.xml`.
 - **Standard**: translation is *同义转换 not 机翻*. Keep paper titles, venue names (EMNLP, NAACL…),
   arXiv IDs, and field-standard terms (RLHF, reward model, agent…) in English; translate the
   surrounding prose naturally. CJK headings fall through Newsreader to Noto Serif SC/JP via `:lang()`.

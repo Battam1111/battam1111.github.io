@@ -1,19 +1,6 @@
 <!-- Metadata, OpenGraph and Schema.org -->
 {% include metadata.liquid %}
 
-<!-- v17: Early language detection (set <html lang> before content paints to avoid flash) -->
-<script>
-  (function () {
-    try {
-      var s = localStorage.getItem('preferred_lang');
-      if (s === 'zh' || s === 'ja') { document.documentElement.lang = s; }
-    } catch (e) {}
-  })();
-</script>
-
-<!-- v17: Language switcher behaviour (deferred — wires up after DOM ready) -->
-<script defer src="{{ '/assets/js/lang-toggle.js' | relative_url }}?v={{ site.asset_version | default: 'v23.1' }}"></script>
-
 <!-- Security: Content Security Policy -->
 <!-- Permissive CSP suitable for academic websites. Allows external images, videos, and common embed services. -->
 <!-- To customize for your needs, see: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
@@ -102,7 +89,17 @@
 {% endif %}
 <!-- v12: explicit cache-bust because bust_css_cache hashes pre-Sass (always empty MD5). -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v23.1' }}">
-<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+{% comment %}
+  One URL per language (jekyll-polyglot builds English at /, Chinese under /zh/, Japanese under /ja/).
+  Each version is canonical for itself and names the other two with hreflang; x-default is the English root.
+  static_href keeps polyglot from prefixing these links with the language of the build.
+{% endcomment %}
+{% capture page_path %}{{ page.url | replace: 'index.html', '' }}{% endcapture %}
+<link rel="canonical" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{% if site.active_lang != site.default_lang %}/{{ site.active_lang }}{% endif %}{{ page_path }}"{% endstatic_href %}>
+{% for l in site.languages %}
+  <link rel="alternate" hreflang="{{ l }}" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{% if l != site.default_lang %}/{{ l }}{% endif %}{{ page_path }}"{% endstatic_href %}>
+{% endfor %}
+<link rel="alternate" hreflang="x-default" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{{ page_path }}"{% endstatic_href %}>
 
 {% if site.goatcounter_username and site.goatcounter_username != "" %}
   <!-- v23: GoatCounter — privacy-friendly, cookieless analytics (no PII). Async load. -->

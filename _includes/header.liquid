@@ -130,12 +130,19 @@
               </button>
             </li>
           {% endif %}
-          <!-- v17: trilingual language switcher (EN / 中 / 日) -->
+          <!-- Language switcher (EN / 中 / 日): each pill links to this page in that language (polyglot builds /zh/ and /ja/).
+               No lang attribute on the links: an element with another lang is dropped from each build (_plugins/lang-blocks.rb). -->
+          {% capture page_path %}{{ page.url | replace: 'index.html', '' }}{% endcapture %}
           <li class="nav-item lang-toggle-wrap">
             <div class="lang-toggle" role="group" aria-label="Language switcher">
-              <button type="button" data-lang="en" title="English">EN</button>
-              <button type="button" data-lang="zh" title="中文">中</button>
-              <button type="button" data-lang="ja" title="日本語">日</button>
+              {% for l in site.languages %}
+                {% case l %}
+                  {% when 'zh' %}{% assign pill = '中' %}{% assign pill_title = '中文' %}
+                  {% when 'ja' %}{% assign pill = '日' %}{% assign pill_title = '日本語' %}
+                  {% else %}{% assign pill = 'EN' %}{% assign pill_title = 'English' %}
+                {% endcase %}
+                <a {% static_href %}href="{{ site.baseurl }}{% if l != site.default_lang %}/{{ l }}{% endif %}{{ page_path }}"{% endstatic_href %} hreflang="{{ l }}" data-lang="{{ l }}" title="{{ pill_title }}"{% if l == site.active_lang %} class="active" aria-current="page"{% endif %}>{{ pill }}</a>
+              {% endfor %}
             </div>
           </li>
           {% if site.enable_darkmode %}
