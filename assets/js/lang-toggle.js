@@ -41,6 +41,9 @@
       else btn.classList.remove('active');
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     }
+    // Charts sized to their container (Vega-Lite width "container") measure on window resize;
+    // a block that was hidden had zero width, so ask them to measure again.
+    window.dispatchEvent(new Event('resize'));
   }
 
   // (1) Set lang on document as early as possible, before content paints

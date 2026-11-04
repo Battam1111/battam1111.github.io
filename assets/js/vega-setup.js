@@ -13,12 +13,10 @@ document.addEventListener("readystatechange", () => {
       chartElement.classList.add("vega-lite");
       backup.after(chartElement);
 
-      /* Embed the visualization in the container */
-      if (vegaTheme === "dark") {
-        vegaEmbed(chartElement, JSON.parse(jsonData), { theme: "dark" });
-      } else {
-        vegaEmbed(chartElement, JSON.parse(jsonData));
-      }
+      /* Embed the visualization in the container. The site's CSP forbids eval, so expressions go through vega-interpreter. */
+      const options = { ast: true, expr: vega.expressionInterpreter };
+      if (vegaTheme === "dark") options.theme = "dark";
+      vegaEmbed(chartElement, JSON.parse(jsonData), options);
     });
   }
 });

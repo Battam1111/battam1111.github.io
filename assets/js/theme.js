@@ -227,11 +227,10 @@ let setVegaLiteTheme = (theme) => {
     // Get the code block content from previous element, since it is the vega lite code itself as defined in Markdown, but it is hidden
     let jsonData = elem.previousSibling.childNodes[0].innerHTML;
     elem.innerHTML = "";
-    if (theme === "dark") {
-      vegaEmbed(elem, JSON.parse(jsonData), { theme: "dark" });
-    } else {
-      vegaEmbed(elem, JSON.parse(jsonData));
-    }
+    // The site's CSP forbids eval, so expressions go through vega-interpreter (see vega-setup.js).
+    const options = { ast: true, expr: vega.expressionInterpreter };
+    if (theme === "dark") options.theme = "dark";
+    vegaEmbed(elem, JSON.parse(jsonData), options);
   });
 };
 
