@@ -63,11 +63,6 @@ Princeton's *What Makes a Reward Model a Good Teacher?* (NeurIPS 2025) opens wit
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-**When a policy absorbs action shaping.** Reward shaping has a theorem guaranteeing that a potential-based term can be removed; the same practice on the action channel, a training-time offset, has none. A trainable policy absorbs an offset its own output layer can reproduce exactly, and once absorbed, the offset can be removed with the return almost unchanged.
-{: .angle }
-*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
-{: .angle-paper }
-
 ### Where I'm Going
 
 The destination: an environment that learns alongside the model it trains, from language to embodied agents. The path runs through credit: **credit should not stop at the agent's boundary.** Once trustworthy learning signals reach the pieces around the model, the environment can begin to learn.
@@ -99,11 +94,6 @@ The destination: an environment that learns alongside the model it trains, from 
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
 {: .angle-paper }
 
-**action shaping 何时被 policy 吸收。** reward shaping 有定理保证基于势函数的项可以拿掉，action channel 上的同类做法（训练时加的偏移）没有。可训练的 policy 会吸收它自己输出层能精确复现的偏移，吸收后拿掉，回报几乎不变。
-{: .angle }
-*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
-{: .angle-paper }
-
 ### 往哪里去
 
 终局：环境与模型一起学习，从语言走向具身智能体。去那里的路，经过 credit assignment（信用分配）：**credit 不该停在 agent 的边界上。** 当可信的学习信号能到达模型周围的组件，环境就能开始学习。
@@ -133,11 +123,6 @@ The destination: an environment that learns alongside the model it trains, from 
 **LLM agent チームの厳密な credit。** LLM agent のチームで各メッセージの価値はこれまで主に予測されてきたが、チームが共有コンテキストを通じてやり取りし、下流の agent が読むものがすべて記録（trace）に書き込まれるなら、記録がそのまま状態になる。このとき一つのメッセージを差し替えて最後まで実際に走らせれば、その credit は厳密に求まる。LLM にとって環境の多くはコンテキストとして届く（検索されたテキスト、ツールの返り値、プロンプト）ので、同じ方法が次に向かう先は、こうした構成要素にも credit を割り当てることだ。
 {: .angle }
 *The Trace Is the State: Exact Credit Assignment for LLM Agent Teams* (arXiv:2603.06859, in submission).
-{: .angle-paper }
-
-**action shaping が policy に吸収されるとき。** reward shaping には、ポテンシャルに基づく項を取り除けることを保証する定理があるが、action channel 上の同じ実践（訓練時に加えるオフセット）にはない。訓練可能な policy は、自分の出力層が正確に再現できるオフセットを吸収し、吸収された後に外してもリターンはほとんど変わらない。
-{: .angle }
-*Action Shaping: Policies Absorb What They Can Express* (arXiv:2609.32752, in submission).
 {: .angle-paper }
 
 ### これから
