@@ -92,9 +92,11 @@
     line-height: 1.45;
   }
 
-  // Beside the bio the card stays in view while the longer column scrolls past (it is shorter than a screen).
-  @media (min-width: 880px) and (min-height: 760px) {
-    .profile-card {
+  // Beside the bio the card stays in view while the longer column scrolls past, but only while the whole card fits
+  // the window: assets/js/site.js adds "fits" by measuring it (783px tall with the 2026-11 photo; a fixed min-height
+  // query would go stale with the next photo).
+  @media (min-width: 880px) {
+    .profile-card.fits {
       position: sticky;
       top: calc(var(--header-h) + var(--space-5));
     }

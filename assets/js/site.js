@@ -201,6 +201,18 @@
   );
   onScroll();
 
+  // Profile card of the home page: sticky beside the bio only while all of it fits the window (_sass/site/_pages.scss).
+  // 96 = the card's top offset there (top bar 56 + 24) and 16 to spare below it.
+  var card = document.querySelector(".profile-card");
+  if (card) {
+    var fit = function () {
+      card.classList.toggle("fits", card.offsetHeight + 96 <= window.innerHeight);
+    };
+    window.addEventListener("resize", fit);
+    if (document.fonts) document.fonts.ready.then(fit);
+    fit();
+  }
+
   // Footer visit counter: GoatCounter's public total as plain text; stays hidden if the fetch fails.
   var counter = document.querySelector(".visit-counter[data-vc-source]");
   if (counter && window.fetch) {
