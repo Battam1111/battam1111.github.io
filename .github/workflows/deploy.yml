@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # A fixed image, not ubuntu-latest: when "latest" moved to 26.04 (2026-11) the pinned Ruby had no build for it
+    # and the deploy stopped at "Setup Ruby".
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
