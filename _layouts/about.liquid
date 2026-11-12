@@ -1,105 +1,81 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header">
-    <h1 class="post-title">
+<div class="home post">
+  <header class="home-head">
+    <h1 class="home-name">
       {% if site.title == 'blank' %}
-        <span class="name-latin"><span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
+        <span class="name-latin"><span class="name-first">{{ site.first_name }}</span> {{ site.middle_name }}
         {{ site.last_name }}</span>
         {% if site.name_zh %}<span class="name-zh"><span class="name-sc">{{ site.name_zh }}</span>{% if site.name_ja %}<span lang="ja">{{ site.name_ja }}</span>{% endif %}</span>{% endif %}
       {% else %}
         {{ site.title }}
       {% endif %}
     </h1>
-    <p class="desc">{{ page.subtitle }}</p>
+    <p class="home-role desc">{{ page.subtitle }}</p>
   </header>
 
   <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
-        {% if page.profile.image %}
-          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% if page.profile.image_circular %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-          {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1
-      rounded' %}
+    <div class="home-hero">
+      {% if page.profile %}
+        <aside class="profile-card profile">
+          {% if page.profile.image %}
+            {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
+            {%
+              include figure.liquid loading="eager" path=profile_image_path class="profile-photo" width="400" height="529"
+              sizes="(min-width: 760px) 220px, 168px" alt=page.profile.image cache_bust=true
+            %}
           {% endif %}
-          {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
-      30vw, 95vw"{% endcapture %}
-          {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-            cache_bust=true
-          %}
-        {% endif %}
-        {% if page.profile.more_info %}
-          <div class="more-info">{{ page.profile.more_info }}</div>
-        {% endif %}
-      </div>
-    {% endif %}
-
-    <div class="clearfix">{{ content }}</div>
-
-    <!-- News -->
-    {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit"><span lang="en">News</span><span lang="zh">近况</span><span lang="ja">お知らせ</span></a>
-      </h2>
-      {% include news.liquid limit=true %}
-    {% endif %}
-
-    <!-- Latest posts -->
-    {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit"><span lang="en">Latest Posts</span><span lang="zh">最近文章</span><span lang="ja">最新の投稿</span></a>
-      </h2>
-      {% include latest_posts.liquid %}
-    {% endif %}
-
-    <!-- Selected papers -->
-    {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit"><span lang="en">Selected Publications</span><span lang="zh">代表性论文</span><span lang="ja">主要論文</span></a>
-      </h2>
-      {% include selected_papers.liquid %}
-    {% endif %}
-
-    <!-- Teaching & Service (v22) -->
-    <h2><span lang="en">Teaching &amp; Service</span><span lang="zh">教学与服务</span><span lang="ja">教育・学会活動</span></h2>
-    <div class="teaching-service">
-
-      <h3 class="ts-sub"><span lang="en">Teaching</span><span lang="zh">教学</span><span lang="ja">教育</span> <small class="ts-affil"><span lang="en">(Teaching Assistant, The Hong Kong Polytechnic University)</span><span lang="zh">（助教，香港理工大学）</span><span lang="ja">（ティーチング・アシスタント、香港理工大学）</span></small></h3>
-      <div class="table-responsive">
-        <table class="table table-sm table-borderless service-table">
-          <tr><th scope="row" style="width: 22%">2025/26 S2</th><td><code>COMP5221</code>&nbsp; Software Project Management</td></tr>
-          <tr><th scope="row" style="width: 22%">2025/26 S1</th><td><code>COMP1002</code>&nbsp; Computational Thinking and Problem Solving</td></tr>
-          <tr><th scope="row" style="width: 22%">2024/25 S2</th><td><code>COMP1411</code>&nbsp; Introduction to Computer Systems</td></tr>
-          <tr><th scope="row" style="width: 22%">2024/25 S1</th><td><code>COMP5567</code>&nbsp; Distributed Algorithms and Protocols for Blockchains</td></tr>
-        </table>
-      </div>
-
-      <h3 class="ts-sub"><span lang="en">Reviewing</span><span lang="zh">审稿</span><span lang="ja">査読</span></h3>
-      <div class="table-responsive">
-        <table class="table table-sm table-borderless service-table">
-          <tr><th scope="row" style="width: 22%">2026</th><td>ACL Rolling Review (ARR)</td></tr>
-          <tr><th scope="row" style="width: 22%">2026</th><td>IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</td></tr>
-        </table>
-      </div>
-
+          {% if page.profile.more_info %}
+            <div class="more-info">{{ page.profile.more_info }}</div>
+          {% endif %}
+        </aside>
+      {% endif %}
+      <div class="home-bio">{{ content }}</div>
     </div>
 
-    <!-- Social -->
-    {% if page.social %}
-      <div class="social">
-        <div class="contact-icons">{% social_links %}</div>
-
-        <div class="contact-note">{{ site.contact_note }}</div>
-      </div>
+    {% if page.announcements and page.announcements.enabled %}
+      <section class="home-section">
+        <h2 class="section-title">
+          <a href="{{ '/news/' | relative_url }}"><span lang="en">News</span><span lang="zh">近况</span><span lang="ja">お知らせ</span></a>
+        </h2>
+        {% include news.liquid limit=true %}
+      </section>
     {% endif %}
 
-    {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
-      {% include newsletter.liquid center=true %}
+    {% if page.selected_papers %}
+      <section class="home-section">
+        <h2 class="section-title">
+          <a href="{{ '/publications/' | relative_url }}"><span lang="en">Selected Publications</span><span lang="zh">代表性论文</span><span lang="ja">主要論文</span></a>
+        </h2>
+        {% include selected_papers.liquid %}
+      </section>
+    {% endif %}
+
+    <section class="home-section">
+      <h2 class="section-title"><span lang="en">Teaching &amp; Service</span><span lang="zh">教学与服务</span><span lang="ja">教育・学会活動</span></h2>
+      <div class="teaching-service">
+        <h3 class="ts-sub"><span lang="en">Teaching</span><span lang="zh">教学</span><span lang="ja">教育</span> <small class="ts-affil"><span lang="en">(Teaching Assistant, The Hong Kong Polytechnic University)</span><span lang="zh">（助教，香港理工大学）</span><span lang="ja">（ティーチング・アシスタント、香港理工大学）</span></small></h3>
+        <ol class="timeline service-list">
+          <li class="timeline__item"><span class="timeline__date">2025/26 S2</span><div class="timeline__body"><code>COMP5221</code>&nbsp; Software Project Management</div></li>
+          <li class="timeline__item"><span class="timeline__date">2025/26 S1</span><div class="timeline__body"><code>COMP1002</code>&nbsp; Computational Thinking and Problem Solving</div></li>
+          <li class="timeline__item"><span class="timeline__date">2024/25 S2</span><div class="timeline__body"><code>COMP1411</code>&nbsp; Introduction to Computer Systems</div></li>
+          <li class="timeline__item"><span class="timeline__date">2024/25 S1</span><div class="timeline__body"><code>COMP5567</code>&nbsp; Distributed Algorithms and Protocols for Blockchains</div></li>
+        </ol>
+
+        <h3 class="ts-sub"><span lang="en">Reviewing</span><span lang="zh">审稿</span><span lang="ja">査読</span></h3>
+        <ol class="timeline service-list">
+          <li class="timeline__item"><span class="timeline__date">2026</span><div class="timeline__body">ACL Rolling Review (ARR)</div></li>
+          <li class="timeline__item"><span class="timeline__date">2026</span><div class="timeline__body">IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</div></li>
+        </ol>
+      </div>
+    </section>
+
+    {% if page.social %}
+      <section class="home-contact social">
+        <div class="contact-icons">{% social_links %}</div>
+        <div class="contact-note">{{ site.contact_note }}</div>
+      </section>
     {% endif %}
   </article>
 </div>

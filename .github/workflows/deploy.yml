@@ -33,6 +33,18 @@ jobs:
           export JEKYLL_ENV=production
           bundle exec jekyll build --config _config.yml,_version.yml
 
+      # The CJK heading fonts are cut from the built pages, so they hold exactly the characters the Chinese and
+      # Japanese headings, navigation, name and badges use (tools/fonts/subset_cjk.py, sources in tools/fontsrc/).
+      - name: Setup Python 🐍
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cut the CJK heading fonts 🔤
+        run: |
+          pip install --quiet fonttools brotli
+          python tools/fonts/subset_cjk.py _site
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:

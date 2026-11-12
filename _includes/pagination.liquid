@@ -1,20 +1,18 @@
 {% if paginator.total_pages > 1 %}
-  <nav aria-label="Blog page navigation">
-    <ul class="pagination pagination-lg justify-content-center">
-      <li class="page-item {% unless paginator.previous_page %}disabled{% endunless %}">
-        <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}" tabindex="-1" aria-disabled="{{ paginator.previous_page }}"
-          >&lt;</a
-        >
+  <nav class="pagination" aria-label="Blog page navigation">
+    <ul>
+      <li>
+        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path | relative_url }}">&lt;</a>{% else %}<span aria-disabled="true">&lt;</span>{% endif %}
       </li>
       {% if paginator.page_trail %}
         {% for trail in paginator.page_trail %}
-          <li class="page-item {% if page.url == trail.path %}active{% endif %}">
-            <a class="page-link" href="{{ trail.path | relative_url | remove: 'index.html' }}" title="{{ trail.title }}">{{ trail.num }}</a>
+          <li>
+            <a href="{{ trail.path | relative_url | remove: 'index.html' }}" title="{{ trail.title }}"{% if page.url == trail.path %} aria-current="page"{% endif %}>{{ trail.num }}</a>
           </li>
         {% endfor %}
       {% endif %}
-      <li class="page-item {% unless paginator.next_page %}disabled{% endunless %}">
-        <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">&gt;</a>
+      <li>
+        {% if paginator.next_page %}<a href="{{ paginator.next_page_path | relative_url }}">&gt;</a>{% else %}<span aria-disabled="true">&gt;</span>{% endif %}
       </li>
     </ul>
   </nav>

@@ -1,64 +1,29 @@
-{% capture footer_contents %}
-  &copy; Copyright {{ site.time | date: '%Y' }}
-  {{ site.first_name }}
-  {{ site.middle_name }}
-  {{ site.last_name }}. {{ site.footer_text }}
-  {% if site.impressum_path %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-  {% endif %}
-  {% if site.last_updated %}
-    <span lang="en">Last updated: {{ 'now' | date: '%B %d, %Y' }}.</span><span lang="zh">最近更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span><span lang="ja">最終更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span>
-  {% endif %}
-  {% if site.goatcounter_username and site.goatcounter_username != "" and site.goatcounter_show_counter %}
-    {%- comment -%}
-      v23.1: Discrete visit counter. Fetches the JSON counter endpoint and inlines a plain
-      number — no bordered widget, no embedded font. Matches the rest of the footer text
-      exactly because it IS text, just dynamically updated.
-      Hidden by `data-vc-hidden` until the fetch resolves, so we never flash a placeholder
-      on first paint. Fails silently if GoatCounter is down or the endpoint isn't public.
-    {%- endcomment -%}
-    <span class="visit-counter" aria-label="Total unique visitors" data-vc-hidden>
-      <span lang="en">·&nbsp;</span><span lang="zh">·&nbsp;</span><span lang="ja">·&nbsp;</span>
-      <span class="vc-count" data-vc-count></span>
-      <span class="vc-unit" lang="en">&nbsp;views</span><span class="vc-unit" lang="zh">&nbsp;次访问</span><span class="vc-unit" lang="ja">&nbsp;回</span>
-    </span>
-    <script>
-      (function () {
-        var host = "https://{{ site.goatcounter_username }}.goatcounter.com";
-        fetch(host + "/counter/TOTAL.json")
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (d) {
-            if (!d) return;
-            // GoatCounter returns count as a string; coerce + locale-format
-            var n = parseInt(d.count_unique || d.count || "0", 10);
-            if (isNaN(n)) return;
-            var el = document.querySelector("[data-vc-count]");
-            var wrap = document.querySelector(".visit-counter");
-            if (el && wrap) {
-              el.textContent = n.toLocaleString();
-              wrap.removeAttribute("data-vc-hidden");
-            }
-          })
-          .catch(function () { /* fail silently — counter just stays hidden */ });
-      })();
-    </script>
-  {% endif %}
-{% endcapture %}
-
-{% if site.footer_fixed %}
-  <footer class="fixed-bottom" role="contentinfo">
-    <div class="container mt-0">
-      {{ footer_contents }}
-    </div>
-  </footer>
-{% else %}
-  <footer class="sticky-bottom mt-5" role="contentinfo">
-    {% if site.newsletter.enabled %}
-      {% include newsletter.liquid %}
-    {% endif %}
-
-    <div class="container">
-      {{ footer_contents }}
-    </div>
-  </footer>
-{% endif %}
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner wrap">
+    <p>
+      &copy; Copyright {{ site.time | date: '%Y' }}
+      {{ site.first_name }}
+      {{ site.middle_name }}
+      {{ site.last_name }}. {{ site.footer_text }}
+      {% if site.impressum_path %}
+        <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
+      {% endif %}
+    </p>
+    <p>
+      {% if site.last_updated %}
+        <span lang="en">Last updated: {{ 'now' | date: '%B %d, %Y' }}.</span><span lang="zh">最近更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span><span lang="ja">最終更新：{{ 'now' | date: '%Y年%-m月%-d日' }}。</span>
+      {% endif %}
+      {% if site.goatcounter_username and site.goatcounter_username != "" and site.goatcounter_show_counter %}
+        {%- comment -%}
+          The visit counter: assets/js/site.js fetches GoatCounter's public total and writes the plain number in;
+          it stays hidden (data-vc-hidden) until then, and for good if the fetch fails.
+        {%- endcomment -%}
+        <span class="visit-counter" aria-label="Total unique visitors" data-vc-hidden data-vc-source="https://{{ site.goatcounter_username }}.goatcounter.com/counter/TOTAL.json">
+          <span lang="en">·&nbsp;</span><span lang="zh">·&nbsp;</span><span lang="ja">·&nbsp;</span>
+          <span class="vc-count" data-vc-count></span>
+          <span class="vc-unit" lang="en">&nbsp;views</span><span class="vc-unit" lang="zh">&nbsp;次访问</span><span class="vc-unit" lang="ja">&nbsp;回</span>
+        </span>
+      {% endif %}
+    </p>
+  </div>
+</footer>

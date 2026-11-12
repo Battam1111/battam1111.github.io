@@ -4,9 +4,10 @@ Internal architecture map and working guide. **Not published** (listed in `_conf
 `exclude`). Read this first before changing anything. It exists so a fresh session (human
 or AI) can work efficiently without re-deriving the custom layer.
 
-This site is a **heavily customized fork of [al-folio](https://github.com/alshedivat/al-folio)**
-(Jekyll), iterated across 20+ versions. Most of al-folio's machinery is untouched vanilla; a
-thin, deliberate custom layer sits on top. Knowing which is which is the whole point of this doc.
+This site started as a fork of [al-folio](https://github.com/alshedivat/al-folio) (Jekyll) and was iterated across
+20+ versions. Since v28 the whole front end is the site's own: its own stylesheet (no Bootstrap, MDB, Font Awesome or
+academicons), its own small scripts (no jQuery), self-hosted fonts and inline SVG icons. What is still al-folio is the
+build side: the Jekyll plugins (jekyll-scholar, polyglot, imagemagick, socials, feed...) and their configuration.
 
 ---
 
@@ -34,6 +35,7 @@ purpose: `bundle update` (or `bundle lock --update`) in the preview environment,
 push to main
   -> .github/workflows/deploy.yml
   -> ubuntu runner: bundle install + ImageMagick + `bundle exec jekyll build` (JEKYLL_ENV=production)
+  -> tools/fonts/subset_cjk.py cuts the CJK heading fonts into _site (section 13)
   -> JamesIves/github-pages-deploy-action publishes _site/ to the gh-pages branch
   -> GitHub Pages serves gh-pages at https://battam1111.github.io
 ```
@@ -62,12 +64,16 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 
 | File | What it is |
 |------|-----------|
-| `_sass/_yanjun-craft.scss` | The ~1400-line custom visual override layer. `@use`d **LAST** in `assets/css/main.scss` so its rules win the cascade over al-folio defaults. This is where the editorial type system, hero grid, dark-mode palette, trilingual hide rules, footer counter, etc. live. |
-| `_layouts/about.liquid` | Custom homepage: CSS-grid hero + Bio + Research + News + Selected Publications + **Teaching & Service** + Social. Not the stock al-folio about layout. |
+| `_sass/site/*.scss` | The whole stylesheet, in cascade layers (section 5): design tokens (colour, type, spacing), base typography, the header and phone menu, the components (dated rows, publication entries, filter, copy and back-to-top buttons, footer) and the pages (home, Notes list, post, 404). |
+| `assets/js/site.js` | Every behaviour of the site, no library: theme button (system / light / dark), phone menu, publication panels (Abs / Bib) and "N more authors", copy buttons, back to top, footer visit counter. Theme detection itself is the inline script in `head.liquid` (runs before the CSS, so no flash). |
+| `assets/js/bibsearch.js`, `assets/js/vega-setup.js` | The Publications filter; the Vega-Lite charts of a post (redrawn on a theme change). |
+| `_includes/icons/*.svg`, `_plugins/icons.rb` | Inline SVG icons. Templates include them directly; the plugin swaps the `<i class="fa-...">` / `<i class="ai ai-...">` markup that the content files and jekyll-socials still write for the same SVGs. A new icon class needs a line in `SiteIcons::ICONS`. |
+| `assets/fonts/`, `tools/fonts/subset_cjk.py`, `tools/fontsrc/` | Self-hosted fonts (section 13). Licences in `assets/LICENSES.md`. |
+| `_layouts/about.liquid` | Custom homepage: heading + profile card and bio side by side + News + Selected Publications + **Teaching & Service** + contact. Not the stock al-folio about layout. |
 | `_layouts/page.liquid`, `_layouts/post.liquid` | Customized for trilingual `<h1>` and single-post scoping (the `single-post` class prevents post CSS bleeding onto the homepage). |
 | `_includes/head.liquid` | Per-language canonical and hreflang links, manual cache-bust, GoatCounter snippet, dark-mode FOUC fix, font preconnects. |
 | `_includes/header.liquid` | Navbar with always-render brand (mobile drawer fix) + trilingual nav + the EN/中/日 language pill (links to this page in each language). |
-| `_includes/footer.liquid` | Trilingual footer + the GoatCounter visit counter (JSON-fetched inline number). |
+| `_includes/footer.liquid` | Trilingual footer + the GoatCounter visit counter (the number is fetched by `site.js`). |
 | `_includes/metadata.liquid` | SEO: absolute-URL OpenGraph, `summary_large_image` Twitter card, homepage **Person** JSON-LD (affiliation/alumniOf/jobTitle/knowsAbout/sameAs), per-page and per-language titles and descriptions. |
 | `_plugins/lang-blocks.rb` | Keeps only the build's own language in each page and in each post body (section 6). |
 | `sitemap.xml` | Every page in every language, each entry naming all versions with hreflang (replaces jekyll-sitemap). |
@@ -76,14 +82,26 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 | `_bibliography/papers.bib` | Real publications. |
 | `_news/*.md`, `_posts/*.md`, `_pages/{about,blog,publications,404}.md` | Real content. |
 
-## 5. The SCSS cascade
+## 5. The stylesheet
 
-`assets/css/main.scss` is the **only** SCSS file with Jekyll front matter, so it is the only one
-Jekyll compiles. It `@use`s the al-folio partials in order, then `font-awesome`, then
-**`yanjun-craft` last** (the comment in the file says "must come LAST so it wins"). Reachability:
-a partial only ships if it is transitively `@use`d from `main.scss`. To override an al-folio
-style, add to `_yanjun-craft.scss`, do not edit the vanilla partials (keeps future al-folio
-pulls cleaner).
+`assets/css/main.scss` is the **only** SCSS file with Jekyll front matter, so it is the only one Jekyll compiles.
+It `@use`s the partials of `_sass/site/`; `_order.scss` comes first and fixes the order of the CSS cascade layers:
+`@layer reset, tokens, base, layout, components, pages, utilities;` Each partial wraps its rules in one of them, so
+a later layer wins regardless of selector weight, and nothing needs `!important` (the print and reduced-motion
+blocks are the only exceptions). Styles that are not in a layer (a post's `_styles`, Vega's injected styles) beat
+every layer: that is how the figures of a post keep their own look.
+
+- Colours, fonts, sizes and spacing are custom properties in `_tokens.scss` (light on `:root`, dark on
+  `:root[data-theme="dark"]`); components use only the variables. Accent colour: links, the current navigation item,
+  focus, a few marks. Contrast: `--ink` and `--ink-2` at least 7:1 on `--bg` and `--surface`, `--ink-3` and links
+  at least 4.5:1.
+- Chinese and Japanese pages (`:root:lang(zh|ja)`) get a narrower measure (38em), more leading (1.85), their own
+  system sans stack after Inter, strict line breaking, and are never slanted (`font-synthesis-style: none` on
+  `em`/`i`/`cite`: Latin titles inside keep Inter's real italic, CJK glyphs stay upright).
+- `font-variant-numeric: tabular-nums` only on elements that hold numbers alone (dates, years, counts): on running
+  text Inter's tabular figures also widen the hyphen.
+- jekyll-minifier's CSS compression is off (`_config.yml`): cssminify2 strips the spaces `calc()` and `clamp()` need
+  around `+`; Sass's `style: compressed` already minifies.
 
 ## 6. Trilingual system (EN / 中 / 日)
 
@@ -95,7 +113,7 @@ three times from the same source, English at `/`, Chinese under `/zh/`, Japanese
   or for Markdown blocks `<div lang="en" markdown="1">…</div>` (so Kramdown still renders inside).
 - **One language per page**: `<html lang>` is the build's language (`site.active_lang`), and
   `_plugins/lang-blocks.rb` drops from `<body>` every element whose `lang` is another language, exactly the
-  elements that `_yanjun-craft.scss` hides (`html[lang="en"] [lang]:not([lang="en"]) { display:none }`, and zh/ja).
+  elements that `_sass/site/_utilities.scss` still hides as a guard (`:root:lang(en) [lang]:not([lang="en"])`, and zh/ja).
   So **never put a `lang` attribute on anything that must show in every language**; it disappears from the other two builds.
 - **Front matter**: subpage titles/descriptions use parallel keys `title` / `title_zh` / `title_ja`
   and `description` / `description_zh` / `description_ja` (see `_pages/blog.md`, `_posts/`); `metadata.liquid`
@@ -111,7 +129,7 @@ three times from the same source, English at `/`, Chinese under `/zh/`, Japanese
   entry titles and summaries stay English (they come from `title` / `description`).
 - **Standard**: translation is *同义转换 not 机翻*. Keep paper titles, venue names (EMNLP, NAACL…),
   arXiv IDs, and field-standard terms (RLHF, reward model, agent…) in English; translate the
-  surrounding prose naturally. CJK headings fall through Newsreader to Noto Serif SC/JP via `:lang()`.
+  surrounding prose naturally. CJK headings fall through Newsreader to the Noto Serif SC/JP subsets (section 13) via `:lang()`.
 
 ## 7. CV -> PDF pipeline
 
@@ -127,7 +145,7 @@ pipeline under `tools/cv/`:
 
 Privacy-friendly, cookieless. `_config.yml` -> `goatcounter_username: battam1111` enables the
 tracking snippet (`_includes/head.liquid`) and the footer counter
-(`goatcounter_show_counter: true`, rendered in `_includes/footer.liquid`). The footer number is
+(`goatcounter_show_counter: true`, rendered in `_includes/footer.liquid`, filled in by `assets/js/site.js`). The footer number is
 fetched client-side from `https://battam1111.goatcounter.com/counter/TOTAL.json` and inlined as
 plain text (no widget border). Dashboard: https://battam1111.goatcounter.com/ . The counter is
 **unique sessions** (same IP+UA within 8h = 1), not raw pageviews. Requires "Allow adding visitor
@@ -155,15 +173,28 @@ counts on your website" enabled in GoatCounter site settings.
   the homepage Selected Publications). `archive.liquid` is the default layout the active
   `jekyll-archives-v2` plugin uses to generate the `/blog/:year/` pages. Neither has a
   `layout:` front-matter reference, so a naive "unused layout" grep will wrongly flag them.
-- **`figure.liquid` / `video.liquid` are build-critical**: `figure.liquid` renders the homepage
-  headshot and every bibliography thumbnail; `video.liquid` is used by the scholar template.
-- **`search_enabled: true`** keeps the entire `assets/js/search/**` ninja-keys tree alive (Ctrl+K).
+- **`figure.liquid` is build-critical**: it renders the homepage headshot and every bibliography thumbnail.
+- **Never put a `lang` attribute on anything that must show in all three languages** (section 6); the icons, the
+  language links and the theme button carry none.
+- **Header CSP** (`head.liquid`): `'self'`, GoatCounter, and jsDelivr only on a page with `chart: vega_lite:`. A new
+  third-party script, style, image or font needs its origin added there, or the browser blocks it.
+- **Publication badges** (Altmetric, Dimensions, Scholar and InspireHEP counts) are no longer rendered or loaded:
+  no entry of `papers.bib` uses them, and their scripts and images would need CSP exceptions.
 - **CRLF**: `.gitattributes` normalizes text to LF (`* text=auto eol=lf`). The repo is canonical-LF
   (correct for the Linux GHA runner). If you see "LF will be replaced by CRLF" on an old file,
   it is harmless; `git add --renormalize .` clears it.
 - **Live `/` is edge-cached**: verify deploys against `/index.html`.
 
-## 11. v24 cleanup (what was removed, what was deliberately kept)
+## 11. v28: the front end rebuilt (what went)
+
+Removed with the new stylesheet: Bootstrap, MDB, Font Awesome (SCSS and webfonts), academicons, scholar-icons,
+jQuery, the Bootstrap scripts, the Google Fonts link, MathJax, Masonry, medium-zoom, the progress bar, the ninja-keys
+search tree (search was already off), every unused `*-setup.js`, distillpub, tikzjax, the pygments themes, and the
+layouts and includes nothing rendered (distill, book-review, book-shelf, course, profiles, none, disqus, giscus,
+newsletter, latest_posts, related_posts, projects, video). The "dormant capabilities" list of section 12 below is
+history: those features would now have to be wired again on purpose, with their origins added to the CSP.
+
+## 12. v24 cleanup (what was removed, what was deliberately kept)
 
 A structural cleanup removed verified-dead al-folio demo material. Removed: the in-page CV
 subsystem (`_layouts/cv.liquid` + `_includes/cv/*` + Einstein `_data/cv.yml`), the GitHub-repo
@@ -172,14 +203,30 @@ stats island (`_includes/repository/*` + `_data/repositories.yml`), orphan demo 
 `.mp3`, `grain.svg`), and a dead FontAwesome v4-shim SCSS cluster. The Einstein demo `_data`
 files still read by `bib.liquid` (`citations`, `coauthors`, `venues`) were emptied to stubs.
 
-**Deliberately kept as dormant-but-available capabilities** (gated behind `{% if %}`, zero runtime
+**Deliberately kept as dormant-but-available capabilities** (until v28, see section 11) (gated behind `{% if %}`, zero runtime
 cost until a page opts in): the Distill scientific-article layout, the chart/diagram/map setup
 scripts (chartjs/echarts/plotly/vega/leaflet/mermaid/diff2html/pseudocode/tikzjax/typograms),
 comment systems (disqus/giscus), and newsletter. A future technical Note can use any of them
 without re-wiring. The empty `_projects` collection + `_pages/projects.md` (`nav: false`) are a
 deliberate placeholder.
 
-## 12. Private material
+## 13. Fonts
+
+Self-hosted, no Google Fonts connection. Latin: Inter (variable 400 to 700, upright and italic), Newsreader (weight
+600 with its optical-size axis; headings), JetBrains Mono (code), each as a Latin and a Latin Extended WOFF2 with
+`unicode-range`; the two the first screen needs are preloaded in `head.liquid`. Chinese and Japanese body text uses
+the reader's system fonts. Chinese and Japanese **headings** use Noto Serif SC / JP at 600, cut per build to the
+characters the headings, navigation, name and badges use:
+
+- Sources: `tools/fontsrc/NotoSerifSC-SemiBold.ttf`, `NotoSerifJP-SemiBold.ttf` (static 600 instances of google/fonts'
+  variable files, TrueType outlines). `tools/` is not published.
+- `tools/fonts/subset_cjk.py _site` writes `_site/assets/fonts/noto-serif-sc-display.woff2` and
+  `noto-serif-jp-display.woff2` (about 20 to 30 KB each). The deploy runs it after `jekyll build`.
+- Local preview: after the build, `pip install fonttools brotli` once, then `python tools/fonts/subset_cjk.py <built
+  site dir>`. Without this step the headings fall back to the system serif (Songti SC, Hiragino Mincho...), never to
+  blank boxes; a character missing from the subset falls back the same way.
+
+## 14. Private material
 
 The design-history corpus (peer analysis, rebuild manual, adversarial design critiques) lives
 **outside this repo** at `../03_private/homepage-rebuild/` (a local sibling dir, not

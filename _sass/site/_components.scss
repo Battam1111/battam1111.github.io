@@ -1,0 +1,407 @@
+@layer components {
+  .icon {
+    display: inline-block;
+    flex: none;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+
+  // ---------- Footer: one quiet line, the two halves at the two ends ----------
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-3);
+
+    a {
+      color: var(--ink-2);
+      text-decoration-color: var(--rule-strong);
+
+      &:hover {
+        color: var(--ink);
+      }
+    }
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-5);
+    padding-block: var(--space-5);
+  }
+
+  .visit-counter[data-vc-hidden] {
+    display: none;
+  }
+
+  .vc-count {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 759.98px) {
+    .site-footer__inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  // ---------- Dated rows: news, teaching, reviewing ----------
+  .timeline {
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    align-items: first baseline;
+    gap: var(--space-1) var(--space-5);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--rule);
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  .timeline__date {
+    font-size: var(--step--1);
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--ink-3);
+  }
+
+  .timeline__body {
+    min-width: 0;
+    max-width: var(--measure);
+    overflow-wrap: anywhere;
+
+    code {
+      padding: 0;
+      background: none;
+      font-size: 0.84em;
+      color: var(--ink-2);
+    }
+  }
+
+  @media (max-width: 559.98px) {
+    .timeline__item {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+
+  // ---------- Publication entries (home Selected Publications and the Publications page) ----------
+  ol.bibliography {
+    padding: 0;
+    list-style: none;
+
+    > li + li {
+      border-top: 1px solid var(--rule);
+    }
+  }
+
+  .pub {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-5);
+  }
+
+  .pub__venue {
+    padding-top: 0.15em;
+  }
+
+  .pub-badge {
+    display: inline-block;
+    max-width: 100%;
+    padding: 3px 7px;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-1);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .pub__body {
+    min-width: 0;
+    max-width: 46rem;
+  }
+
+  .pub__title {
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+
+  .pub__authors,
+  .pub__body .periodical {
+    margin-top: 2px;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+
+  .pub__body .periodical:empty {
+    display: none;
+  }
+
+  .pub__authors {
+    overflow-wrap: break-word;
+
+    em {
+      font-style: normal;
+      font-weight: 650;
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .more-authors {
+    padding: 0;
+    text-align: start;
+    color: var(--ink-2);
+    text-decoration: underline dotted var(--rule-strong);
+    text-underline-offset: 0.2em;
+
+    &:hover {
+      color: var(--ink);
+      text-decoration-color: currentColor;
+    }
+  }
+
+  .pub__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .pub-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 11px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    font-size: var(--step--2);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition:
+      color var(--ease-quick),
+      background-color var(--ease-quick),
+      border-color var(--ease-quick);
+
+    &:hover {
+      background: var(--surface-2);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    &[aria-expanded="true"] {
+      background: var(--surface-2);
+      border-color: var(--ink-3);
+      color: var(--ink);
+    }
+  }
+
+  .pub__panel {
+    position: relative;
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-2);
+    background: var(--surface);
+    font-size: 0.9375rem;
+
+    figure.highlight,
+    pre {
+      margin: 0;
+    }
+
+    pre {
+      padding: 0 var(--space-7) 0 0;
+      background: none;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (max-width: 559.98px) {
+    .pub {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+
+    .pub__venue {
+      padding-top: 0;
+    }
+  }
+
+  // ---------- Year line on the Publications page: the year, then a hairline across ----------
+  h2.bibliography {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: var(--space-6) 0 0;
+    font-size: 1.1875rem;
+    font-variant-numeric: lining-nums tabular-nums;
+    font-variation-settings: "opsz" 24;
+    color: var(--ink-2);
+
+    &::after {
+      content: "";
+      flex: 1;
+      border-top: 1px solid var(--rule);
+    }
+  }
+
+  // ---------- Publication filter ----------
+  .pub-filter {
+    position: relative;
+    max-width: 26rem;
+    margin-bottom: var(--space-6);
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      width: 17px;
+      height: 17px;
+      color: var(--ink-3);
+      translate: 0 -50%;
+      pointer-events: none;
+    }
+
+    input {
+      appearance: none;
+      width: 100%;
+      height: 42px;
+      padding: 0 var(--space-4) 0 38px;
+      font-size: 0.9375rem;
+      color: var(--ink);
+      transition: border-color var(--ease-quick);
+
+      &:focus {
+        border-color: var(--accent);
+        outline: 2px solid var(--focus);
+        outline-offset: 0;
+      }
+    }
+  }
+
+  // ---------- Code blocks: copy button ----------
+  .has-copy {
+    position: relative;
+  }
+
+  .copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink-3);
+
+    .icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .icon-check {
+      display: none;
+    }
+
+    &[data-copied] {
+      color: var(--accent);
+
+      .icon-copy {
+        display: none;
+      }
+
+      .icon-check {
+        display: block;
+      }
+    }
+  }
+
+  .pub__annotation {
+    margin-left: 0.3em;
+    color: var(--ink-3);
+  }
+
+  .pub__preview {
+    width: 100%;
+    margin-top: var(--space-3);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-1);
+  }
+
+  // ---------- Notes pagination (shown once there are more posts than one page holds) ----------
+  .pagination ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-7);
+    padding: 0;
+    list-style: none;
+  }
+
+  .pagination :is(a, span) {
+    display: inline-grid;
+    place-items: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 var(--space-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-1);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  .pagination a:hover,
+  .pagination a[aria-current="page"] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .pagination span[aria-disabled] {
+    color: var(--ink-3);
+    opacity: 0.6;
+  }
+
+  // ---------- Back to top ----------
+  .to-top {
+    position: fixed;
+    right: max(var(--space-4), env(safe-area-inset-right));
+    bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    z-index: 40;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--ink-2);
+  }
+}

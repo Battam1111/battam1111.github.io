@@ -16,23 +16,21 @@ layout: default
   </header>
 
   <article class="archive">
-    <div class="table-responsive">
-      <table class="table table-sm table-borderless">
-        {% for document in page.documents %}
-          <tr>
-            <th scope="row">{{ document.date | date: '%b %d, %Y' }}</th>
-            <td>
-              {% if document.redirect == blank %}
-                <a class="post-link" href="{{ document.url | relative_url }}">{{ document.title }}</a>
-              {% elsif document.redirect contains '://' %}
-                <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ document.title }}</a>
-              {% else %}
-                <a class="post-link" href="{{ document.redirect | relative_url }}">{{ document.title }}</a>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
+    <ol class="timeline">
+      {% for document in page.documents %}
+        <li class="timeline__item">
+          <time class="timeline__date" datetime="{{ document.date | date: '%Y-%m-%d' }}">{{ document.date | date: '%b %d, %Y' }}</time>
+          <div class="timeline__body">
+            {% if document.redirect == blank %}
+              <a class="post-link" href="{{ document.url | relative_url }}">{{ document.title }}</a>
+            {% elsif document.redirect contains '://' %}
+              <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ document.title }}</a>
+            {% else %}
+              <a class="post-link" href="{{ document.redirect | relative_url }}">{{ document.title }}</a>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
   </article>
 </div>

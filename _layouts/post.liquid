@@ -20,6 +20,7 @@ layout: default
       {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
       {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
     </h1>
+    <div class="post-byline">
     <p class="post-meta">
       <span lang="en">Created on {{ page.date | date: '%B %d, %Y' }}</span><span lang="zh">{{ page.date | date: '%Y年%-m月%-d日' }} 发布</span><span lang="ja">{{ page.date | date: '%Y年%-m月%-d日' }} 公開</span>
       {% if page.author %}by {{ page.author }}{% endif %}
@@ -61,6 +62,7 @@ layout: default
         {% endfor %}
       {% endif %}
     </p>
+    </div>
   </header>
 
   <article class="post-content">
@@ -86,16 +88,4 @@ layout: default
     </div>
   {% endif %}
 
-  {% if site.related_blog_posts and site.related_blog_posts.enabled %}
-    {% if page.related_posts == null or page.related_posts %}
-      {% include related_posts.liquid %}
-    {% endif %}
-  {% endif %}
-
-  {% if site.disqus_shortname and page.disqus_comments %}
-    {% include disqus.liquid %}
-  {% endif %}
-  {% if site.giscus and page.giscus_comments %}
-    {% include giscus.liquid %}
-  {% endif %}
 </div>

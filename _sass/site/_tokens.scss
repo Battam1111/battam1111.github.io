@@ -1,0 +1,91 @@
+// The post column width: registered so that a ch-based measure resolves where it is set, not where it is used.
+@property --col {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 44rem;
+}
+
+@layer tokens {
+  :root {
+    color-scheme: light;
+    --bg: oklch(98.6% 0.002 250);
+    --surface: oklch(96.6% 0.004 250);
+    --surface-2: oklch(94.2% 0.006 250);
+    --ink: oklch(21% 0.012 255);
+    --ink-2: oklch(42% 0.012 255);
+    --ink-3: oklch(54% 0.012 255);
+    --rule: oklch(21% 0.012 255 / 0.12);
+    --rule-strong: oklch(21% 0.012 255 / 0.22);
+    --accent: oklch(32.5% 0.095 256);
+    --accent-strong: oklch(26% 0.09 256);
+    --accent-tint: oklch(95.5% 0.018 256);
+    --accent-line: oklch(32.5% 0.095 256 / 0.4);
+    --focus: oklch(55% 0.19 256);
+    --header-bg: oklch(98.6% 0.002 250 / 0.86);
+    --shadow-photo: 0 1px 2px oklch(21% 0.012 255 / 0.06), 0 4px 12px -6px oklch(21% 0.012 255 / 0.12);
+
+    --font-display: "Newsreader", "Noto Serif SC Display", "Songti SC", "STSong", "Source Han Serif SC",
+      "Noto Serif CJK SC", Georgia, serif;
+    --font-cjk-text: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC";
+    --font-text: "Inter", var(--font-cjk-text), system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+    --step--2: 0.75rem;
+    --step--1: 0.8125rem;
+    --step-0: 1rem;
+    --step-1: 1.1875rem;
+    --step-2: clamp(1.4rem, 1.2rem + 0.9vw, 1.8rem);
+    --step-3: clamp(2.1rem, 1.45rem + 2.4vw, 3.05rem);
+    --step-4: clamp(2.25rem, 1.45rem + 3.4vw, 3.6rem);
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+    --radius-1: 6px;
+    --radius-2: 10px;
+    --measure: 68ch;
+    --rail: 9rem;
+    --page: 1040px;
+    --gutter: clamp(20px, 4vw, 32px);
+    --header-h: 56px;
+    --leading: 1.65;
+    --ease-quick: 120ms ease;
+  }
+
+  :root:lang(zh),
+  :root:lang(ja) {
+    --measure: 38em;
+    --leading: 1.85;
+  }
+
+  :root:lang(ja) {
+    --font-display: "Newsreader", "Noto Serif JP Display", "Hiragino Mincho ProN", "Yu Mincho", "Source Han Serif JP",
+      "Noto Serif CJK JP", Georgia, serif;
+    --font-cjk-text: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Noto Sans CJK JP";
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: oklch(17.5% 0.012 260);
+    --surface: oklch(21.5% 0.014 260);
+    --surface-2: oklch(25.5% 0.016 260);
+    --ink: oklch(93% 0.006 250);
+    --ink-2: oklch(77% 0.01 250);
+    --ink-3: oklch(65% 0.012 250);
+    --rule: oklch(93% 0.006 250 / 0.13);
+    --rule-strong: oklch(93% 0.006 250 / 0.24);
+    --accent: oklch(78% 0.11 250);
+    --accent-strong: oklch(86% 0.085 250);
+    --accent-tint: oklch(30% 0.05 256);
+    --accent-line: oklch(78% 0.11 250 / 0.45);
+    --focus: oklch(78% 0.14 250);
+    --header-bg: oklch(17.5% 0.012 260 / 0.82);
+    --shadow-photo: 0 1px 2px oklch(0% 0 0 / 0.3);
+  }
+}

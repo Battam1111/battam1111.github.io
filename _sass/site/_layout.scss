@@ -1,0 +1,28 @@
+@layer layout {
+  .wrap {
+    width: 100%;
+    max-width: calc(var(--page) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .site-main {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: calc(var(--page) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding: var(--space-8) var(--gutter) var(--space-9);
+  }
+
+  // Posts set their own column (a text measure, with figures allowed wider), so their frame is the widest one.
+  .layout-post .site-main {
+    max-width: calc(60rem + 2 * var(--gutter));
+  }
+
+  @media (max-width: 759.98px) {
+    .site-main {
+      padding-top: var(--space-6);
+      padding-bottom: var(--space-8);
+    }
+  }
+}

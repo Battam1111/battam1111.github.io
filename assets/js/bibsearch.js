@@ -1,70 +1,49 @@
-import { highlightSearchTerm } from "./highlight-search-term.js";
+// Publications page filter: keeps the entries whose title, authors, venue or badge contain every typed word,
+// hides a year line (and a section) that has nothing left, and keeps the words in the URL hash.
+(function () {
+  "use strict";
+  var input = document.getElementById("bibsearch");
+  if (!input) return;
+  var entries = Array.prototype.slice.call(document.querySelectorAll(".bibliography > li"));
+  var haystack = entries.map(function (li) {
+    return Array.prototype.map
+      .call(li.querySelectorAll(".pub__title, .pub__authors, .periodical, .pub-badge"), function (el) {
+        return el.textContent;
+      })
+      .join(" ")
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+  });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // actual bibsearch logic
-  const filterItems = (searchTerm) => {
-    document.querySelectorAll(".bibliography, .unloaded").forEach((element) => element.classList.remove("unloaded"));
-
-    // highlight-search-term
-    if (CSS.highlights) {
-      const nonMatchingElements = highlightSearchTerm({ search: searchTerm, selector: ".bibliography > li" });
-      if (nonMatchingElements == null) {
-        return;
-      }
-      nonMatchingElements.forEach((element) => {
-        element.classList.add("unloaded");
+  var filter = function (term) {
+    var words = term.toLowerCase().split(/\s+/).filter(Boolean);
+    entries.forEach(function (li, i) {
+      li.hidden = !words.every(function (w) {
+        return haystack[i].indexOf(w) !== -1;
       });
-    } else {
-      // Simply add unloaded class to all non-matching items if Browser does not support CSS highlights
-      document.querySelectorAll(".bibliography > li").forEach((element, index) => {
-        const text = element.innerText.toLowerCase();
-        if (text.indexOf(searchTerm) == -1) {
-          element.classList.add("unloaded");
-        }
-      });
-    }
-
-    document.querySelectorAll("h2.bibliography").forEach(function (element) {
-      let iterator = element.nextElementSibling; // get next sibling element after h2, which can be h3 or ol
-      let hideFirstGroupingElement = true;
-      // iterate until next group element (h2), which is already selected by the querySelectorAll(-).forEach(-)
-      while (iterator && iterator.tagName !== "H2") {
-        if (iterator.tagName === "OL") {
-          const ol = iterator;
-          const unloadedSiblings = ol.querySelectorAll(":scope > li.unloaded");
-          const totalSiblings = ol.querySelectorAll(":scope > li");
-
-          if (unloadedSiblings.length === totalSiblings.length) {
-            ol.previousElementSibling.classList.add("unloaded"); // Add the '.unloaded' class to the previous grouping element (e.g. year)
-            ol.classList.add("unloaded"); // Add the '.unloaded' class to the OL itself
-          } else {
-            hideFirstGroupingElement = false; // there is at least some visible entry, don't hide the first grouping element
-          }
-        }
-        iterator = iterator.nextElementSibling;
-      }
-      // Add unloaded class to first grouping element (e.g. year) if no item left in this group
-      if (hideFirstGroupingElement) {
-        element.classList.add("unloaded");
-      }
+    });
+    document.querySelectorAll("ol.bibliography").forEach(function (ol) {
+      var empty = !ol.querySelector(":scope > li:not([hidden])");
+      ol.hidden = empty;
+      var year = ol.previousElementSibling;
+      if (year && year.matches("h2.bibliography")) year.hidden = empty;
     });
   };
 
-  const updateInputField = () => {
-    const hashValue = decodeURIComponent(window.location.hash.substring(1)); // Remove the '#' character
-    document.getElementById("bibsearch").value = hashValue;
-    filterItems(hashValue);
+  var fromHash = function () {
+    var term = decodeURIComponent(window.location.hash.slice(1));
+    input.value = term;
+    filter(term);
   };
 
-  // Sensitive search. Only start searching if there's been no input for 300 ms
-  let timeoutId;
-  document.getElementById("bibsearch").addEventListener("input", function () {
-    clearTimeout(timeoutId); // Clear the previous timeout
-    const searchTerm = this.value.toLowerCase();
-    timeoutId = setTimeout(filterItems(searchTerm), 300);
+  var timer;
+  input.addEventListener("input", function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      filter(input.value);
+      history.replaceState(null, "", input.value ? "#" + encodeURIComponent(input.value) : window.location.pathname);
+    }, 150);
   });
-
-  window.addEventListener("hashchange", updateInputField); // Update the filter when the hash changes
-
-  updateInputField(); // Update filter when page loads
-});
+  window.addEventListener("hashchange", fromHash);
+  if (window.location.hash) fromHash();
+})();

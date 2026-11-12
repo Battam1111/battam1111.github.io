@@ -1,0 +1,91 @@
+@layer utilities {
+  [hidden] {
+    display: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  // Guard for the one-language-per-URL rule: _plugins/lang-blocks.rb already removes the other languages.
+  :root:lang(en) [lang]:not([lang="en"]),
+  :root:lang(zh) [lang]:not([lang="zh"]),
+  :root:lang(ja) [lang]:not([lang="ja"]) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --ink: #000;
+    --ink-2: #222;
+    --ink-3: #444;
+    --rule: #bbb;
+    --rule-strong: #888;
+    --accent: #000;
+    --accent-strong: #000;
+    --accent-line: #888;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .site-header,
+  .to-top,
+  .copy-button,
+  .pub-filter,
+  .pub__links,
+  .menu-button,
+  .theme-button,
+  .lang-switch,
+  .visit-counter {
+    display: none !important;
+  }
+
+  .site-main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  a::after {
+    content: none !important;
+  }
+
+  pre,
+  blockquote,
+  .pub,
+  .timeline__item,
+  .gf {
+    break-inside: avoid;
+  }
+}

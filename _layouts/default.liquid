@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="{{ site.active_lang | default: site.lang }}">
-  <!-- Head -->
   <head>
     {% if page.redirect %}
       {% if page.redirect == true %}
@@ -14,43 +13,15 @@
     {% endif %}
     {% include head.liquid %}
   </head>
-
-  <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
-    <!-- Header -->
+  <body class="layout-{{ page.layout | default: 'page' }}{% if page.permalink == '/' %} is-home{% elsif page.permalink == '/404.html' %} is-404{% endif %}">
     {% include header.liquid %}
-
-    <!-- Content -->
-    <div class="container mt-5" role="main">
-      {% if page.toc and page.toc.sidebar %}
-        {% if page.toc.sidebar == 'right' %}
-          <div class="row">
-            <!-- main content area -->
-            <div class="col-sm-9">{{ content }}</div>
-            <!-- sidebar, which will move to the top on a small screen -->
-            <div class="col-sm-3">
-              <nav id="toc-sidebar" class="sticky-top"></nav>
-            </div>
-          </div>
-        {% else %}
-          <div class="row">
-            <!-- sidebar, which will move to the top on a small screen -->
-            <div class="col-sm-3">
-              <nav id="toc-sidebar" class="sticky-top"></nav>
-            </div>
-            <!-- main content area -->
-            <div class="col-sm-9">{{ content }}</div>
-          </div>
-        {% endif %}
-      {% else %}
-        {{ content }}
-      {% endif %}
-    </div>
-
-    <!-- Footer -->
+    <main class="site-main" id="main">
+      {{ content }}
+    </main>
     {% include footer.liquid %}
-
-    <!-- JavaScripts -->
+    <template id="icon-copy">{% include icons/copy.svg %}</template>
+    <template id="icon-check">{% include icons/check.svg %}</template>
+    <template id="icon-arrow-up">{% include icons/arrow-up.svg %}</template>
     {% include scripts.liquid %}
   </body>
 </html>
