@@ -87,8 +87,8 @@
 {% elsif site.icon != blank %}
   <link rel="shortcut icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}">
 {% endif %}
-<!-- v12: explicit cache-bust because bust_css_cache hashes pre-Sass (always empty MD5). -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'v23.1' }}">
+<!-- Cache-bust for the compiled stylesheet: the build passes the commit id as asset_version (see DEVELOPMENT.md section 3). -->
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: 'dev' }}">
 {% comment %}
   One URL per language (jekyll-polyglot builds English at /, Chinese under /zh/, Japanese under /ja/).
   Each version is canonical for itself and names the other two with hreflang; x-default is the English root.
@@ -100,6 +100,8 @@
   <link rel="alternate" hreflang="{{ l }}" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{% if l != site.default_lang %}/{{ l }}{% endif %}{{ page_path }}"{% endstatic_href %}>
 {% endfor %}
 <link rel="alternate" hreflang="x-default" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{{ page_path }}"{% endstatic_href %}>
+<!-- The Notes feed of this language (jekyll-feed writes one per language build). -->
+<link rel="alternate" type="application/atom+xml" title="{{ site.first_name }} {{ site.last_name }}, Notes" {% static_href %}href="{{ site.url }}{{ site.baseurl }}{% if site.active_lang != site.default_lang %}/{{ site.active_lang }}{% endif %}/feed.xml"{% endstatic_href %}>
 
 {% if site.goatcounter_username and site.goatcounter_username != "" %}
   <!-- v23: GoatCounter — privacy-friendly, cookieless analytics (no PII). Async load. -->

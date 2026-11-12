@@ -10,7 +10,7 @@ _site
 .venv
 assets/libs/
 assets/rendercv/rendercv_output/*.typ
-Gemfile.lock
+_version.yml
 node_modules/
 vendor
 # tools/ holds the CV->PDF pipeline SOURCE (tools/cv/{cv.html,cv.css,build_cv.py}), which IS tracked.

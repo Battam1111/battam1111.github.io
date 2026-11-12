@@ -10,13 +10,12 @@ Source for **[battam1111.github.io](https://battam1111.github.io)**. A heavily c
 
 ## Quick facts
 
-- **No local build.** There is no Ruby/Jekyll on the dev machine; the only build verification is
-  the GitHub Actions deploy. Push, then watch the run.
+- **Build before pushing.** There is no Ruby/Jekyll on the dev machine; a real build of the working tree is
+  made off the machine before a push (DEVELOPMENT.md §1). Gem versions are pinned by `Gemfile.lock`.
 - **Deploy:** push to `main` -> `.github/workflows/deploy.yml` builds Jekyll on an Ubuntu runner ->
   publishes `_site/` to the `gh-pages` branch -> GitHub Pages serves it. Push over HTTPS.
-- **Cache-bust:** bump `asset_version` in `_config.yml` whenever the compiled CSS or a served JS
-  asset changes (al-folio's built-in `bust_css_cache` is broken here). See DEVELOPMENT.md §3.
-- **Trilingual** EN / 中 / 日 throughout, toggled by the navbar pill. See DEVELOPMENT.md §6.
+- **Cache-bust:** automatic; the deploy passes the commit id as the stylesheet version. See DEVELOPMENT.md §3.
+- **Trilingual** EN / 中 / 日, one URL per language (`/`, `/zh/`, `/ja/`); the navbar pill links between them. See DEVELOPMENT.md §6.
 
 ## Where the content lives
 

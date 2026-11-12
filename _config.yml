@@ -102,7 +102,8 @@ og_image: og-card.png    # 1200x630 social share card (assets/img/og-card.png)
 
 # v23: manual cache-bust (al-folio's bust_css_cache is broken — emits empty MD5 because it
 # hashes pre-Sass source). Bumped on every visual/content change so browsers pick up new CSS.
-asset_version: v27.9
+# asset_version (the ?v= on main.css) is not set here: the deploy workflow writes the commit id into _version.yml
+# and builds with --config _config.yml,_version.yml, so every deploy busts the stylesheet cache by itself.
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification

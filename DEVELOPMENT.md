@@ -10,18 +10,23 @@ thin, deliberate custom layer sits on top. Knowing which is which is the whole p
 
 ---
 
-## 1. Hard constraint: no local build
+## 1. Building before pushing
 
-There is **no Ruby / Jekyll / Bundler on the dev machine** (Windows). You CANNOT run
-`bundle exec jekyll serve` or `build` locally. The **only** build verification is the GitHub
-Actions deploy. Practical consequences:
+There is **no Ruby / Jekyll / Bundler on the dev machine** (Windows), so `bundle exec jekyll build` does not
+run there. Two ways to see a real build:
 
-- Every change is verified by pushing and watching the deploy go green, not locally.
-- Batch related changes, push, then watch the run. If it goes red, read the Actions log and
-  fix forward (or revert the commit).
-- Do NOT trust "it looks right in the file" for anything that affects the Liquid/SCSS build.
-  Grep-prove reference safety before deleting templates/partials (an `{% include x %}` that
-  points at a deleted file is a hard build break only caught on deploy).
+- **Preview build off the machine** (the normal way since 2026-11): the maintainer's private tooling builds the
+  working tree, uncommitted changes included, with Ruby 3.3 and the gem versions of `Gemfile.lock`, and serves
+  the built site locally. Use it before every push that touches Liquid, SCSS, plugins or `_config.yml`.
+- **The deploy itself**: pushing to `main` builds and publishes. If it goes red, read the Actions log and fix
+  forward (or revert the commit).
+
+Do NOT trust "it looks right in the file" for anything that affects the Liquid/SCSS build. Grep-prove reference
+safety before deleting templates/partials (an `{% include x %}` that points at a deleted file is a hard build break).
+
+**Gem versions are pinned**: `Gemfile.lock` is committed (platforms `x86_64-linux` for the Actions runner and
+`arm64-darwin` for the preview machine), so the preview and the deploy build with the same plugins. Update on
+purpose: `bundle update` (or `bundle lock --update`) in the preview environment, look at the preview, commit the lock.
 
 ## 2. Deploy flow
 
@@ -40,17 +45,16 @@ GitHub Pages auth hiccup; re-run with `gh run rerun <id> --failed`. Push over HT
 The live `/` URL is **Fastly-cached**; to confirm a fresh deploy, fetch `/index.html` (bypasses
 the `/` edge cache) or append a cache-buster query.
 
-## 3. The cache-bust ritual (IMPORTANT)
+## 3. Cache-bust (automatic)
 
-al-folio's `bust_css_cache` filter is broken in this setup (it hashes the pre-Sass source and
-always emits an empty MD5). We replace it with a **manual** version string:
+al-folio's `bust_css_cache` filter is broken in this setup (it hashes the pre-Sass source and always emits an
+empty MD5), so the stylesheet gets its version from the build instead:
 
-- `_config.yml` -> `asset_version: vXX`
+- `.github/workflows/deploy.yml` writes `asset_version: <commit id>` into `_version.yml` and builds with
+  `--config _config.yml,_version.yml`.
 - `_includes/head.liquid` loads `main.css?v={{ site.asset_version }}`.
 
-**Whenever you change anything that alters the compiled CSS or a served JS asset, bump
-`asset_version`** (e.g. `v23.1` -> `v24`). Pure file removals that do not change `main.css`
-output (e.g. deleting an un-`@use`d SCSS partial, or unused `_data`) do NOT need a bump.
+Nothing to bump by hand: every deploy gets a new version. Other assets use `bust_file_cache` (a hash of the file).
 
 ## 4. The custom layer (hand-built; never treat as al-folio cruft)
 
@@ -65,7 +69,7 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 | `_includes/header.liquid` | Navbar with always-render brand (mobile drawer fix) + trilingual nav + the EN/中/日 language pill (links to this page in each language). |
 | `_includes/footer.liquid` | Trilingual footer + the GoatCounter visit counter (JSON-fetched inline number). |
 | `_includes/metadata.liquid` | SEO: absolute-URL OpenGraph, `summary_large_image` Twitter card, homepage **Person** JSON-LD (affiliation/alumniOf/jobTitle/knowsAbout/sameAs), per-page and per-language titles and descriptions. |
-| `_plugins/lang-blocks.rb` | Keeps only the build's own language in each page (section 6). |
+| `_plugins/lang-blocks.rb` | Keeps only the build's own language in each page and in each post body (section 6). |
 | `sitemap.xml` | Every page in every language, each entry naming all versions with hreflang (replaces jekyll-sitemap). |
 | `tools/cv/` | The CV->PDF pipeline (see section 7). Source, run manually; not part of the Jekyll build. |
 | `_data/socials.yml` | The one real `_data` file (email, ORCID, Scholar, GitHub, X). |
@@ -100,7 +104,11 @@ three times from the same source, English at `/`, Chinese under `/zh/`, Japanese
   except paths in `exclude_from_localization` (`/assets/`, feeds). A link that must point at a *given* language
   (the pill, hreflang, canonical) goes inside `{% static_href %}href="..."{% endstatic_href %}`.
 - **Search engines**: each page is canonical for itself and names the three versions plus `x-default` (the
-  English root) with hreflang, in `<head>` and in `sitemap.xml`.
+  English root) with hreflang, in `<head>` and in `sitemap.xml`. After each deploy the workflow submits every
+  sitemap URL to IndexNow (Bing and the engines that share its index); the key is the `.txt` file at the site root.
+- **Feed**: jekyll-feed writes one feed per language build (`/feed.xml`, `/zh/feed.xml`, `/ja/feed.xml`).
+  `lang-blocks.rb` filters each post body right after Markdown conversion, so a feed entry carries one language;
+  entry titles and summaries stay English (they come from `title` / `description`).
 - **Standard**: translation is *同义转换 not 机翻*. Keep paper titles, venue names (EMNLP, NAACL…),
   arXiv IDs, and field-standard terms (RLHF, reward model, agent…) in English; translate the
   surrounding prose naturally. CJK headings fall through Newsreader to Noto Serif SC/JP via `:lang()`.
@@ -141,7 +149,7 @@ counts on your website" enabled in GoatCounter site settings.
 
 ## 10. Gotchas
 
-- **al-folio `bust_css_cache` is broken** -> manual `asset_version` (section 3).
+- **al-folio `bust_css_cache` is broken** -> the build sets `asset_version` (section 3).
 - **`bib.liquid` and `archive.liquid` look unused but are build-critical.** `bib.liquid` is bound
   via `_config.yml` `scholar.bibliography_template: bib` (renders every `{% bibliography %}` and
   the homepage Selected Publications). `archive.liquid` is the default layout the active

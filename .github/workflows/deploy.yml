@@ -16,20 +16,42 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
+      # Installs exactly the gem versions recorded in Gemfile.lock.
       - name: Setup Ruby 💎
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3.5"
           bundler-cache: true
 
+      # The commit id becomes the stylesheet's cache-bust version (head.liquid reads site.asset_version).
       - name: Install ImageMagick & Build Jekyll 🔧
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick
+          echo "asset_version: ${GITHUB_SHA::8}" > _version.yml
           export JEKYLL_ENV=production
-          bundle exec jekyll build
+          bundle exec jekyll build --config _config.yml,_version.yml
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
           branch: gh-pages
+
+      # IndexNow: tells Bing (and the engines that share its index) every URL of the sitemap after each deploy.
+      # The key is public by design: it is the file b7d3bf4ebb505c273f1876f024b317a2.txt at the site root.
+      # Waits first, so GitHub Pages has published the new gh-pages commit before a crawler comes.
+      - name: Submit the sitemap URLs to IndexNow 🔎
+        continue-on-error: true
+        run: |
+          sleep 120
+          python3 - <<'EOF'
+          import json, re, urllib.request
+          key = "b7d3bf4ebb505c273f1876f024b317a2"
+          host = "battam1111.github.io"
+          urls = re.findall(r"<loc>([^<]+)</loc>", open("_site/sitemap.xml", encoding="utf-8").read())
+          body = json.dumps({"host": host, "key": key, "keyLocation": f"https://{host}/{key}.txt", "urlList": urls}).encode()
+          req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
+                                       headers={"Content-Type": "application/json; charset=utf-8"})
+          with urllib.request.urlopen(req, timeout=30) as r:
+              print("IndexNow answered", r.status, "for", len(urls), "URLs")
+          EOF

@@ -86,7 +86,7 @@ pagination:
 <p class="card-text">{{ post.description }}</p>
 
                     {% if post.external_source == blank %}
-                      {% if post.read_time %}{% assign read_time = post.read_time %}{% else %}{% assign read_src = post.content | split: '<div lang="zh"' | first %}{% assign read_time = read_src | strip_html | number_of_words | divided_by: 180 | plus: 1 %}{% endif %}
+                      {% comment %} post.content holds this build's language only (_plugins/lang-blocks.rb): words at 180 a minute, Chinese and Japanese characters at 350 a minute. {% endcomment %}{% if post.read_time %}{% assign read_time = post.read_time %}{% elsif site.active_lang == 'zh' or site.active_lang == 'ja' %}{% assign read_time = post.content | strip_html | number_of_words: 'cjk' | divided_by: 350 | plus: 1 %}{% else %}{% assign read_time = post.content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}{% endif %}
                     {% else %}
                       {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
                     {% endif %}
@@ -121,7 +121,7 @@ pagination:
     {% for post in postlist %}
 
     {% if post.external_source == blank %}
-      {% if post.read_time %}{% assign read_time = post.read_time %}{% else %}{% assign read_src = post.content | split: '<div lang="zh"' | first %}{% assign read_time = read_src | strip_html | number_of_words | divided_by: 180 | plus: 1 %}{% endif %}
+      {% comment %} post.content holds this build's language only (_plugins/lang-blocks.rb): words at 180 a minute, Chinese and Japanese characters at 350 a minute. {% endcomment %}{% if post.read_time %}{% assign read_time = post.read_time %}{% elsif site.active_lang == 'zh' or site.active_lang == 'ja' %}{% assign read_time = post.content | strip_html | number_of_words: 'cjk' | divided_by: 350 | plus: 1 %}{% else %}{% assign read_time = post.content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}{% endif %}
     {% else %}
       {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
     {% endif %}
