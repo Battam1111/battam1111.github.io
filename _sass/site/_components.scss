@@ -59,11 +59,10 @@
     grid-template-columns: var(--rail) minmax(0, 1fr);
     align-items: first baseline;
     gap: var(--space-1) var(--space-5);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--rule);
+    padding-block: 9px;
 
     &:first-child {
-      border-top: 0;
+      padding-top: 0;
     }
   }
 
@@ -99,17 +98,18 @@
   ol.bibliography {
     padding: 0;
     list-style: none;
-
-    > li + li {
-      border-top: 1px solid var(--rule);
-    }
   }
 
+  // Entries are separated by space alone; an entry reached from the year chart or a link is tinted for a moment.
   .pub {
     display: grid;
     grid-template-columns: var(--rail) minmax(0, 1fr);
     gap: var(--space-2) var(--space-5);
-    padding-block: var(--space-5);
+    padding-block: 18px;
+  }
+
+  ol.bibliography > li:first-child > .pub {
+    padding-top: var(--space-2);
   }
 
   .pub__venue {

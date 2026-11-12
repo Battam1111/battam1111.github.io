@@ -1,5 +1,6 @@
 // The site's own behaviour, with no library: theme button, phone menu, publication panels and author lists,
-// code copy buttons, back to top, and the footer visit counter. Theme detection itself runs inline in <head>.
+// code copy buttons, back to top, the contents rail of a post, and the footer visit counter.
+// Theme detection itself runs inline in <head>.
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -25,7 +26,24 @@
       try {
         localStorage.setItem("theme", next);
       } catch (e) {}
-      applyTheme();
+      // When the colours really change, the new theme opens as a circle from the button (a view transition,
+      // styled in _sass/site/_motion.scss); otherwise, and where the browser cannot, it simply switches.
+      var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!document.startViewTransition || still || window.determineComputedTheme() === root.getAttribute("data-theme")) {
+        applyTheme();
+        return;
+      }
+      var box = themeButton.getBoundingClientRect();
+      var x = box.left + box.width / 2;
+      var y = box.top + box.height / 2;
+      root.style.setProperty("--vt-x", x + "px");
+      root.style.setProperty("--vt-y", y + "px");
+      root.style.setProperty("--vt-r", Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + "px");
+      root.setAttribute("data-theme-switch", "");
+      var done = function () {
+        root.removeAttribute("data-theme-switch");
+      };
+      document.startViewTransition(applyTheme).finished.then(done, done);
     });
   }
   if (window.matchMedia) {
@@ -132,10 +150,55 @@
     }
   });
   document.body.appendChild(top);
+
+  // Contents rail of a post (wide screens only, _sass/site/_viz.scss): its section headings, the current one marked.
+  var post = document.querySelector(".single-post");
+  var heads = post ? Array.prototype.slice.call(post.querySelectorAll(".post-content h2[id]")) : [];
+  var tocLinks = [];
+  if (heads.length >= 3) {
+    var toc = document.createElement("nav");
+    var list = document.createElement("ol");
+    var postTitle = post.querySelector(".post-title");
+    toc.className = "post-toc";
+    if (postTitle) toc.setAttribute("aria-label", postTitle.textContent.trim());
+    heads.forEach(function (h) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + encodeURIComponent(h.id);
+      a.textContent = h.textContent.trim();
+      li.appendChild(a);
+      list.appendChild(li);
+      tocLinks.push(a);
+    });
+    toc.appendChild(list);
+    post.insertBefore(toc, post.firstChild);
+  }
+
+  var ticking = false;
   var onScroll = function () {
+    ticking = false;
     top.hidden = window.scrollY < window.innerHeight;
+    if (tocLinks.length) {
+      var current = -1;
+      heads.forEach(function (h, i) {
+        if (h.getBoundingClientRect().top < window.innerHeight * 0.3) current = i;
+      });
+      tocLinks.forEach(function (a, i) {
+        if (i === current) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    }
   };
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(onScroll);
+      }
+    },
+    { passive: true }
+  );
   onScroll();
 
   // Footer visit counter: GoatCounter's public total as plain text; stays hidden if the fetch fails.

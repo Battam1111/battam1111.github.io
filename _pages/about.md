@@ -45,6 +45,7 @@ latest_posts:
 I am a PhD candidate in the [Department of Computing](https://www.polyu.edu.hk/en/comp/) at [The Hong Kong Polytechnic University](https://www.polyu.edu.hk/), advised by Prof. [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) and Prof. [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN), with joint doctoral training at the Eastern Institute of Technology (EIT), Ningbo. I am currently a research intern at Microsoft Research Asia, Singapore.
 
 In reinforcement learning, models are **trainable**. The environments that train them are **not**. I want to make the environment trainable, the way models are, and with it to lift the ceiling of what AI can become.
+{: .thesis }
 
 ## Research
 
@@ -80,6 +81,7 @@ The destination: an environment that learns alongside the model it trains, from 
 我是[香港理工大学 计算学系](https://www.polyu.edu.hk/en/comp/)的博士生，师从 [Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授与 [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授，并在东方理工（EIT，宁波）联合培养。目前在微软亚洲研究院（新加坡）做研究实习。
 
 在强化学习里，模型是**可以训练的**。训练模型的环境，**还不行**。我想让环境也变得可训练，像模型一样，并以此把 AI 的上限抬上去。
+{: .thesis }
 
 ## 研究方向
 
@@ -115,6 +117,7 @@ The destination: an environment that learns alongside the model it trains, from 
 [香港理工大学 コンピューティング学科](https://www.polyu.edu.hk/en/comp/)の博士候補者で、[Wenjie Li (Maggie)](https://www4.comp.polyu.edu.hk/~cswjli/) 教授と [Wei Zhang](https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN) 教授の指導のもと、東方理工（EIT、寧波）との共同育成プログラムに参加しています。現在、Microsoft Research Asia（シンガポール）のリサーチインターンでもあります。
 
 強化学習において、モデルは**訓練できる**。モデルを訓練する環境は、**まだできない**。私はその環境を、モデルと同じように訓練できるものにしたい。そしてそれによって、AI の到達点を引き上げたいのです。
+{: .thesis }
 
 ## 研究内容
 

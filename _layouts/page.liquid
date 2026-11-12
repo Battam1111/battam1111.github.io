@@ -15,7 +15,14 @@ layout: default
       {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
       {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
     </h1>
-    <p class="post-description">{{ page.description }}</p>
+    {% comment %} The description in the language of the build when the page gives one (description_zh, description_ja). {% endcomment %}
+    <p class="post-description">
+      {%- if page.description_zh and page.description_ja -%}
+        <span lang="en">{{ page.description }}</span><span lang="zh">{{ page.description_zh }}</span><span lang="ja">{{ page.description_ja }}</span>
+      {%- else -%}
+        {{ page.description }}
+      {%- endif -%}
+    </p>
   </header>
 
   <article>

@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCES = os.path.join(HERE, "..", "fontsrc")
 # Elements set in --font-display or worth covering: headings, the navigation, the name, the venue badges.
 TAGS = {"h1", "h2", "h3", "nav", "abbr", "title"}
-CLASSES = {"site-title", "home-name", "profile-name", "name-zh", "pub-badge", "site-nav"}
+CLASSES = {"site-title", "home-name", "profile-name", "name-zh", "pub-badge", "site-nav", "thesis"}
 CJK = re.compile(r"[\u2e80-\u2fdf\u3000-\u30ff\u3190-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
 # Punctuation a heading may gain later without a rebuild of this list.
 EXTRA = "，。、：；！？（）「」『』《》〈〉【】・…ー—～"

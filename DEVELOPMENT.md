@@ -64,9 +64,9 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 
 | File | What it is |
 |------|-----------|
-| `_sass/site/*.scss` | The whole stylesheet, in cascade layers (section 5): design tokens (colour, type, spacing), base typography, the header and phone menu, the components (dated rows, publication entries, filter, copy and back-to-top buttons, footer) and the pages (home, Notes list, post, 404). |
-| `assets/js/site.js` | Every behaviour of the site, no library: theme button (system / light / dark), phone menu, publication panels (Abs / Bib) and "N more authors", copy buttons, back to top, footer visit counter. Theme detection itself is the inline script in `head.liquid` (runs before the CSS, so no flash). |
-| `assets/js/bibsearch.js`, `assets/js/vega-setup.js` | The Publications filter; the Vega-Lite charts of a post (redrawn on a theme change). |
+| `_sass/site/*.scss` | The whole stylesheet, in cascade layers (section 5): design tokens (colour, type, spacing, motion), base typography, the header and phone menu, the components (dated rows, publication entries, filter, copy and back-to-top buttons, footer), the pages (home, Notes list, post, 404), the two instruments (`_viz.scss`) and all motion (`_motion.scss`). |
+| `assets/js/site.js` | Every behaviour of the site, no library: theme button (system / light / dark, with the circular reveal), phone menu, publication panels (Abs / Bib) and "N more authors", copy buttons, back to top, the contents rail of a post, footer visit counter. Theme detection itself is the inline script in `head.liquid` (runs before the CSS, so no flash); the same script marks the first page of a visit (`intro`). |
+| `assets/js/bibsearch.js`, `assets/js/vega-setup.js` | The Publications filter and the year chart built from the entries on the page; the Vega-Lite charts of a post (redrawn on a theme change, axes and lettering from the design tokens). |
 | `_includes/icons/*.svg`, `_plugins/icons.rb` | Inline SVG icons. Templates include them directly; the plugin swaps the `<i class="fa-...">` / `<i class="ai ai-...">` markup that the content files and jekyll-socials still write for the same SVGs. A new icon class needs a line in `SiteIcons::ICONS`. |
 | `assets/fonts/`, `tools/fonts/subset_cjk.py`, `tools/fontsrc/` | Self-hosted fonts (section 13). Licences in `assets/LICENSES.md`. |
 | `_layouts/about.liquid` | Custom homepage: heading + profile card and bio side by side + News + Selected Publications + **Teaching & Service** + contact. Not the stock al-folio about layout. |
@@ -86,7 +86,7 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 
 `assets/css/main.scss` is the **only** SCSS file with Jekyll front matter, so it is the only one Jekyll compiles.
 It `@use`s the partials of `_sass/site/`; `_order.scss` comes first and fixes the order of the CSS cascade layers:
-`@layer reset, tokens, base, layout, components, pages, utilities;` Each partial wraps its rules in one of them, so
+`@layer reset, tokens, base, layout, components, pages, motion, utilities;` Each partial wraps its rules in one of them, so
 a later layer wins regardless of selector weight, and nothing needs `!important` (the print and reduced-motion
 blocks are the only exceptions). Styles that are not in a layer (a post's `_styles`, Vega's injected styles) beat
 every layer: that is how the figures of a post keep their own look.
@@ -102,6 +102,44 @@ every layer: that is how the figures of a post keep their own look.
   text Inter's tabular figures also widen the hyphen.
 - jekyll-minifier's CSS compression is off (`_config.yml`): cssminify2 strips the spaces `calc()` and `clamp()` need
   around `+`; Sass's `style: compressed` already minifies.
+- The home page's one-paragraph thesis is the paragraph marked `{: .thesis }` in `_pages/about.md` (once per
+  language): set in the display face, its two bold words in the accent. Its Chinese and Japanese characters come
+  from the heading subset, so `thesis` is in the class list of `tools/fonts/subset_cjk.py`.
+- Lines are few on purpose: a hairline opens each section of the home page and each year of the Publications
+  page; rows and entries inside are separated by space alone.
+
+### Motion (`_sass/site/_motion.scss`)
+
+Everything that moves is an addition: an older browser, "reduce motion" and print get the same page standing
+still. Only the theme reveal and the first-visit entrance involve a script.
+
+- Between pages and between languages: the browser's cross-document view transition (`@view-transition`). The page
+  body (`.site-main`) is its own layer, leaving before the new one arrives; the top bar belongs to the root layer
+  and looks still. Do not give the top bar a `view-transition-name`: a named element becomes a backdrop root and
+  the bar's frosted backing stops blurring the page behind it.
+- Theme button: when the colours really change, `site.js` starts a same-document view transition and the new theme
+  opens as a circle from the button (`data-theme-switch` on `<html>` while it runs).
+- First page of a visit (`intro` class, set once per session in `head.liquid`): the heading block and the columns
+  arrive in sequence. Later pages arrive through the view transition instead.
+- On scroll (`animation-timeline: view()` / `scroll()`, inside `@supports`): home sections, Publications entries,
+  Notes entries and a post's figures arrive as they enter; a Vega chart is drawn in from the left and is whole once
+  it is fully on screen; the top bar is bare at the top of a page and gains its backing and hairline over the
+  first 72px; a post shows reading progress along the bar's lower edge.
+- Keyframes name only a "from" state and fill backwards, so nothing keeps a transform (and with it a stacking
+  context) after it has arrived.
+- A full-page screenshot does not scroll, so anything arriving on scroll is caught before it arrives: take such
+  screenshots with "reduce motion" on.
+
+### The two instruments (`_sass/site/_viz.scss`)
+
+Both are built by script from what the page already says, and bring no words of their own.
+
+- Publications by year (`bibsearch.js`): one square per paper, a row per year, in the page header. Filled squares
+  are the first section of the page, outlined ones the second; the legend repeats those two section headings in
+  the language of the page. A square scrolls to its entry; the filter dims the squares it hides. Squares are
+  buttons, not `#id` links, because the filter keeps its words in the URL hash.
+- Contents rail of a post (`site.js`): the `h2` headings, the current one marked, in the margin left of the widest
+  figure, so only from 1420px up; it lives inside the article box and never reaches the footer.
 
 ## 6. Trilingual system (EN / 中 / 日)
 
@@ -221,10 +259,11 @@ characters the headings, navigation, name and badges use:
 - Sources: `tools/fontsrc/NotoSerifSC-SemiBold.ttf`, `NotoSerifJP-SemiBold.ttf` (static 600 instances of google/fonts'
   variable files, TrueType outlines). `tools/` is not published.
 - `tools/fonts/subset_cjk.py _site` writes `_site/assets/fonts/noto-serif-sc-display.woff2` and
-  `noto-serif-jp-display.woff2` (about 20 to 30 KB each). The deploy runs it after `jekyll build`.
-- Local preview: after the build, `pip install fonttools brotli` once, then `python tools/fonts/subset_cjk.py <built
-  site dir>`. Without this step the headings fall back to the system serif (Songti SC, Hiragino Mincho...), never to
-  blank boxes; a character missing from the subset falls back the same way.
+  `noto-serif-jp-display.woff2` (about 25 to 30 KB each). The deploy runs it after `jekyll build`, with
+  `fonttools==4.56.0` and `brotli==1.1.0` (pinned in `deploy.yml`; the preview build cuts with the same versions).
+- The preview build runs the same step. By hand: `pip install fonttools==4.56.0 brotli==1.1.0` once, then
+  `python tools/fonts/subset_cjk.py <built site dir>`. Without this step the headings fall back to the system serif
+  (Songti SC, Hiragino Mincho...), never to blank boxes; a character missing from the subset falls back the same way.
 
 ## 14. Private material
 

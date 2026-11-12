@@ -60,10 +60,12 @@
     white-space: nowrap;
   }
 
+  // The Chinese name follows the Latin one a step quieter: smaller and in the second ink.
   .name-zh {
-    font-size: 0.82em;
-    letter-spacing: 0.03em;
+    font-size: 0.7em;
+    letter-spacing: 0.04em;
     white-space: nowrap;
+    color: var(--ink-2);
   }
 
   :root:lang(ja) .name-sc {
@@ -88,6 +90,14 @@
   .profile-card {
     font-size: 0.875rem;
     line-height: 1.45;
+  }
+
+  // Beside the bio the card stays in view while the longer column scrolls past (it is shorter than a screen).
+  @media (min-width: 880px) and (min-height: 760px) {
+    .profile-card {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-5));
+    }
   }
 
   .profile-photo {
@@ -187,15 +197,43 @@
     }
   }
 
-  // A research direction: the paragraph that opens with a bold claim...
-  .angle {
+  // The one-paragraph thesis of the page, set as a statement in the display face; its two bold words carry the
+  // accent instead of more weight.
+  .home-bio p.thesis {
+    max-width: 42.75rem;
     margin-top: var(--space-5);
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1.12rem + 0.8vw, 1.62rem);
+    font-weight: 600;
+    line-height: 1.32;
+    letter-spacing: -0.008em;
+    font-variation-settings: "opsz" 30;
+    text-wrap: balance;
+    color: var(--ink);
+
+    strong {
+      font-weight: inherit;
+      color: var(--accent);
+    }
   }
 
-  // ...and under it the papers, as one citation strip with a thin accent rule.
+  :root:lang(zh) .home-bio p.thesis,
+  :root:lang(ja) .home-bio p.thesis {
+    max-width: 38rem;
+    font-size: clamp(1.22rem, 1.08rem + 0.6vw, 1.45rem);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+
+  // A research direction: the paragraph that opens with a bold claim...
+  .angle {
+    margin-top: var(--space-6);
+  }
+
+  // ...and under it the papers, as one citation strip behind a hairline.
   .angle-paper {
-    padding: 2px 0 2px var(--space-4);
-    border-left: 2px solid var(--accent);
+    padding: 1px 0 1px var(--space-4);
+    border-left: 1px solid var(--rule-strong);
     font-size: 0.9375rem;
     line-height: 1.6;
     color: var(--ink-2);
@@ -206,7 +244,7 @@
   }
 
   .home-bio p.angle-paper {
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   .home-bio p.angle-paper + p.angle-paper {
@@ -228,8 +266,16 @@
     margin-top: var(--space-6);
   }
 
+  // Each section of the home page opens with a hairline across the page and its heading under it; inside a
+  // section spacing alone separates the rows.
   .home-section {
-    margin-top: var(--space-9);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--rule);
+
+    > .section-title {
+      margin-bottom: var(--space-5);
+    }
   }
 
   .teaching-service .ts-sub {
@@ -251,7 +297,7 @@
 
   // Contact: the icon row of the socials plus the note, closing the page.
   .home-contact {
-    margin-top: var(--space-9);
+    margin-top: var(--space-8);
     padding-top: var(--space-6);
     border-top: 1px solid var(--rule);
   }
@@ -335,7 +381,8 @@
 
     .home-section,
     .home-contact {
-      margin-top: var(--space-8);
+      margin-top: var(--space-7);
+      padding-top: var(--space-5);
     }
   }
 

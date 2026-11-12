@@ -1,0 +1,290 @@
+// Motion. Everything here is an addition: without it (an older browser, "reduce motion", print) the page is the
+// same page, standing still. Nothing waits on JavaScript except the theme reveal and the first-visit entrance.
+//   1. Between pages and between languages: the browser's cross-document view transition.
+//   2. Theme button: the new theme opens as a circle from the button (assets/js/site.js starts it).
+//   3. First page of a visit: the header block and the columns arrive in sequence, once (class "intro", head.liquid).
+//   4. On scroll: sections, list entries and figures arrive as they enter the screen; the top bar gains its
+//      hairline and backing once the page has moved; a post shows reading progress along the bar.
+//   5. Small state changes: publication panels, the phone menu, the back-to-top button, a publication reached
+//      from the year chart.
+// Keyframes that only name a "from" state end at the element's own style, so nothing keeps a transform afterwards.
+
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes vt-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-arrive {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 100%) var(--vt-y, 0%));
+  }
+
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 100%) var(--vt-y, 0%));
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes bar-settle {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rule-settle {
+  from {
+    border-bottom-color: transparent;
+  }
+}
+
+@keyframes progress {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes flash {
+  from {
+    background-color: var(--accent-tint);
+    box-shadow: 0 0 0 12px var(--accent-tint);
+  }
+
+  to {
+    background-color: transparent;
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+@layer motion {
+  // ---------- 1. Between pages ----------
+  // The page body is its own layer of the transition: the old one leaves first, the new one arrives after it,
+  // so the two are never read through each other. Everything else (top bar, footer) is the root layer, which
+  // cross-fades in place and so looks still. The top bar itself must not be named: a named element becomes a
+  // backdrop root, and the bar's frosted backing would stop blurring the page behind it.
+  .site-main {
+    view-transition-name: site-main;
+  }
+
+  ::view-transition-group(site-main) {
+    animation: none;
+  }
+
+  ::view-transition-old(site-main) {
+    animation: vt-leave 110ms ease-in both;
+  }
+
+  ::view-transition-new(site-main) {
+    animation: vt-arrive var(--dur-2) var(--ease-out) 70ms both;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-1);
+  }
+
+  // ---------- 2. Theme reveal ----------
+  :root[data-theme-switch] .site-main {
+    view-transition-name: none;
+  }
+
+  :root[data-theme-switch]::view-transition-old(root),
+  :root[data-theme-switch]::view-transition-new(root) {
+    mix-blend-mode: normal;
+    animation: none;
+  }
+
+  :root[data-theme-switch]::view-transition-new(root) {
+    animation: theme-reveal var(--dur-3) var(--ease-out) both;
+  }
+
+  // ---------- 3. First page of a visit ----------
+  .intro {
+    .home-name,
+    .home-role,
+    .profile-card,
+    .home-bio,
+    .post-header,
+    .post-header ~ * {
+      animation: arrive var(--dur-3) var(--ease-out) backwards;
+    }
+
+    .home-role {
+      animation-delay: 70ms;
+    }
+
+    .profile-card,
+    .post-header ~ * {
+      animation-delay: 150ms;
+    }
+
+    .home-bio {
+      animation-delay: 230ms;
+    }
+  }
+
+  // ---------- 4. On scroll ----------
+  @supports (animation-timeline: view()) {
+    .home-section,
+    .home-contact,
+    .layout-page .publications > ol.bibliography > li,
+    .post-list > li,
+    .post-content .gf,
+    .post-citation {
+      animation: arrive linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 140px;
+    }
+
+    // A chart is drawn from the left as it comes into view, and is whole once it is fully on screen.
+    .post-content .vega-embed {
+      animation: wipe-in linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    // The top bar is bare at the top of a page; its backing and hairline settle in over the first 72px.
+    .site-header {
+      animation: rule-settle linear backwards;
+      animation-timeline: scroll(root block);
+      animation-range: 0 72px;
+
+      &::before {
+        animation: bar-settle linear backwards;
+        animation-timeline: scroll(root block);
+        animation-range: 0 72px;
+      }
+    }
+
+    // Reading progress of a post, along the lower edge of the bar.
+    .layout-post .site-header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -1px 0;
+      height: 2px;
+      background: var(--accent);
+      transform-origin: 0 50%;
+      animation: progress linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    // The phone sheet needs the bar's backing whatever the scroll position.
+    .site-header[data-menu-open],
+    .site-header[data-menu-open]::before {
+      animation: none;
+    }
+  }
+
+  // ---------- 5. State changes ----------
+  .pub__panel,
+  .to-top {
+    transition:
+      opacity var(--dur-2) var(--ease-out),
+      translate var(--dur-2) var(--ease-out),
+      color var(--ease-quick),
+      background-color var(--ease-quick);
+  }
+
+  @starting-style {
+    .pub__panel:not([hidden]) {
+      opacity: 0;
+      translate: 0 -6px;
+    }
+
+    .to-top:not([hidden]) {
+      opacity: 0;
+      translate: 0 8px;
+    }
+
+    :root.js .site-header[data-menu-open] .site-nav {
+      opacity: 0;
+      translate: 0 -10px;
+    }
+  }
+
+  @media (max-width: 759.98px) {
+    :root.js .site-nav {
+      transition:
+        opacity var(--dur-2) var(--ease-out),
+        translate var(--dur-2) var(--ease-out);
+    }
+  }
+
+  .pub.is-flash {
+    border-radius: var(--radius-1);
+    animation: flash 1.8s ease-out;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+// "Reduce motion" keeps the two scroll indicators (the bar's backing and the reading progress: no movement of
+// content) and drops the rest: no page transition, no entrance, nothing arriving on scroll. Print drops everything.
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  .intro :is(.home-name, .home-role, .profile-card, .home-bio, .post-header, .post-header ~ *),
+  .home-section,
+  .home-contact,
+  .publications > ol.bibliography > li,
+  .post-list > li,
+  .post-content .gf,
+  .post-content .vega-embed,
+  .post-citation,
+  .pub.is-flash {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+  }
+}

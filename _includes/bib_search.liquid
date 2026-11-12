@@ -2,6 +2,12 @@
   <script src="{{ '/assets/js/bibsearch.js' | relative_url | bust_file_cache }}" defer></script>
   <div class="pub-filter">
     {%- include icons/search.svg -%}
-    <input type="search" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="Type to filter" aria-label="Filter publications">
+    {%- comment -%} The hint is an attribute, so it is chosen per language build here (a lang span cannot sit in an attribute). {%- endcomment -%}
+    {%- case site.active_lang -%}
+      {%- when 'zh' -%}{%- assign filter_hint = '输入关键词筛选' -%}{%- assign filter_label = '筛选论文' -%}
+      {%- when 'ja' -%}{%- assign filter_hint = 'キーワードで絞り込む' -%}{%- assign filter_label = '論文を絞り込む' -%}
+      {%- else -%}{%- assign filter_hint = 'Type to filter' -%}{%- assign filter_label = 'Filter publications' -%}
+    {%- endcase -%}
+    <input type="search" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="{{ filter_hint }}" aria-label="{{ filter_label }}">
   </div>
 {% endif %}

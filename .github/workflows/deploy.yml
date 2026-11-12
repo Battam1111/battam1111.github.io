@@ -42,7 +42,8 @@ jobs:
 
       - name: Cut the CJK heading fonts 🔤
         run: |
-          pip install --quiet fonttools brotli
+          # Pinned to the versions the fonts were checked with (DEVELOPMENT.md section 13).
+          pip install --quiet fonttools==4.56.0 brotli==1.1.0
           python tools/fonts/subset_cjk.py _site
 
       - name: Deploy 🚀

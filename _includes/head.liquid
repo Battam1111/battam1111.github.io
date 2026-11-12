@@ -14,11 +14,20 @@
 >
 
 <!-- Theme before any CSS loads, so a dark page never flashes light: the setting is system, light or dark
-     (localStorage "theme"); data-theme on <html> is what the stylesheet reads. "js" lets the CSS fold the phone menu. -->
+     (localStorage "theme"); data-theme on <html> is what the stylesheet reads. "js" lets the CSS fold the phone menu
+     and gates everything that needs the scripts. -->
 <script>
   (function () {
     var root = document.documentElement;
     root.classList.add('js');
+    // The first page of a visit plays the entrance once ("intro", see _sass/site/_motion.scss); later pages
+    // arrive through the view transition instead.
+    try {
+      if (!sessionStorage.getItem('seen')) {
+        root.classList.add('intro');
+        sessionStorage.setItem('seen', '1');
+      }
+    } catch (e) {}
     window.determineThemeSetting = function () {
       var s = null;
       try { s = localStorage.getItem('theme'); } catch (e) {}

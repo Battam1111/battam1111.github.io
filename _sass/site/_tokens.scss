@@ -23,6 +23,8 @@
     --focus: oklch(55% 0.19 256);
     --header-bg: oklch(98.6% 0.002 250 / 0.86);
     --shadow-photo: 0 1px 2px oklch(21% 0.012 255 / 0.06), 0 4px 12px -6px oklch(21% 0.012 255 / 0.12);
+    // The faint tint behind the top of every page (body background, _base.scss).
+    --wash: oklch(93.5% 0.03 256 / 0.6);
 
     --font-display: "Newsreader", "Noto Serif SC Display", "Songti SC", "STSong", "Source Han Serif SC",
       "Noto Serif CJK SC", Georgia, serif;
@@ -36,7 +38,7 @@
     --step-1: 1.1875rem;
     --step-2: clamp(1.4rem, 1.2rem + 0.9vw, 1.8rem);
     --step-3: clamp(2.1rem, 1.45rem + 2.4vw, 3.05rem);
-    --step-4: clamp(2.25rem, 1.45rem + 3.4vw, 3.6rem);
+    --step-4: clamp(2.5rem, 1.5rem + 4.4vw, 4.4rem);
 
     --space-1: 4px;
     --space-2: 8px;
@@ -56,6 +58,11 @@
     --header-h: 56px;
     --leading: 1.65;
     --ease-quick: 120ms ease;
+    // Motion (_motion.scss): one curve for things that arrive, three lengths.
+    --ease-out: cubic-bezier(0.22, 0.8, 0.24, 1);
+    --dur-1: 160ms;
+    --dur-2: 320ms;
+    --dur-3: 640ms;
   }
 
   :root:lang(zh),
@@ -87,5 +94,6 @@
     --focus: oklch(78% 0.14 250);
     --header-bg: oklch(17.5% 0.012 260 / 0.82);
     --shadow-photo: 0 1px 2px oklch(0% 0 0 / 0.3);
+    --wash: oklch(34% 0.075 256 / 0.34);
   }
 }

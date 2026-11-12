@@ -1,0 +1,209 @@
+// Two small instruments drawn by the scripts from what the page already says (nothing here adds data):
+//   - the year chart of the Publications page: one square per paper, a row per year (assets/js/bibsearch.js);
+//   - the contents rail of a post on wide screens: the section headings, the current one marked (assets/js/site.js).
+@layer components {
+  // ---------- Publications by year ----------
+  // With the chart present the page header becomes two columns on wide screens: words left, chart right.
+  @media (min-width: 900px) {
+    .post-header:has(> .pub-years) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: var(--space-8);
+      align-items: end;
+
+      > :not(.pub-years) {
+        grid-column: 1;
+      }
+
+      > .pub-years {
+        position: relative;
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        margin-top: 0;
+        // The legend's line sits on the last line of the description.
+        margin-bottom: 0.3em;
+      }
+
+      // Beside the words the caption hangs under the chart, over the empty margin, so it reserves no room.
+      .pub-years__caption {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 22rem;
+        min-height: 0;
+        text-align: right;
+      }
+    }
+  }
+
+  .pub-years {
+    --cell: 13px;
+    width: max-content;
+    max-width: 100%;
+    margin-top: var(--space-5);
+    font-size: var(--step--1);
+    line-height: 1.4;
+    color: var(--ink-3);
+  }
+
+  .pub-years__row {
+    display: grid;
+    grid-template-columns: 3.2em auto 2em;
+    align-items: center;
+    column-gap: var(--space-2);
+    min-height: 22px;
+  }
+
+  .pub-years__year,
+  .pub-years__n {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .pub-years__n {
+    text-align: right;
+    color: var(--ink-2);
+  }
+
+  .pub-years__cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .pub-years__cell {
+    width: var(--cell);
+    height: var(--cell);
+    border-radius: 3px;
+    background: var(--accent);
+    transition:
+      scale var(--dur-1) var(--ease-out),
+      opacity var(--dur-1) ease,
+      box-shadow var(--dur-1) ease;
+
+    &.is-preprint {
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px var(--ink-3);
+    }
+
+    &:hover,
+    &:focus-visible {
+      scale: 1.3;
+    }
+
+    &.is-preprint:hover,
+    &.is-preprint:focus-visible {
+      box-shadow: inset 0 0 0 1.5px var(--accent);
+    }
+
+    &.is-out {
+      opacity: 0.22;
+    }
+  }
+
+  .pub-years__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px var(--space-4);
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--rule);
+
+    > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    i {
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    .is-preprint i {
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px var(--ink-3);
+    }
+  }
+
+  // The title of the square under the pointer; the line is always there, so nothing moves when it fills.
+  .pub-years__caption {
+    max-width: 22rem;
+    min-height: 2.8em;
+    margin-top: var(--space-2);
+    color: var(--ink-2);
+    text-wrap: balance;
+  }
+
+  @media (hover: none) {
+    .pub-years__caption {
+      display: none;
+    }
+  }
+
+  // ---------- Contents rail of a post ----------
+  // The rail lives in the margin left of the widest figure, so it only appears once that margin exists.
+  .post-toc {
+    display: none;
+  }
+
+  @media (min-width: 1420px) {
+    .single-post {
+      position: relative;
+    }
+
+    .post-toc {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -10rem;
+      width: 10.5rem;
+      pointer-events: none;
+
+      ol {
+        position: sticky;
+        top: calc(var(--header-h) + var(--space-7));
+        max-height: calc(100vh - var(--header-h) - var(--space-9));
+        overflow-y: auto;
+        scrollbar-width: none;
+        padding: 0;
+        list-style: none;
+        border-left: 1px solid var(--rule);
+        pointer-events: auto;
+      }
+
+      a {
+        display: block;
+        margin-left: -1px;
+        padding: 5px 0 5px var(--space-3);
+        border-left: 1px solid transparent;
+        font-size: 0.78rem;
+        line-height: 1.4;
+        color: var(--ink-3);
+        text-decoration: none;
+        text-wrap: balance;
+        transition:
+          color var(--dur-1) ease,
+          border-color var(--dur-1) ease;
+
+        &:hover {
+          color: var(--ink);
+        }
+
+        &[aria-current="true"] {
+          border-left-color: var(--accent);
+          color: var(--ink);
+        }
+      }
+    }
+  }
+
+  @media print {
+    .post-toc,
+    .pub-years {
+      display: none;
+    }
+  }
+}
