@@ -9,6 +9,159 @@ description_zh: "前一次大一统让模型什么都能读懂，这一次让模
 description_ja: "前の大統一でモデルは何でも読み取れるようになり、今回の統一で何でも作り出せるようになります。"
 tags: [coding-agents, compression, llm]
 categories: [essays]
+_styles: |
+  .ef-css-start{}
+  /* Figures of the text essays (essay_figs.py). Colours come from the site's own tokens, so both themes follow.
+     One meaning per colour in every figure: accent = works / has a signal / the one model; grey = fails or is absent;
+     a dashed empty box = the thing that is missing. */
+  .ef { margin: 2.2em 0; font-family: var(--font-text); color: var(--ink); }
+  .post-content #markdown-content > div[lang] > .gf.ef { max-width: var(--col); }
+  .post-content #markdown-content > div[lang] > .gf.ef-wide { max-width: 56rem; }
+  .ef-box { background: var(--surface); border-radius: var(--radius-2); padding: 22px 24px 24px; }
+  .ef-h { font-weight: 600; font-size: 1rem; line-height: 1.5; margin: 0 0 18px; color: var(--ink); }
+  .ef-cap { font-size: var(--step--1); line-height: 1.65; color: var(--ink-3); margin-top: 10px; padding: 0 2px; }
+  .ef-note { font-size: var(--step--1); line-height: 1.55; color: var(--ink-2); margin: 0; }
+  .ef-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; font-size: var(--step--1); color: var(--ink-2); }
+  .ef-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .ef-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; box-sizing: border-box; flex: none; }
+  .ef-dot.ok { background: var(--accent); }
+  .ef-dot.bad { border: 1.5px solid var(--ink-3); }
+  .ef-node { box-sizing: border-box; border: 1.5px solid var(--rule-strong); border-radius: 8px; padding: 9px 12px; background: var(--bg); font-size: 0.9rem; line-height: 1.45; }
+  .ef-node.on { border-color: var(--accent-line); background: var(--accent-tint); color: var(--accent-strong); }
+  .ef-node.none { border-style: dashed; border-color: var(--ink-3); background: transparent; color: var(--ink-3); }
+  .ef-arr { color: var(--ink-3); text-align: center; line-height: 1; font-size: 1rem; }
+  .ef-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ef-pane { border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px 16px; background: var(--bg); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .ef-pane h4 { margin: 0; font-size: var(--step--1); font-weight: 600; letter-spacing: 0.02em; color: var(--ink-3); }
+  .ef-pane.on h4 { color: var(--accent); }
+  
+  /* group: six attempts at one task, set against the group's average */
+  .ef-grp { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0 8px; position: relative; }
+  .ef-grp-col { display: flex; flex-direction: column; align-items: center; }
+  .ef-grp-n { font-size: var(--step--2); color: var(--ink-3); height: 22px; font-variant-numeric: tabular-nums; }
+  .ef-slot { height: 34px; display: flex; align-items: center; justify-content: center; }
+  .ef-slot .ef-dot { width: 20px; height: 20px; }
+  .ef-verdict { margin-top: 8px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; background: var(--surface-2); color: var(--ink-3); }
+  .ef-verdict.up { background: var(--accent-tint); color: var(--accent); }
+  .ef-grp-avg { position: absolute; left: 0; right: 0; top: 56px; border-top: 1.5px dashed var(--ink-3); pointer-events: none; }
+  .ef-dash { display: inline-block; width: 22px; border-top: 1.5px dashed var(--ink-3); }
+  
+  /* long: drag the task length */
+  .ef-ctl { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 8px 12px; margin-bottom: 16px; font-size: 0.9rem; }
+  .ef-ctl output { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 2.2em; color: var(--accent); }
+  .ef-ctl input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+  .ef-presets { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+  .ef button { font: inherit; font-size: var(--step--1); padding: 5px 12px; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--bg); color: var(--ink-2); cursor: pointer; }
+  .ef button:hover { border-color: var(--accent-line); color: var(--accent); }
+  .ef-tracks { position: relative; margin: 26px 30px 0 0; }
+  .ef-track { position: relative; height: 10px; margin: 0 0 7px; background: var(--surface-2); border-radius: 5px; }
+  .ef-bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; background: var(--ink-3); opacity: 0.55; transition: width 160ms ease; }
+  .ef-track.ok .ef-bar { background: var(--accent); opacity: 1; }
+  .ef-mark { position: absolute; right: -28px; top: -6px; width: 22px; text-align: center; font-size: 0.85rem; line-height: 22px; color: var(--ink-3); }
+  .ef-track.ok .ef-mark { color: var(--accent); font-weight: 600; }
+  .ef-endline { position: absolute; top: -8px; bottom: 0; width: 0; border-left: 1.5px solid var(--ink); transition: left 160ms ease; }
+  .ef-endline span { position: absolute; top: -18px; left: 0; transform: translateX(-50%); white-space: nowrap; font-size: var(--step--2); color: var(--ink-2); }
+  .ef-endline.far span { transform: translateX(-100%); }
+  .ef-endline.near span { transform: none; }
+  .ef-axis { display: flex; justify-content: space-between; margin: 2px 30px 0 0; font-size: var(--step--2); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .ef-tiles { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; margin-top: 18px; }
+  .ef-tile { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .ef-tile .k { font-size: var(--step--2); color: var(--ink-3); }
+  .ef-tile .v { font-size: 1.15rem; font-weight: 600; line-height: 1.35; font-variant-numeric: tabular-nums; color: var(--accent); }
+  .ef-tile .s { font-size: var(--step--2); line-height: 1.5; color: var(--ink-3); }
+  .ef-tile.dead .v { color: var(--ink-2); }
+  
+  /* lesson: two rows, three stages */
+  .ef-lesson { display: grid; grid-template-columns: 7.2em repeat(3, 1fr); gap: 10px 8px; align-items: stretch; }
+  .ef-lesson .hd { font-size: var(--step--2); color: var(--ink-3); align-self: end; padding: 0 2px; }
+  .ef-lesson .who { font-size: var(--step--1); font-weight: 600; align-self: center; line-height: 1.4; }
+  .ef-lesson .ef-node { position: relative; display: flex; align-items: center; }
+  .ef-lesson .ef-node + .ef-node::before { content: "→"; position: absolute; left: -9px; top: 50%; transform: translate(-50%, -50%); color: var(--ink-3); font-size: 0.8rem; background: var(--surface); line-height: 1; }
+  
+  /* scope: one group against everything seen so far */
+  .ef-scope-art { height: 150px; display: flex; align-items: center; justify-content: center; }
+  .ef-scope-art svg { width: 100%; height: 100%; }
+  .ef-group8 { display: grid; grid-template-columns: repeat(4, 14px); gap: 12px; padding: 16px 20px; border: 1.5px dashed var(--ink-3); border-radius: 10px; }
+  .ef svg .s { fill: var(--accent); }
+  .ef svg .f { fill: none; stroke: var(--ink-3); stroke-width: 1.4; }
+  .ef svg .ring { fill: none; stroke: var(--accent); stroke-width: 1.6; }
+  .ef svg .halo { fill: var(--accent-tint); stroke: var(--accent-line); stroke-width: 1; stroke-dasharray: 4 4; }
+  
+  /* loop: the same cycle, turning and stuck */
+  .ef-cycle { position: relative; padding-left: 26px; display: flex; flex-direction: column; gap: 4px; }
+  .ef-cycle::before { content: ""; position: absolute; left: 7px; top: 20px; bottom: 20px; width: 14px; border: 1.5px solid var(--ink-3); border-right: 0; border-radius: 9px 0 0 9px; }
+  .ef-cycle::after { content: ""; position: absolute; left: 17px; top: 16px; border: 5px solid transparent; border-left-color: var(--ink-3); border-right: 0; }
+  .ef-pane.on .ef-cycle::before { border-color: var(--accent); }
+  .ef-pane.on .ef-cycle::after { border-left-color: var(--accent); }
+  .ef-back { font-size: var(--step--1); line-height: 1.5; color: var(--ink-2); margin: 0; padding-left: 26px; }
+  .ef-pane.on .ef-back { color: var(--accent-strong); }
+  .ef-side { font-size: var(--step--1); line-height: 1.5; color: var(--ink-2); margin: 0 0 0 26px; padding: 6px 0 6px 12px; border-left: 2px solid var(--rule-strong); }
+  
+  /* ends: everything in as text, everything out as code */
+  .ef-ends { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: 10px; }
+  .ef-chips { display: flex; flex-direction: column; gap: 6px; }
+  .ef-chip { border: 1px solid var(--rule-strong); border-radius: 6px; padding: 5px 10px; font-size: var(--step--1); background: var(--bg); text-align: center; line-height: 1.4; }
+  .ef-via { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: var(--step--2); color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
+  .ef-via::after { content: "→"; font-size: 1.1rem; font-weight: 400; color: var(--ink-3); line-height: 1; }
+  .ef-model { border: 1.5px solid var(--accent); background: var(--accent-tint); color: var(--accent-strong); border-radius: 12px; padding: 22px 16px; font-weight: 600; text-align: center; line-height: 1.4; }
+  .ef-ends-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); font-size: var(--step--1); color: var(--ink-2); }
+  .ef-ends-sub b { display: block; color: var(--ink); font-weight: 600; }
+  .ef-ends-sub div:last-child { text-align: right; }
+  
+  /* compress: share of the raw size left after compression */
+  .ef-bgroup + .ef-bgroup { margin-top: 18px; }
+  .ef-bg-t { display: block; font-size: var(--step--1); font-weight: 600; margin-bottom: 8px; color: var(--ink-2); }
+  .ef-brow { display: grid; grid-template-columns: 14.5em 1fr 3.6em; align-items: center; gap: 10px; margin-bottom: 6px; font-size: var(--step--1); }
+  .ef-brow .t { height: 14px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .ef-brow .b { display: block; height: 100%; background: var(--ink-3); opacity: 0.6; border-radius: 3px; }
+  .ef-brow .n { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink-2); }
+  .ef-brow.on .b { background: var(--accent); opacity: 1; }
+  .ef-brow.on .l, .ef-brow.on .n { color: var(--accent-strong); font-weight: 600; }
+  .ef-axisnote { font-size: var(--step--2); color: var(--ink-3); margin: 10px 0 0; }
+  
+  /* output: one model per kind of output, then one program */
+  .ef-lanes { display: flex; flex-direction: column; gap: 6px; }
+  .ef-lane { display: grid; grid-template-columns: 1fr 1.2em 1fr; align-items: center; gap: 4px; }
+  .ef-lane .ef-node { padding: 6px 10px; font-size: var(--step--1); text-align: center; }
+  .ef-chain { display: flex; flex-direction: column; gap: 4px; }
+  .ef-chain .ef-node { text-align: center; }
+  .ef-outs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .ef-outs .ef-node { text-align: center; padding: 6px 10px; font-size: var(--step--1); }
+  .ef-f-output .ef-pane:first-child { justify-content: space-between; }
+  
+  /* strokes: a picture made by a short program */
+  .ef-paint { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+  .ef-canvas { position: relative; }
+  .ef-canvas canvas { display: block; width: 100%; height: auto; aspect-ratio: 720 / 450; border-radius: 6px; background: #efe7d8; }
+  .ef-codebox { display: flex; flex-direction: column; min-width: 0; min-height: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); overflow: hidden; }
+  .ef-codebox h4 { margin: 0; padding: 7px 12px; font-size: var(--step--2); font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--rule); letter-spacing: 0.03em; }
+  .ef-codebox pre { margin: 0; padding: 10px 12px; flex: 1 1 0; min-height: 180px; overflow: auto; font: 11px/1.55 var(--font-mono); color: var(--ink-2); background: transparent; border: 0; border-radius: 0; white-space: pre; tab-size: 2; }
+  .ef-paintbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 14px; }
+  .ef-sizes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .ef-sizes .ef-tile:last-child .v { color: var(--ink-2); }
+  
+  @media (max-width: 640px) {
+    .ef-box { padding: 18px 16px 20px; }
+    .ef-two { grid-template-columns: 1fr; }
+    .ef-tiles { grid-template-columns: 1fr 1fr; }
+    .ef-tiles .ef-tile:last-child { grid-column: 1 / -1; }
+    .ef-lesson { grid-template-columns: 1fr; gap: 6px; }
+    .ef-lesson .hd { display: none; }
+    .ef-lesson .who { margin-top: 10px; }
+    .ef-lesson .ef-node + .ef-node::before { content: "↓"; left: 50%; top: -4px; }
+    .ef-ends { grid-template-columns: 1fr; }
+    .ef-chips { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .ef-via::after { content: "↓"; }
+    .ef-model { padding: 14px 16px; }
+    .ef-ends-sub, .ef-sizes { grid-template-columns: 1fr; }
+    .ef-ends-sub div:last-child { text-align: left; }
+    .ef-brow { grid-template-columns: 1fr 3.6em; }
+    .ef-brow .l { grid-column: 1 / -1; }
+    .ef-paint { grid-template-columns: 1fr; }
+    .ef-codebox pre { max-height: 220px; min-height: 0; flex: none; }
+  }
+  @media print { .ef button, .ef-ctl input { display: none; } }
+  .ef-css-end{}
 ---
 {% raw %}
 <div lang="en" markdown="1">
@@ -16,6 +169,8 @@ categories: [essays]
 Many people see the coding agent as a tool for writing code, a stronger programming assistant. I have come to think it means far more than that. The coding paradigm is to today what LLMs were to the research of the pre-LLM era, one general approach that brings a whole range of specialized directions under one roof.
 
 If I had to sum up my view in one sentence, it would be that LLMs unified the input and coding unified the output. The first unification let models understand anything; this one lets them make anything.
+
+<figure class="gf ef ef-f-ends" id="ef-ends-en"><div class="ef-box"><p class="ef-h">Two unifications, one at each end</p><div class="ef-ends"><div class="ef-chips"><span class="ef-chip">translation</span><span class="ef-chip">question answering</span><span class="ef-chip">writing</span><span class="ef-chip">reasoning</span></div><span class="ef-via">TEXT</span><span class="ef-model">one model</span><span class="ef-via">CODE</span><div class="ef-chips"><span class="ef-chip">a painting</span><span class="ef-chip">a 3D scene</span><span class="ef-chip">a video</span><span class="ef-chip">a robot command</span></div></div><div class="ef-ends-sub"><div><b>LLMs unified the input</b>Everything comes in as text, so the model can read anything</div><div><b>Coding unified the output</b>Everything goes out as a program that runs, so the model can make anything</div></div></div><figcaption class="ef-cap">The first unification opened up the understanding end. This one opens up the output end.</figcaption></figure>
 
 To explain this, I need to start from the idea that compression is intelligence.
 
@@ -36,6 +191,8 @@ Model size matters too, of course, but that is more of an engineering question. 
 This is how LLMs outclassed pre-LLM AI across the board. Instead of specializing, they cover everything, and that breadth is exactly what makes them better at the specialties.
 
 A DeepMind study gives a very concrete example. A language model trained mainly on text, when used to compress images and speech, did better than PNG, which was designed for images, and FLAC, which was designed for audio. The generalist beat the specialists on their own ground.
+
+<figure class="gf ef ef-f-compress" id="ef-compress-en"><div class="ef-box"><p class="ef-h">A language model trained mainly on text beats the purpose-built formats at compressing images and speech</p><div class="ef-bgroup"><span class="ef-bg-t">Images (ImageNet patches)</span><div class="ef-brow on"><span class="l">Language model, Chinchilla 70B</span><span class="t"><span class="b" style="width:43.4%"></span></span><span class="n">43.4%</span></div><div class="ef-brow"><span class="l">PNG, designed for images</span><span class="t"><span class="b" style="width:58.5%"></span></span><span class="n">58.5%</span></div></div><div class="ef-bgroup"><span class="ef-bg-t">Speech (LibriSpeech)</span><div class="ef-brow on"><span class="l">Language model, Chinchilla 70B</span><span class="t"><span class="b" style="width:16.4%"></span></span><span class="n">16.4%</span></div><div class="ef-brow"><span class="l">FLAC, designed for audio</span><span class="t"><span class="b" style="width:30.3%"></span></span><span class="n">30.3%</span></div></div><p class="ef-axisnote">Share of the raw size left after compression. Smaller is better.</p></div><figcaption class="ef-cap">Data from Delétang et al., <em>Language Modeling Is Compression</em> (ICLR 2024).</figcaption></figure>
 
 This is the same thing Sutton called the bitter lesson. People always want to build rules out of their own reasoning and construct a perfect model, and without exception it runs into trouble in the end. Looking back on seventy years of AI research, Sutton concluded that what wins in the long run is always general methods that can absorb more compute, mainly learning and search. Hard-coding human understanding into a system works in the short run and holds it back in the long run.
 
@@ -61,6 +218,8 @@ But understanding alone is not enough. What an LLM outputs is only text, and tex
 
 Code fills in exactly that end. Code can express any computation and can also be executed, so the model's output is no longer just text. It becomes action that has an effect on the world. A painting, a 3D scene, a video, a command for a robot, each of them is what you get by running a program. All those specialized output models are folded into a single action, writing a program.
 
+<figure class="gf ef ef-f-output" id="ef-output-en"><div class="ef-box"><p class="ef-h">At the output end, one model per kind of output gives way to writing a program</p><div class="ef-two"><div class="ef-pane"><h4>Before</h4><div class="ef-lanes"><div class="ef-lane"><span class="ef-node">LLM</span><span class="ef-arr">→</span><span class="ef-node">text</span></div><div class="ef-lane"><span class="ef-node">image model</span><span class="ef-arr">→</span><span class="ef-node">images</span></div><div class="ef-lane"><span class="ef-node">video model</span><span class="ef-arr">→</span><span class="ef-node">video</span></div><div class="ef-lane"><span class="ef-node">control model</span><span class="ef-arr">→</span><span class="ef-node">robot actions</span></div></div><p class="ef-note">Text by itself cannot touch the world, and every other kind of output needs its own specialized model.</p></div><div class="ef-pane on"><h4>Now</h4><div class="ef-chain"><span class="ef-node on">one model</span><span class="ef-arr">↓</span><span class="ef-node on">writes a program</span><span class="ef-arr">↓</span><span class="ef-node on">runs it</span><span class="ef-arr">↓</span></div><div class="ef-outs"><span class="ef-node">a painting</span><span class="ef-node">a 3D scene</span><span class="ef-node">a video</span><span class="ef-node">a robot command</span></div></div></div></div><figcaption class="ef-cap">All those specialized output models are folded into a single action, writing a program.</figcaption></figure>
+
 Put the two together and one model goes all the way from reading to doing. The first unification let models understand anything; this one lets them do anything.
 
 ## Learning plus search: the bitter lesson in its purest form
@@ -76,6 +235,8 @@ There is one more reason. Generating with code is itself compression. In compres
 Some may think code only suits structured things like charts and geometric figures, and that real paintings and photographs are too complex to have any program shorter than themselves. That underestimates code.
 
 Code generates a process, not pixels. A human painting is made one stroke at a time, so its shortest program is not a table of pixels but that sequence of strokes. A real photograph is produced by light and objects following physical laws, and a ray tracer plus a scene description is itself a program. The only part that truly cannot be compressed is the random detail, and random detail does not need to be reproduced point by point. It only has to be right statistically, and one call to a random number generator in the code is enough for that.
+
+<figure class="gf ef ef-f-strokes ef-wide" id="ef-strokes-en"><div class="ef-box"><p class="ef-h">This picture is painted stroke by stroke by a short program</p><div class="ef-paint"><div class="ef-canvas"><canvas width="720" height="450" role="img" aria-label="A dusk landscape painted by the program"></canvas><noscript><p class="ef-note">Turn on JavaScript to see the picture.</p></noscript></div><div class="ef-codebox"><h4>The program</h4></div></div><div class="ef-paintbar"><button type="button">Paint it again</button><button type="button">New random details</button></div><div class="ef-sizes"><div class="ef-tile"><span class="k">This program</span><span class="v"></span></div><div class="ef-tile"><span class="k">The same picture stored pixel by pixel (720×450, 3 bytes per pixel)</span><span class="v"></span><span class="s"></span></div></div></div><script>(function(){var f=document.getElementById("ef-strokes-en"),SRC="function paint(S, R) {\n  var W = 720, H = 450, hz = 250, i, k, x, y, t, a;\n  var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48];\n  var sun = \"rgb(255,232,180)\";\n  function mix(p, q, t) {\n    return \"rgb(\" + [0, 1, 2].map(function (j) {\n      return Math.round(p[j] + (q[j] - p[j]) * t);\n    }) + \")\";\n  }\n  /* sky: broad strokes, cool on top, warm near the horizon */\n  for (i = 0; i < 240; i++) {\n    y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3);\n    S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5,\n      16 + R() * 12, mix(top, glow, t), 0.5);\n  }\n  /* sun: short strokes around a centre, low in the sky */\n  for (i = 0; i < 60; i++) {\n    a = R() * 6.28; k = R() * 30;\n    S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k,\n      480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k,\n      9, sun, 0.7);\n  }\n  /* three ridges, the nearer the darker */\n  for (k = 0; k < 3; k++) {\n    for (x = -10; x < W + 10; x += 4) {\n      y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1)\n        + 9 * Math.sin(x / 21 + k);\n      S(x, y + R() * 5, x + R() * 16 - 8, hz + 2,\n        6, mix(glow, ink, 0.42 + k * 0.22), 0.7);\n    }\n  }\n  /* water: short level strokes that mirror the sky */\n  for (i = 0; i < 300; i++) {\n    y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz);\n    S(x - 25 - R() * 45, y, x + 25 + R() * 45, y,\n      2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45);\n  }\n  /* the sun's path on the water */\n  for (i = 0; i < 70; i++) {\n    y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55);\n    S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6);\n  }\n  /* the near bank, then two pines on it */\n  for (i = 0; i < 90; i++) {\n    x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04;\n    S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9);\n  }\n  for (k = 0; k < 2; k++) {\n    x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72;\n    S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95);\n    for (i = 1; i < 16; i++) {\n      a = 5 + i * (2.6 + k * 0.4);\n      S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n      S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n    }\n  }\n}",T={"unit": "{} bytes", "ratio": "about {} times the program"},cv=f.querySelector("canvas"),x=cv.getContext("2d"),W=720,H=450,d=Math.min(window.devicePixelRatio||1,2),seed=7,Q=[],raf=0,started=false;function paint(S, R) { var W = 720, H = 450, hz = 250, i, k, x, y, t, a; var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48]; var sun = "rgb(255,232,180)"; function mix(p, q, t) { return "rgb(" + [0, 1, 2].map(function (j) { return Math.round(p[j] + (q[j] - p[j]) * t); }) + ")"; } /* sky: broad strokes, cool on top, warm near the horizon */ for (i = 0; i < 240; i++) { y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3); S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5, 16 + R() * 12, mix(top, glow, t), 0.5); } /* sun: short strokes around a centre, low in the sky */ for (i = 0; i < 60; i++) { a = R() * 6.28; k = R() * 30; S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k, 480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k, 9, sun, 0.7); } /* three ridges, the nearer the darker */ for (k = 0; k < 3; k++) { for (x = -10; x < W + 10; x += 4) { y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1) + 9 * Math.sin(x / 21 + k); S(x, y + R() * 5, x + R() * 16 - 8, hz + 2, 6, mix(glow, ink, 0.42 + k * 0.22), 0.7); } } /* water: short level strokes that mirror the sky */ for (i = 0; i < 300; i++) { y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz); S(x - 25 - R() * 45, y, x + 25 + R() * 45, y, 2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45); } /* the sun's path on the water */ for (i = 0; i < 70; i++) { y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55); S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6); } /* the near bank, then two pines on it */ for (i = 0; i < 90; i++) { x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04; S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9); } for (k = 0; k < 2; k++) { x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72; S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95); for (i = 1; i < 16; i++) { a = 5 + i * (2.6 + k * 0.4); S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); } } } cv.width=W*d;cv.height=H*d;var pre=document.createElement("pre");pre.textContent=SRC;f.querySelector(".ef-codebox").appendChild(pre);var fmt=function(n){return n.toLocaleString("en-US")},v=f.querySelectorAll(".ef-sizes .v");v[0].textContent=T.unit.replace("{}",fmt(SRC.length));v[1].textContent=T.unit.replace("{}",fmt(W*H*3));f.querySelector(".ef-sizes .s").textContent=T.ratio.replace("{}",fmt(Math.round(W*H*3/SRC.length)));function one(q){x.globalAlpha=q[6];x.strokeStyle=q[5];x.lineWidth=q[4];x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[2],q[3]);x.stroke()}function go(){cancelAnimationFrame(raf);var s=seed;Q=[];paint(function(){Q.push(arguments)},function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296});x.setTransform(d,0,0,d,0,0);x.globalAlpha=1;x.fillStyle="#efe7d8";x.fillRect(0,0,W,H);x.lineCap="round";var i=0,per=Math.ceil(Q.length/170),still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;(function step(){var e=still?Q.length:Math.min(i+per,Q.length);for(;i<e;i++)one(Q[i]);if(i<Q.length)raf=requestAnimationFrame(step)})()}var b=f.querySelectorAll("button");b[0].onclick=go;b[1].onclick=function(){seed=Math.floor(Math.random()*1e9);go()};if("IntersectionObserver" in window){new IntersectionObserver(function(es,ob){if(es[0].isIntersecting&&!started){started=true;ob.disconnect();go()}},{threshold:.35}).observe(cv)}else{go()}})();</script><figcaption class="ef-cap">The picture stores no pixels at all. It stores how to paint: the sky first, then the sun, the far ridges and the water, and last the trees on the near bank. Where each stroke lands and how it wobbles come from random numbers. Change the random numbers and every detail changes, yet it is still the same picture. The byte count covers only the program shown here, not the basic action of making one stroke.</figcaption></figure>
 
 Almost everything in the world comes out of some process. Whatever has a generating process can be written out by some program. That is why I say coding has almost no ceiling.
 
@@ -116,6 +277,8 @@ LLMs unified the input and brought the many directions of the pre-LLM era into o
 
 如果用一句话概括我的看法，那就是 LLM 统一了输入，coding 统一了输出。前一次大一统让模型什么都能读懂，这一次让模型什么都能做出来。
 
+<figure class="gf ef ef-f-ends" id="ef-ends-zh"><div class="ef-box"><p class="ef-h">两次大一统，统一的是两头</p><div class="ef-ends"><div class="ef-chips"><span class="ef-chip">翻译</span><span class="ef-chip">问答</span><span class="ef-chip">写作</span><span class="ef-chip">推理</span></div><span class="ef-via">文本</span><span class="ef-model">一个模型</span><span class="ef-via">代码</span><div class="ef-chips"><span class="ef-chip">一幅画</span><span class="ef-chip">3D 场景</span><span class="ef-chip">一段视频</span><span class="ef-chip">机器人指令</span></div></div><div class="ef-ends-sub"><div><b>LLM 统一了输入</b>进来的都是文本，模型什么都能读懂</div><div><b>coding 统一了输出</b>出去的都是能运行的程序，模型什么都能做出来</div></div></div><figcaption class="ef-cap">前一次大一统打通了理解这一端，这一次打通的是输出这一端。</figcaption></figure>
+
 要说清楚这一点，得先从「压缩即智能」讲起。
 
 ## 压缩即智能
@@ -135,6 +298,8 @@ Ilya 在 2023 年的一次报告里正是这么解释无监督学习的。他说
 这是 LLM 对前 LLM 时代人工智能的一次全方位降维打击。它不做专，而做全，而这个「全」本身就让它做得更专。
 
 DeepMind 的一项研究给了一个很直观的例子。一个主要用文本训练的语言模型，拿去压缩图像和语音，压得比专门为图像设计的 PNG、专门为音频设计的 FLAC 还要好。通才在专才的地盘上赢了专才。
+
+<figure class="gf ef ef-f-compress" id="ef-compress-zh"><div class="ef-box"><p class="ef-h">主要用文本训练的语言模型，压缩图像和语音都赢了专用的格式</p><div class="ef-bgroup"><span class="ef-bg-t">图像（ImageNet 图块）</span><div class="ef-brow on"><span class="l">语言模型 Chinchilla 70B</span><span class="t"><span class="b" style="width:43.4%"></span></span><span class="n">43.4%</span></div><div class="ef-brow"><span class="l">PNG，专为图像设计</span><span class="t"><span class="b" style="width:58.5%"></span></span><span class="n">58.5%</span></div></div><div class="ef-bgroup"><span class="ef-bg-t">语音（LibriSpeech）</span><div class="ef-brow on"><span class="l">语言模型 Chinchilla 70B</span><span class="t"><span class="b" style="width:16.4%"></span></span><span class="n">16.4%</span></div><div class="ef-brow"><span class="l">FLAC，专为音频设计</span><span class="t"><span class="b" style="width:30.3%"></span></span><span class="n">30.3%</span></div></div><p class="ef-axisnote">压缩后占原始大小的比例，越小越好。</p></div><figcaption class="ef-cap">数据来自 Delétang 等，<em>Language Modeling Is Compression</em>（ICLR 2024）。</figcaption></figure>
 
 这和 Sutton 说的「苦涩的教训」是一回事。人类总想用自己的理性去构建规则，构建一个完美的模型，但最后无一例外都会出问题。Sutton 回顾七十年的 AI 研究，结论是长期胜出的总是那些能吃下更多算力的通用方法，主要是学习和搜索；把人的理解硬编码进系统，短期有效，长期反而拖后腿。
 
@@ -160,6 +325,8 @@ LLM 统一的是输入。它把所有任务都变成「文本进、文本出」�
 
 代码补上的正是这一端。代码能表达任何计算，又能被执行，于是模型的输出不再只是文字，而是能对世界起作用的动作。一幅画、一个 3D 场景、一段视频、一条机器人指令，都是一段程序跑出来的结果。各种专门的输出模型，被收进了「写一段程序」这一个动作里。
 
+<figure class="gf ef ef-f-output" id="ef-output-zh"><div class="ef-box"><p class="ef-h">输出这一端，从各训各的模型，变成写一段程序</p><div class="ef-two"><div class="ef-pane"><h4>以前</h4><div class="ef-lanes"><div class="ef-lane"><span class="ef-node">LLM</span><span class="ef-arr">→</span><span class="ef-node">文字</span></div><div class="ef-lane"><span class="ef-node">画图模型</span><span class="ef-arr">→</span><span class="ef-node">图</span></div><div class="ef-lane"><span class="ef-node">视频模型</span><span class="ef-arr">→</span><span class="ef-node">视频</span></div><div class="ef-lane"><span class="ef-node">控制模型</span><span class="ef-arr">→</span><span class="ef-node">机器人动作</span></div></div><p class="ef-note">文字本身碰不到世界，其余每一种输出都要一个专门的模型。</p></div><div class="ef-pane on"><h4>现在</h4><div class="ef-chain"><span class="ef-node on">一个模型</span><span class="ef-arr">↓</span><span class="ef-node on">写一段程序</span><span class="ef-arr">↓</span><span class="ef-node on">运行</span><span class="ef-arr">↓</span></div><div class="ef-outs"><span class="ef-node">一幅画</span><span class="ef-node">3D 场景</span><span class="ef-node">一段视频</span><span class="ef-node">机器人指令</span></div></div></div></div><figcaption class="ef-cap">各种专门的输出模型，被收进了「写一段程序」这一个动作里。</figcaption></figure>
+
 两次加起来，一个模型从读到做就打通了。前一次大一统让模型什么都能懂，这一次让模型什么都能做。
 
 ## 学习加搜索：苦涩的教训最纯粹的形态
@@ -175,6 +342,8 @@ LLM 统一的是输入。它把所有任务都变成「文本进、文本出」�
 也许有人会觉得，代码只适合画图表、画几何图形这类有结构的东西，真实的绘画、照片太复杂，没有比它本身更短的程序。但这低估了代码。
 
 代码生成的是过程，而不是像素。人的一幅画是一笔一笔画出来的，它最短的程序不是一张像素表，而是那一串笔触。一张真实的照片，是光照和物体按物理规律造出来的，一套光线追踪加一份场景描述，本身就是一段程序。真正压不掉的，只有那些随机的细节，而随机细节并不需要逐点复现，只要统计上对就行，代码里调用一个随机数就够了。
+
+<figure class="gf ef ef-f-strokes ef-wide" id="ef-strokes-zh"><div class="ef-box"><p class="ef-h">这幅画，是一段程序一笔一笔画出来的</p><div class="ef-paint"><div class="ef-canvas"><canvas width="720" height="450" role="img" aria-label="程序画出的一幅黄昏山水"></canvas><noscript><p class="ef-note">打开 JavaScript 才能看到这幅画。</p></noscript></div><div class="ef-codebox"><h4>程序</h4></div></div><div class="ef-paintbar"><button type="button">重画一遍</button><button type="button">换一组随机细节</button></div><div class="ef-sizes"><div class="ef-tile"><span class="k">这段程序</span><span class="v"></span></div><div class="ef-tile"><span class="k">逐像素存这幅画（720×450，每个像素 3 字节）</span><span class="v"></span><span class="s"></span></div></div></div><script>(function(){var f=document.getElementById("ef-strokes-zh"),SRC="function paint(S, R) {\n  var W = 720, H = 450, hz = 250, i, k, x, y, t, a;\n  var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48];\n  var sun = \"rgb(255,232,180)\";\n  function mix(p, q, t) {\n    return \"rgb(\" + [0, 1, 2].map(function (j) {\n      return Math.round(p[j] + (q[j] - p[j]) * t);\n    }) + \")\";\n  }\n  /* sky: broad strokes, cool on top, warm near the horizon */\n  for (i = 0; i < 240; i++) {\n    y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3);\n    S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5,\n      16 + R() * 12, mix(top, glow, t), 0.5);\n  }\n  /* sun: short strokes around a centre, low in the sky */\n  for (i = 0; i < 60; i++) {\n    a = R() * 6.28; k = R() * 30;\n    S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k,\n      480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k,\n      9, sun, 0.7);\n  }\n  /* three ridges, the nearer the darker */\n  for (k = 0; k < 3; k++) {\n    for (x = -10; x < W + 10; x += 4) {\n      y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1)\n        + 9 * Math.sin(x / 21 + k);\n      S(x, y + R() * 5, x + R() * 16 - 8, hz + 2,\n        6, mix(glow, ink, 0.42 + k * 0.22), 0.7);\n    }\n  }\n  /* water: short level strokes that mirror the sky */\n  for (i = 0; i < 300; i++) {\n    y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz);\n    S(x - 25 - R() * 45, y, x + 25 + R() * 45, y,\n      2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45);\n  }\n  /* the sun's path on the water */\n  for (i = 0; i < 70; i++) {\n    y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55);\n    S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6);\n  }\n  /* the near bank, then two pines on it */\n  for (i = 0; i < 90; i++) {\n    x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04;\n    S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9);\n  }\n  for (k = 0; k < 2; k++) {\n    x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72;\n    S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95);\n    for (i = 1; i < 16; i++) {\n      a = 5 + i * (2.6 + k * 0.4);\n      S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n      S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n    }\n  }\n}",T={"unit": "{} 字节", "ratio": "约是程序的 {} 倍"},cv=f.querySelector("canvas"),x=cv.getContext("2d"),W=720,H=450,d=Math.min(window.devicePixelRatio||1,2),seed=7,Q=[],raf=0,started=false;function paint(S, R) { var W = 720, H = 450, hz = 250, i, k, x, y, t, a; var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48]; var sun = "rgb(255,232,180)"; function mix(p, q, t) { return "rgb(" + [0, 1, 2].map(function (j) { return Math.round(p[j] + (q[j] - p[j]) * t); }) + ")"; } /* sky: broad strokes, cool on top, warm near the horizon */ for (i = 0; i < 240; i++) { y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3); S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5, 16 + R() * 12, mix(top, glow, t), 0.5); } /* sun: short strokes around a centre, low in the sky */ for (i = 0; i < 60; i++) { a = R() * 6.28; k = R() * 30; S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k, 480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k, 9, sun, 0.7); } /* three ridges, the nearer the darker */ for (k = 0; k < 3; k++) { for (x = -10; x < W + 10; x += 4) { y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1) + 9 * Math.sin(x / 21 + k); S(x, y + R() * 5, x + R() * 16 - 8, hz + 2, 6, mix(glow, ink, 0.42 + k * 0.22), 0.7); } } /* water: short level strokes that mirror the sky */ for (i = 0; i < 300; i++) { y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz); S(x - 25 - R() * 45, y, x + 25 + R() * 45, y, 2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45); } /* the sun's path on the water */ for (i = 0; i < 70; i++) { y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55); S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6); } /* the near bank, then two pines on it */ for (i = 0; i < 90; i++) { x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04; S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9); } for (k = 0; k < 2; k++) { x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72; S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95); for (i = 1; i < 16; i++) { a = 5 + i * (2.6 + k * 0.4); S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); } } } cv.width=W*d;cv.height=H*d;var pre=document.createElement("pre");pre.textContent=SRC;f.querySelector(".ef-codebox").appendChild(pre);var fmt=function(n){return n.toLocaleString("en-US")},v=f.querySelectorAll(".ef-sizes .v");v[0].textContent=T.unit.replace("{}",fmt(SRC.length));v[1].textContent=T.unit.replace("{}",fmt(W*H*3));f.querySelector(".ef-sizes .s").textContent=T.ratio.replace("{}",fmt(Math.round(W*H*3/SRC.length)));function one(q){x.globalAlpha=q[6];x.strokeStyle=q[5];x.lineWidth=q[4];x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[2],q[3]);x.stroke()}function go(){cancelAnimationFrame(raf);var s=seed;Q=[];paint(function(){Q.push(arguments)},function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296});x.setTransform(d,0,0,d,0,0);x.globalAlpha=1;x.fillStyle="#efe7d8";x.fillRect(0,0,W,H);x.lineCap="round";var i=0,per=Math.ceil(Q.length/170),still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;(function step(){var e=still?Q.length:Math.min(i+per,Q.length);for(;i<e;i++)one(Q[i]);if(i<Q.length)raf=requestAnimationFrame(step)})()}var b=f.querySelectorAll("button");b[0].onclick=go;b[1].onclick=function(){seed=Math.floor(Math.random()*1e9);go()};if("IntersectionObserver" in window){new IntersectionObserver(function(es,ob){if(es[0].isIntersecting&&!started){started=true;ob.disconnect();go()}},{threshold:.35}).observe(cv)}else{go()}})();</script><figcaption class="ef-cap">画里没有存任何一个像素，存的是怎么画：先铺天空，再画太阳、远山和水面，最后是近处的树。笔触的位置和抖动来自随机数，换一组随机数，细节全变了，画还是那幅画。字节数只算图里这段程序，不算「画一笔」这个基本动作。</figcaption></figure>
 
 世界上的东西，几乎都是由某个过程产生的。凡是有生成过程的，就有一段程序能把它写出来。这就是为什么我说 coding 几乎没有上限。
 
@@ -215,6 +384,8 @@ LLM 当年统一了输入，把前 LLM 时代的各个方向收归一统；codin
 
 私の考えを一言でまとめるなら、LLM は入力を統一し、コーディングは出力を統一した、ということです。前の大統一でモデルは何でも読み取れるようになり、今回の統一で何でも作り出せるようになります。
 
+<figure class="gf ef ef-f-ends" id="ef-ends-ja"><div class="ef-box"><p class="ef-h">二度の大統一が、それぞれ両端を統一した</p><div class="ef-ends"><div class="ef-chips"><span class="ef-chip">翻訳</span><span class="ef-chip">質疑応答</span><span class="ef-chip">文章を書く</span><span class="ef-chip">推論</span></div><span class="ef-via">テキスト</span><span class="ef-model">一つのモデル</span><span class="ef-via">コード</span><div class="ef-chips"><span class="ef-chip">一枚の絵</span><span class="ef-chip">3D シーン</span><span class="ef-chip">一本の動画</span><span class="ef-chip">ロボットへの指令</span></div></div><div class="ef-ends-sub"><div><b>LLM は入力を統一した</b>入ってくるものはすべてテキストで、モデルは何でも読み取れる</div><div><b>コーディングは出力を統一した</b>出ていくものはすべて実行できるプログラムで、モデルは何でも作り出せる</div></div></div><figcaption class="ef-cap">前の大統一は理解の側をつなぎ、今回の統一は出力の側をつなぎます。</figcaption></figure>
+
 これを説明するには、「圧縮は知能である」という話から始める必要があります。
 
 ## 圧縮は知能である
@@ -234,6 +405,8 @@ LLM にとって、その「良い形式」とは Transformer と attention の�
 これは、LLM 以前の人工知能に対して、LLM があらゆる面で次元の違う勝ち方をしたということです。専門に絞るのではなく、何でもやる。そしてその「何でも」こそが、専門分野でもより強くしているのです。
 
 DeepMind のある研究が、とてもわかりやすい例を示しています。主にテキストで訓練された言語モデルを画像や音声の圧縮に使ったところ、画像専用に設計された PNG や、音声専用に設計された FLAC よりもよく圧縮できたのです。万能選手が、専門家の土俵で専門家に勝ちました。
+
+<figure class="gf ef ef-f-compress" id="ef-compress-ja"><div class="ef-box"><p class="ef-h">主にテキストで訓練された言語モデルが、画像でも音声でも専用の形式よりよく圧縮した</p><div class="ef-bgroup"><span class="ef-bg-t">画像（ImageNet のパッチ）</span><div class="ef-brow on"><span class="l">言語モデル Chinchilla 70B</span><span class="t"><span class="b" style="width:43.4%"></span></span><span class="n">43.4%</span></div><div class="ef-brow"><span class="l">PNG、画像専用の形式</span><span class="t"><span class="b" style="width:58.5%"></span></span><span class="n">58.5%</span></div></div><div class="ef-bgroup"><span class="ef-bg-t">音声（LibriSpeech）</span><div class="ef-brow on"><span class="l">言語モデル Chinchilla 70B</span><span class="t"><span class="b" style="width:16.4%"></span></span><span class="n">16.4%</span></div><div class="ef-brow"><span class="l">FLAC、音声専用の形式</span><span class="t"><span class="b" style="width:30.3%"></span></span><span class="n">30.3%</span></div></div><p class="ef-axisnote">圧縮後のサイズが元のサイズに占める割合。小さいほど良い。</p></div><figcaption class="ef-cap">データは Delétang ほか <em>Language Modeling Is Compression</em>（ICLR 2024）より。</figcaption></figure>
 
 これは Sutton の言う「苦い教訓」と同じことです。人間はいつも自分の理性で規則を組み立て、完璧なモデルを作ろうとしますが、最後には例外なく問題が出てきます。Sutton は七十年にわたる AI 研究を振り返り、長い目で見て勝つのは、より多くの計算を取り込める汎用的な方法、主に学習と探索だと結論づけました。人間の理解をシステムに直接書き込むと、短期的には効いても、長期的にはかえって足を引っ張ります。
 
@@ -259,6 +432,8 @@ LLM が統一したのは入力です。あらゆる課題を「テキストを�
 
 コードが埋めたのは、まさにこの側です。コードはどんな計算でも表現でき、しかも実行できます。だからモデルの出力はもはや文字だけではなく、世界に働きかける動作になります。一枚の絵、一つの 3D シーン、一本の動画、一つのロボットへの指令。どれもプログラムを走らせた結果です。さまざまな専用の出力モデルが、「プログラムを書く」という一つの動作に収められたのです。
 
+<figure class="gf ef ef-f-output" id="ef-output-ja"><div class="ef-box"><p class="ef-h">出力の側は、種類ごとの専用モデルから、プログラムを書くことへ</p><div class="ef-two"><div class="ef-pane"><h4>以前</h4><div class="ef-lanes"><div class="ef-lane"><span class="ef-node">LLM</span><span class="ef-arr">→</span><span class="ef-node">文字</span></div><div class="ef-lane"><span class="ef-node">画像モデル</span><span class="ef-arr">→</span><span class="ef-node">絵</span></div><div class="ef-lane"><span class="ef-node">動画モデル</span><span class="ef-arr">→</span><span class="ef-node">動画</span></div><div class="ef-lane"><span class="ef-node">制御モデル</span><span class="ef-arr">→</span><span class="ef-node">ロボットの動作</span></div></div><p class="ef-note">文字それ自体は世界に触れられず、ほかの出力にはそれぞれ専用のモデルが必要でした。</p></div><div class="ef-pane on"><h4>いま</h4><div class="ef-chain"><span class="ef-node on">一つのモデル</span><span class="ef-arr">↓</span><span class="ef-node on">プログラムを書く</span><span class="ef-arr">↓</span><span class="ef-node on">実行する</span><span class="ef-arr">↓</span></div><div class="ef-outs"><span class="ef-node">一枚の絵</span><span class="ef-node">3D シーン</span><span class="ef-node">一本の動画</span><span class="ef-node">ロボットへの指令</span></div></div></div></div><figcaption class="ef-cap">さまざまな専用の出力モデルが、「プログラムを書く」という一つの動作に収められました。</figcaption></figure>
+
 二つを合わせると、一つのモデルで読むことからやることまでがつながります。前の大統一でモデルは何でも理解できるようになり、今回の統一で何でもできるようになります。
 
 ## 学習と探索：苦い教訓のもっとも純粋なかたち
@@ -274,6 +449,8 @@ LLM が統一したのは入力です。あらゆる課題を「テキストを�
 コードが向いているのはグラフや幾何学図形のような構造のあるものだけで、本物の絵や写真は複雑すぎて、それ自体より短いプログラムなどない、と思う人もいるかもしれません。しかしそれは、コードを過小評価しています。
 
 コードが生み出すのは過程であって、ピクセルではありません。人間の絵は一筆一筆描かれたもので、その最短のプログラムはピクセルの表ではなく、その筆の運びの連なりです。本物の写真は、光と物体が物理法則に従って作り出したもので、レイトレーシングとシーンの記述の組み合わせは、それ自体が一つのプログラムです。本当に圧縮できないのはランダムな細部だけですが、ランダムな細部は一点ずつ再現する必要はなく、統計的に正しければ十分です。コードの中で乱数を一つ呼び出せば足ります。
+
+<figure class="gf ef ef-f-strokes ef-wide" id="ef-strokes-ja"><div class="ef-box"><p class="ef-h">この絵は、短いプログラムが一筆ずつ描いたものです</p><div class="ef-paint"><div class="ef-canvas"><canvas width="720" height="450" role="img" aria-label="プログラムが描いた夕暮れの風景"></canvas><noscript><p class="ef-note">この絵を見るには JavaScript を有効にしてください。</p></noscript></div><div class="ef-codebox"><h4>プログラム</h4></div></div><div class="ef-paintbar"><button type="button">もう一度描く</button><button type="button">ランダムな細部を変える</button></div><div class="ef-sizes"><div class="ef-tile"><span class="k">このプログラム</span><span class="v"></span></div><div class="ef-tile"><span class="k">同じ絵をピクセルごとに保存（720×450、1 ピクセル 3 バイト）</span><span class="v"></span><span class="s"></span></div></div></div><script>(function(){var f=document.getElementById("ef-strokes-ja"),SRC="function paint(S, R) {\n  var W = 720, H = 450, hz = 250, i, k, x, y, t, a;\n  var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48];\n  var sun = \"rgb(255,232,180)\";\n  function mix(p, q, t) {\n    return \"rgb(\" + [0, 1, 2].map(function (j) {\n      return Math.round(p[j] + (q[j] - p[j]) * t);\n    }) + \")\";\n  }\n  /* sky: broad strokes, cool on top, warm near the horizon */\n  for (i = 0; i < 240; i++) {\n    y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3);\n    S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5,\n      16 + R() * 12, mix(top, glow, t), 0.5);\n  }\n  /* sun: short strokes around a centre, low in the sky */\n  for (i = 0; i < 60; i++) {\n    a = R() * 6.28; k = R() * 30;\n    S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k,\n      480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k,\n      9, sun, 0.7);\n  }\n  /* three ridges, the nearer the darker */\n  for (k = 0; k < 3; k++) {\n    for (x = -10; x < W + 10; x += 4) {\n      y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1)\n        + 9 * Math.sin(x / 21 + k);\n      S(x, y + R() * 5, x + R() * 16 - 8, hz + 2,\n        6, mix(glow, ink, 0.42 + k * 0.22), 0.7);\n    }\n  }\n  /* water: short level strokes that mirror the sky */\n  for (i = 0; i < 300; i++) {\n    y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz);\n    S(x - 25 - R() * 45, y, x + 25 + R() * 45, y,\n      2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45);\n  }\n  /* the sun's path on the water */\n  for (i = 0; i < 70; i++) {\n    y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55);\n    S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6);\n  }\n  /* the near bank, then two pines on it */\n  for (i = 0; i < 90; i++) {\n    x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04;\n    S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9);\n  }\n  for (k = 0; k < 2; k++) {\n    x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72;\n    S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95);\n    for (i = 1; i < 16; i++) {\n      a = 5 + i * (2.6 + k * 0.4);\n      S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n      S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17,\n        4.5, mix(ink, top, 0.12), 0.9);\n    }\n  }\n}",T={"unit": "{} バイト", "ratio": "プログラムの約 {} 倍"},cv=f.querySelector("canvas"),x=cv.getContext("2d"),W=720,H=450,d=Math.min(window.devicePixelRatio||1,2),seed=7,Q=[],raf=0,started=false;function paint(S, R) { var W = 720, H = 450, hz = 250, i, k, x, y, t, a; var top = [36, 56, 112], glow = [246, 162, 92], ink = [24, 30, 48]; var sun = "rgb(255,232,180)"; function mix(p, q, t) { return "rgb(" + [0, 1, 2].map(function (j) { return Math.round(p[j] + (q[j] - p[j]) * t); }) + ")"; } /* sky: broad strokes, cool on top, warm near the horizon */ for (i = 0; i < 240; i++) { y = R() * hz; x = R() * W; t = Math.pow(y / hz, 1.3); S(x - 100, y + R() * 10 - 5, x + 100, y + R() * 10 - 5, 16 + R() * 12, mix(top, glow, t), 0.5); } /* sun: short strokes around a centre, low in the sky */ for (i = 0; i < 60; i++) { a = R() * 6.28; k = R() * 30; S(480 + Math.cos(a) * k, 122 + Math.sin(a) * k, 480 + Math.cos(a + 0.9) * k, 122 + Math.sin(a + 0.9) * k, 9, sun, 0.7); } /* three ridges, the nearer the darker */ for (k = 0; k < 3; k++) { for (x = -10; x < W + 10; x += 4) { y = hz - 70 + k * 26 + 24 * Math.sin(x / (110 - k * 25) + k * 2.1) + 9 * Math.sin(x / 21 + k); S(x, y + R() * 5, x + R() * 16 - 8, hz + 2, 6, mix(glow, ink, 0.42 + k * 0.22), 0.7); } } /* water: short level strokes that mirror the sky */ for (i = 0; i < 300; i++) { y = hz + 4 + R() * (H - hz); x = R() * W; t = (y - hz) / (H - hz); S(x - 25 - R() * 45, y, x + 25 + R() * 45, y, 2.5 + t * 5, mix(glow, top, Math.pow(t, 0.6)), 0.45); } /* the sun's path on the water */ for (i = 0; i < 70; i++) { y = hz + 6 + R() * 180; x = 480 + (R() - 0.5) * (26 + (y - hz) * 0.55); S(x - 12 - R() * 8, y, x + 12 + R() * 8, y, 2.5, sun, 0.6); } /* the near bank, then two pines on it */ for (i = 0; i < 90; i++) { x = R() * 280 - 30; y = 428 + R() * 26 + x * 0.04; S(x - 30, y, x + 30, y + 3, 9, mix(ink, top, 0.1), 0.9); } for (k = 0; k < 2; k++) { x = 96 + k * 76; y = 432 - k * 10; t = 250 - k * 72; S(x, y, x, y - t, 5, mix(ink, top, 0), 0.95); for (i = 1; i < 16; i++) { a = 5 + i * (2.6 + k * 0.4); S(x - a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); S(x + a, y - t + i * t / 17 + 9 + R() * 5, x, y - t + i * t / 17, 4.5, mix(ink, top, 0.12), 0.9); } } } cv.width=W*d;cv.height=H*d;var pre=document.createElement("pre");pre.textContent=SRC;f.querySelector(".ef-codebox").appendChild(pre);var fmt=function(n){return n.toLocaleString("en-US")},v=f.querySelectorAll(".ef-sizes .v");v[0].textContent=T.unit.replace("{}",fmt(SRC.length));v[1].textContent=T.unit.replace("{}",fmt(W*H*3));f.querySelector(".ef-sizes .s").textContent=T.ratio.replace("{}",fmt(Math.round(W*H*3/SRC.length)));function one(q){x.globalAlpha=q[6];x.strokeStyle=q[5];x.lineWidth=q[4];x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[2],q[3]);x.stroke()}function go(){cancelAnimationFrame(raf);var s=seed;Q=[];paint(function(){Q.push(arguments)},function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296});x.setTransform(d,0,0,d,0,0);x.globalAlpha=1;x.fillStyle="#efe7d8";x.fillRect(0,0,W,H);x.lineCap="round";var i=0,per=Math.ceil(Q.length/170),still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;(function step(){var e=still?Q.length:Math.min(i+per,Q.length);for(;i<e;i++)one(Q[i]);if(i<Q.length)raf=requestAnimationFrame(step)})()}var b=f.querySelectorAll("button");b[0].onclick=go;b[1].onclick=function(){seed=Math.floor(Math.random()*1e9);go()};if("IntersectionObserver" in window){new IntersectionObserver(function(es,ob){if(es[0].isIntersecting&&!started){started=true;ob.disconnect();go()}},{threshold:.35}).observe(cv)}else{go()}})();</script><figcaption class="ef-cap">絵にはピクセルが一つも保存されていません。保存されているのは描き方です。まず空を塗り、次に太陽、遠くの山並み、水面、最後に手前の木を描きます。筆の位置や揺れは乱数から来ています。乱数を変えると細部はすべて変わりますが、絵は同じ絵のままです。バイト数は図のプログラムだけを数えたもので、「一筆描く」という基本の動作は含みません。</figcaption></figure>
 
 世界にあるものは、ほとんどが何らかの過程から生まれています。生成の過程があるものなら、それを書き出すプログラムがあります。コーディングにはほとんど上限がないと私が言うのは、このためです。
 
