@@ -13,3 +13,7 @@
 @use "site/viz";
 @use "site/motion";
 @use "site/utilities";
+// Figures inside the notes; unlayered, as when they sat in each post's front matter. note-figs first: its .gf
+// margin then yields to the essays' .ef margin, as it did when each page carried only its own styles.
+@use "site/note-figs";
+@use "site/essay-figs";

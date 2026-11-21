@@ -1,0 +1,8 @@
+{% raw %}<div class="gf gf-ledger" markdown="1">
+
+```vega_lite
+{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":"container","height":{"step":46},"background":null,"usermeta":{"embedOptions":{"actions":false}},"data":{"values":[{"lab":"同模型换 harness|Tev 对 Skill2Env","v":27.0,"o":0},{"lab":"同模型换 harness|官方 2.1 公告","v":22.5,"o":1},{"lab":"换一批 89 道题|95% 区间 *","v":16.0,"o":2},{"lab":"同一权重|只开思考 *","v":7.88,"o":3},{"lab":"同样的题重跑|两次之差 95% 区间 *","v":4.0,"o":4},{"lab":"同配方重训五次|的极差","v":2.9,"o":5}]},"encoding":{"y":{"field":"lab","type":"nominal","sort":{"field":"o"},"title":null,"axis":{"labelExpr":"split(datum.label, '|')","labelLimit":0,"labelFontSize":12,"ticks":false,"domain":false}}},"layer":[{"mark":{"type":"bar","color":"#8A9099","height":20},"encoding":{"x":{"field":"v","type":"quantitative","title":"分数变化（百分点）","scale":{"domain":[0,30]},"axis":{"values":[0,10,20,30]}}}},{"mark":{"type":"text","align":"left","dx":5,"fontWeight":"bold","fontSize":12,"color":"#8A9099"},"encoding":{"x":{"field":"v","type":"quantitative"},"text":{"field":"v","type":"quantitative","format":"~g"}}},{"data":{"values":[{"r":3.1},{"r":18.7}]},"mark":{"type":"rule","color":"#5E86A0","strokeDash":[4,3],"strokeWidth":1.5},"encoding":{"x":{"field":"r","type":"quantitative"},"y":null}},{"data":{"values":[{"r":3.1},{"r":18.7}]},"mark":{"type":"text","color":"#5E86A0","baseline":"bottom","dy":-2,"fontSize":11},"encoding":{"x":{"field":"r","type":"quantitative"},"y":{"value":0},"text":{"field":"r","type":"quantitative"}}}]}
+```
+
+<p class="gf-cap">分数能动多少，单位是 Terminal-Bench 式的百分制分数。两条虚线是拿来作参照的两个涨幅，一条是 TermGrade 的 3.1，一条是已核到的 2.1 上最大的涨幅 18.7。标 * 的三项是在 TermGrade 的非 Terminal-Bench 题上算的。</p>
+</div>{% endraw %}

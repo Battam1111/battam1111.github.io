@@ -15,11 +15,8 @@ layout: default
 
 <div class="post single-post">
   <header class="post-header">
-    <h1 class="post-title">
-      <span lang="en">{{ page.title }}</span>
-      {% if page.title_zh %}<span lang="zh">{{ page.title_zh }}</span>{% endif %}
-      {% if page.title_ja %}<span lang="ja">{{ page.title_ja }}</span>{% endif %}
-    </h1>
+    {% comment %} One file per language (jekyll-polyglot), so the title is already in the language of the build. {% endcomment %}
+    <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-byline">
     <p class="post-meta">
       <span lang="en">Created on {{ page.date | date: '%B %d, %Y' }}</span><span lang="zh">{{ page.date | date: '%Y年%-m月%-d日' }} 发布</span><span lang="ja">{{ page.date | date: '%Y年%-m月%-d日' }} 公開</span>

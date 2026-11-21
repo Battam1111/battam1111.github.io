@@ -503,31 +503,26 @@
     --col: min(44rem, var(--measure));
   }
 
-  .post-content #markdown-content,
-  .post-content #markdown-content > div[lang] {
+  // Each post holds one language (one file per language since 2026-11-21), so its blocks are the grid's own children.
+  .post-content #markdown-content {
     display: grid;
     grid-template-columns: [full-start] minmax(0, 1fr) [text-start] minmax(0, var(--col)) [text-end] minmax(0, 1fr) [full-end];
   }
 
-  .post-content #markdown-content > div[lang] {
-    grid-column: full;
-  }
-
-  .post-content #markdown-content > :not(div[lang]),
-  .post-content #markdown-content > div[lang] > * {
+  .post-content #markdown-content > * {
     grid-column: text;
     min-width: 0;
     margin: 0 0 1.1em;
   }
 
-  .post-content #markdown-content > div[lang] > .gf {
+  .post-content #markdown-content > .gf {
     grid-column: full;
     justify-self: center;
     width: 100%;
     max-width: 56rem;
   }
 
-  .post-content #markdown-content > div[lang] > p:first-of-type {
+  .post-content #markdown-content > p:first-of-type {
     font-size: var(--step-1);
     line-height: 1.6;
     color: var(--ink);

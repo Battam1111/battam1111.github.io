@@ -1,0 +1,8 @@
+{% raw %}<div class="gf gf-ledger" markdown="1">
+
+```vega_lite
+{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":"container","height":{"step":46},"background":null,"usermeta":{"embedOptions":{"actions":false}},"data":{"values":[{"lab":"同じモデル、別の harness|Tev と Skill2Env","v":27.0,"o":0},{"lab":"同じモデル、別の harness|公式 2.1 のお知らせ","v":22.5,"o":1},{"lab":"別の 89 題|95% 区間 *","v":16.0,"o":2},{"lab":"同じ重み|思考モードを有効に *","v":7.88,"o":3},{"lab":"同じ課題を再実行|二回の差の 95% 区間 *","v":4.0,"o":4},{"lab":"同じレシピで五回再訓練|の範囲","v":2.9,"o":5}]},"encoding":{"y":{"field":"lab","type":"nominal","sort":{"field":"o"},"title":null,"axis":{"labelExpr":"split(datum.label, '|')","labelLimit":0,"labelFontSize":12,"ticks":false,"domain":false}}},"layer":[{"mark":{"type":"bar","color":"#8A9099","height":20},"encoding":{"x":{"field":"v","type":"quantitative","title":"スコアの変化（ポイント）","scale":{"domain":[0,30]},"axis":{"values":[0,10,20,30]}}}},{"mark":{"type":"text","align":"left","dx":5,"fontWeight":"bold","fontSize":12,"color":"#8A9099"},"encoding":{"x":{"field":"v","type":"quantitative"},"text":{"field":"v","type":"quantitative","format":"~g"}}},{"data":{"values":[{"r":3.1},{"r":18.7}]},"mark":{"type":"rule","color":"#5E86A0","strokeDash":[4,3],"strokeWidth":1.5},"encoding":{"x":{"field":"r","type":"quantitative"},"y":null}},{"data":{"values":[{"r":3.1},{"r":18.7}]},"mark":{"type":"text","color":"#5E86A0","baseline":"bottom","dy":-2,"fontSize":11},"encoding":{"x":{"field":"r","type":"quantitative"},"y":{"value":0},"text":{"field":"r","type":"quantitative"}}}]}
+```
+
+<p class="gf-cap">スコアがどれだけ動くか。単位は Terminal-Bench 式の百点満点のスコアです。二本の破線は参照用の二つの伸び幅で、一本は TermGrade の 3.1、もう一本は確認できた 2.1 での最大の伸び幅 18.7 です。* の付いた三項目は、TermGrade の Terminal-Bench 以外の課題で計算しました。</p>
+</div>{% endraw %}

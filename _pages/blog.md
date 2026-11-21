@@ -137,9 +137,8 @@ pagination:
           <div class="col-sm-9">
 {% endif %}
         <h3>
-        {%- capture post_title_html -%}
-          <span lang="en">{{ post.title }}</span>{% if post.title_zh %}<span lang="zh">{{ post.title_zh }}</span>{% endif %}{% if post.title_ja %}<span lang="ja">{{ post.title_ja }}</span>{% endif %}
-        {%- endcapture -%}
+        {%- comment -%} One file per language (jekyll-polyglot): the title and description are in this build's language. {%- endcomment -%}
+        {%- capture post_title_html -%}{{ post.title }}{%- endcapture -%}
         {% if post.redirect == blank %}
           <a class="post-title" href="{{ post.url | relative_url }}">{{ post_title_html }}</a>
         {% elsif post.redirect contains '://' %}
@@ -152,7 +151,7 @@ pagination:
         {% endif %}
       </h3>
       <p>
-        <span lang="en">{{ post.description }}</span>{% if post.description_zh %}<span lang="zh">{{ post.description_zh }}</span>{% endif %}{% if post.description_ja %}<span lang="ja">{{ post.description_ja }}</span>{% endif %}
+        {{ post.description }}
       </p>
       <p class="post-meta">
         <span lang="en">{{ read_time }} min read</span><span lang="zh">{{ read_time }} 分钟阅读</span><span lang="ja">約 {{ read_time }} 分で読了</span>

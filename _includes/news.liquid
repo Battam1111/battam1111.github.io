@@ -1,7 +1,12 @@
 <div class="news">
   {% if site.news != blank %}
-    {% assign news_size = site.news | size %}
-    {% assign news = site.news | reverse %}
+    {% comment %}
+      Every note (post) is news by itself, so no separate news item is written for it; a post with news: false stays out.
+      One file per language (jekyll-polyglot), so each build lists its own language's notes.
+    {% endcomment %}
+    {% assign notes = site.posts | where_exp: "p", "p.news != false" %}
+    {% assign news = site.news | concat: notes | sort: "date" | reverse %}
+    {% assign news_size = news | size %}
     {% if include.limit and page.announcements.limit %}
       {% assign news_limit = page.announcements.limit %}
     {% else %}
@@ -12,7 +17,14 @@
         <li class="timeline__item">
           <time class="timeline__date" datetime="{{ item.date | date: '%Y-%m-%d' }}"><span lang="en">{{ item.date | date: '%b %d, %Y' }}</span><span lang="zh">{{ item.date | date: '%Y年%-m月%-d日' }}</span><span lang="ja">{{ item.date | date: '%Y年%-m月%-d日' }}</span></time>
           <div class="timeline__body">
-            {% if item.inline %}
+            {% if item.collection == "posts" %}
+              {%- assign end = item.title | slice: -1 -%}
+              {%- case site.active_lang -%}
+                {%- when "zh" -%}新文章<a href="{{ item.url | relative_url }}">《{{ item.title }}》</a>，{{ item.description }}
+                {%- when "ja" -%}新しいノート<a href="{{ item.url | relative_url }}">「{{ item.title }}」</a>を公開しました。{{ item.description }}
+                {%- else -%}New note, <a href="{{ item.url | relative_url }}"><em>{{ item.title }}</em></a>{% if end != "?" and end != "!" %}.{% endif %} {{ item.description }}
+              {%- endcase -%}
+            {% elsif item.inline %}
               {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
             {% else %}
               <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>

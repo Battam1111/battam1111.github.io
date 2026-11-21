@@ -1,8 +1,10 @@
+{% comment %} One citation in every language: the Chinese and Japanese files of a post give the English title as citation_title. {% endcomment %}
+{% assign cite_title = page.citation_title | default: page.title %}
 <section class="post-citation">
 <p>If you found this useful, please cite this as:</p>
 
 {% capture citation_quote -%}
-> {{ site.last_name }}, {{ site.first_name }}{% if site.middle_name %} {{ site.middle_name }}{% endif %} ({{ page.date | date: "%b %Y" }}). {{ page.title }}. {% if site.title != 'blank' %}{{ site.title }}. {% endif %}{{ site.url }}.
+> {{ site.last_name }}, {{ site.first_name }}{% if site.middle_name %} {{ site.middle_name }}{% endif %} ({{ page.date | date: "%b %Y" }}). {{ cite_title }}. {% if site.title != 'blank' %}{{ site.title }}. {% endif %}{{ site.url }}.
 {%- endcapture %}
 {{ citation_quote | markdownify }}
 
@@ -10,8 +12,8 @@
 
 {% capture citation_code -%}
 ```bibtex
-@article{ {{- site.last_name | downcase }}{{ page.date | date: "%Y" }}{{ page.title | slugify }},
-  title   = { {{- page.title -}} },
+@article{ {{- site.last_name | downcase }}{{ page.date | date: "%Y" }}{{ cite_title | slugify }},
+  title   = { {{- cite_title -}} },
   author  = { {{- site.last_name }}, {{ site.first_name }}{% if site.middle_name %} {{ site.middle_name }}{% endif -%}},
   {%- if site.title != 'blank' %}journal = { {{- site.title -}} },{% endif %}
   year    = { {{- page.date | date: "%Y" -}} },

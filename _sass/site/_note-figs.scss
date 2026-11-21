@@ -1,0 +1,37 @@
+// Figures of the note Crooked Environments, Crooked Agents (2026-11-04: the film, the ladders, the replay, the curve,
+// the ledger; _includes/figs/shortcut-never-touches-grader/). Plain CSS, unlayered on purpose: it used to sit in the
+// post's front matter (_styles), and unlayered rules keep the same precedence over the site's layered styles.
+:root { --gf-mute:#6b7280; --gf-line:#e5e7eb; --gf-acc:#4F6D80; --gf-panel:#f6f7f8; --gf-term:#f3f4f6; --gf-fg:#22262b; }
+html[data-theme=dark] { --gf-mute:#a0a6ae; --gf-line:#34373d; --gf-acc:#8FB3C9; --gf-panel:#24272d; --gf-term:#14161a; --gf-fg:#e7e9ec; }
+.gf { margin:30px 0; }
+.gf .vega-lite { width:100%; }
+.gf .vega-embed { width:100%; }
+.gf .vega-bind { font-size:14px; color:var(--gf-mute); display:flex; align-items:center; }
+.gf .vega-bind label { display:flex; align-items:center; gap:8px; width:100%; margin:0; }
+.gf .vega-bind input[type=range] { flex:1; accent-color:var(--gf-acc); }
+.gf-cap { font-size:14px; line-height:1.6; color:var(--gf-mute); margin-top:10px; }
+.gf-q { margin:8px 0 0; padding:10px 14px; background:var(--gf-panel); border-left:3px solid var(--gf-acc); font:15px/1.6 Georgia,"Times New Roman",serif; min-height:68px; color:var(--gf-fg); }
+.gf-q small { display:block; margin-top:4px; font:12px -apple-system,"Segoe UI",sans-serif; color:var(--gf-mute); }
+.gf-q-muted { border-left-color:var(--gf-line); color:var(--gf-mute); font-family:inherit; }
+.gf-ladders { display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+.gf-col h4 { font-size:14px; font-weight:600; margin:0 0 10px; color:var(--gf-mute); }
+.gf-step { display:flex; align-items:baseline; gap:10px; padding:9px 12px; margin-bottom:8px; background:var(--gf-panel); border-radius:4px; }
+.gf-n { font-size:22px; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.gf-t { font-size:13.5px; line-height:1.45; }
+.gf-t small { display:block; color:var(--gf-mute); font-size:12px; }
+.gf-hi .gf-n { color:var(--gf-acc); }
+.gf-empty { background:none; outline:1.5px dashed var(--gf-acc); outline-offset:-1.5px; }
+.gf-empty .gf-n { color:var(--gf-acc); font-size:30px; }
+.gf-replay { border:1px solid var(--gf-line); border-radius:6px; padding:14px 16px; }
+.gf-pane { min-height:190px; }
+.gf-pane h4 { font-size:14px; font-weight:600; color:var(--gf-mute); margin:0 0 10px; }
+.gf-pane pre { background:var(--gf-term); padding:10px 12px; border-radius:4px; font:13px/1.55 Consolas,Menlo,monospace; white-space:pre-wrap; overflow-wrap:anywhere; margin:8px 0 0; }
+.gf-say { font:16px/1.6 Georgia,"Times New Roman",serif; margin:0; padding:2px 0 2px 12px; border-left:3px solid var(--gf-acc); overflow-wrap:anywhere; }
+.gf-nav { display:flex; align-items:center; justify-content:space-between; margin-top:12px; font-size:13px; color:var(--gf-mute); }
+.gf-nav button { font:inherit; font-size:14px; padding:4px 12px; background:var(--gf-panel); color:var(--gf-fg); border:1px solid var(--gf-line); border-radius:4px; cursor:pointer; }
+.gf-nav button:disabled { opacity:.4; cursor:default; }
+.gf-video video { display:block; width:100%; height:auto; aspect-ratio:16/9; background:#0D1B2A; border-radius:6px; }
+@media (max-width:560px) {
+  .gf-ladders { grid-template-columns:1fr; }
+  .gf-step { margin-left:0 !important; }
+}
