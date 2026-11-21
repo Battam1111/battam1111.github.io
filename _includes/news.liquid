@@ -25,7 +25,7 @@
                 {%- else -%}New note, <a href="{{ item.url | relative_url }}"><em>{{ item.title }}</em></a>{% if end != "?" and end != "!" %}.{% endif %} {{ item.description }}
               {%- endcase -%}
             {% elsif item.inline %}
-              {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+              {{ item.content | remove: '<p>' | remove: '</p>' }}
             {% else %}
               <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
             {% endif %}

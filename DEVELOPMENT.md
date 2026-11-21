@@ -16,18 +16,21 @@ build side: the Jekyll plugins (jekyll-scholar, polyglot, imagemagick, socials, 
 There is **no Ruby / Jekyll / Bundler on the dev machine** (Windows), so `bundle exec jekyll build` does not
 run there. Two ways to see a real build:
 
-- **Preview build off the machine** (the normal way since 2026-11): the maintainer's private tooling builds the
-  working tree, uncommitted changes included, with Ruby 3.3 and the gem versions of `Gemfile.lock`, and serves
-  the built site locally. Use it before every push that touches Liquid, SCSS, plugins or `_config.yml`.
+- **Preview build on GitHub** (the normal way since 2026-11-21): the maintainer's preview script commits the working
+  tree (uncommitted changes and unpublished drafts included) to the private repo `Battam1111/homepage-preview`, whose
+  Actions run this very `deploy.yml` (there it uploads `_site` instead of deploying; a newer push cancels the run
+  before it), then downloads the built site and serves it locally. One build recipe for preview and live. Use it
+  before every push that touches Liquid, SCSS, plugins, `_config.yml` or a figure.
 - **The deploy itself**: pushing to `main` builds and publishes. If it goes red, read the Actions log and fix
   forward (or revert the commit).
 
 Do NOT trust "it looks right in the file" for anything that affects the Liquid/SCSS build. Grep-prove reference
 safety before deleting templates/partials (an `{% include x %}` that points at a deleted file is a hard build break).
 
-**Gem versions are pinned**: `Gemfile.lock` is committed (platforms `x86_64-linux` for the Actions runner and
-`arm64-darwin` for the preview machine), so the preview and the deploy build with the same plugins. Update on
-purpose: `bundle update` (or `bundle lock --update`) in the preview environment, look at the preview, commit the lock.
+**Gem versions are pinned**: `Gemfile.lock` is committed, so the preview and the deploy build with the same plugins.
+The dev machine has no Ruby, so after changing the `Gemfile` the lock is re-resolved by `bundle lock` in a workflow
+pushed to the private preview repo only (it keeps every gem still wanted at its locked version); look at the
+preview, commit the lock.
 
 ## 2. Deploy flow
 
@@ -45,7 +48,9 @@ GitHub Pages auth hiccup; re-run with `gh run rerun <id> --failed`. Push over HT
 (SSH is flaky here): `git push https://github.com/Battam1111/battam1111.github.io.git main`.
 
 The live `/` URL is **Fastly-cached**; to confirm a fresh deploy, fetch `/index.html` (bypasses
-the `/` edge cache) or append a cache-buster query.
+the `/` edge cache) or append a cache-buster query. The site is live once its stylesheet link reads
+`main.css?v=<first 8 characters of the commit>` (about 80 s after the push); the run itself goes on for two more
+minutes, because the IndexNow step waits 120 s on purpose, so do not wait for the run to finish.
 
 ## 3. Cache-bust (automatic)
 
@@ -88,8 +93,9 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 It `@use`s the partials of `_sass/site/`; `_order.scss` comes first and fixes the order of the CSS cascade layers:
 `@layer reset, tokens, base, layout, components, pages, motion, utilities;` Each partial wraps its rules in one of them, so
 a later layer wins regardless of selector weight, and nothing needs `!important` (the print and reduced-motion
-blocks are the only exceptions). Styles that are not in a layer (a post's `_styles`, Vega's injected styles) beat
-every layer: that is how the figures of a post keep their own look.
+blocks are the only exceptions). Styles that are not in a layer (the figure styles `_essay-figs.scss` and
+`_note-figs.scss`, a page's `_styles`, Vega's injected styles) beat every layer: that is how the figures of the notes
+keep their own look.
 
 - Colours, fonts, sizes and spacing are custom properties in `_tokens.scss` (light on `:root`, dark on
   `:root[data-theme="dark"]`); components use only the variables. Accent colour: links, the current navigation item,
@@ -147,24 +153,26 @@ One URL per language (since v27.9): [jekyll-polyglot](https://github.com/untra/p
 three times from the same source, English at `/`, Chinese under `/zh/`, Japanese under `/ja/` (`_config.yml`:
 `languages`, `default_lang`, `exclude_from_localization`). The navbar pill links to the same page in each language.
 
-- **Markup**: wrap each translatable string in `<span lang="en">…</span><span lang="zh">…</span><span lang="ja">…</span>`,
+- **Notes (posts) are one file per language**, polyglot's own way: `_posts/<date>-<slug>.md` in English and the same
+  file name under `_posts/zh/` and `_posts/ja/`, each with `lang:` and its own `title` and `description`; the same
+  URL makes them one note (section 9). They carry no language blocks.
+- **Pages and news items**: wrap each translatable string in `<span lang="en">…</span><span lang="zh">…</span><span lang="ja">…</span>`,
   or for Markdown blocks `<div lang="en" markdown="1">…</div>` (so Kramdown still renders inside).
 - **One language per page**: `<html lang>` is the build's language (`site.active_lang`), and
   `_plugins/lang-blocks.rb` drops from `<body>` every element whose `lang` is another language, exactly the
   elements that `_sass/site/_utilities.scss` still hides as a guard (`:root:lang(en) [lang]:not([lang="en"])`, and zh/ja).
   So **never put a `lang` attribute on anything that must show in every language**; it disappears from the other two builds.
-- **Front matter**: subpage titles/descriptions use parallel keys `title` / `title_zh` / `title_ja`
-  and `description` / `description_zh` / `description_ja` (see `_pages/blog.md`, `_posts/`); `metadata.liquid`
-  puts the build's own pair into `<title>`, the description and OpenGraph.
+- **Front matter**: page titles/descriptions use parallel keys `title` / `title_zh` / `title_ja`
+  and `description` / `description_zh` / `description_ja` (see `_pages/blog.md`); `metadata.liquid`
+  puts the build's own pair into `<title>`, the description and OpenGraph (a note's own `title` is already the build's).
 - **Links**: write site links as usual (`/blog/`); polyglot prefixes them with `/zh` or `/ja` in those builds,
   except paths in `exclude_from_localization` (`/assets/`, feeds). A link that must point at a *given* language
   (the pill, hreflang, canonical) goes inside `{% static_href %}href="..."{% endstatic_href %}`.
 - **Search engines**: each page is canonical for itself and names the three versions plus `x-default` (the
   English root) with hreflang, in `<head>` and in `sitemap.xml`. After each deploy the workflow submits every
   sitemap URL to IndexNow (Bing and the engines that share its index); the key is the `.txt` file at the site root.
-- **Feed**: jekyll-feed writes one feed per language build (`/feed.xml`, `/zh/feed.xml`, `/ja/feed.xml`).
-  `lang-blocks.rb` filters each post body right after Markdown conversion, so a feed entry carries one language;
-  entry titles and summaries stay English (they come from `title` / `description`).
+- **Feed**: jekyll-feed writes one feed per language build (`/feed.xml`, `/zh/feed.xml`, `/ja/feed.xml`), each
+  with that language's notes, titles and summaries included.
 - **Standard**: translation is *同义转换 not 机翻*. Keep paper titles, venue names (EMNLP, NAACL…),
   arXiv IDs, and field-standard terms (RLHF, reward model, agent…) in English; translate the
   surrounding prose naturally. CJK headings fall through Newsreader to the Noto Serif SC/JP subsets (section 13) via `:lang()`.
@@ -196,8 +204,8 @@ counts on your website" enabled in GoatCounter site settings.
 | Homepage bio / research / acknowledgement | `_pages/about.md` (trilingual `<div lang>` blocks) |
 | Homepage section headings + Teaching & Service table | `_layouts/about.liquid` |
 | Subtitle / profile sidebar | `_pages/about.md` front matter |
-| News timeline | `_news/*.md` (one file per item, inline trilingual spans) |
-| Notes (blog) | `_posts/*.md` (trilingual front-matter keys + body `<div lang>`) |
+| News timeline | `_news/*.md` (one file per item, inline trilingual spans); every note shows there by itself (`_includes/news.liquid`; `news: false` keeps one out) |
+| Notes (blog) | `_posts/<date>-<slug>.md` (English), `_posts/zh/` and `_posts/ja/` (same file name); figures `_includes/figs/<slug>/<name>.<lang>.html`, their styles `_sass/site/_essay-figs.scss`, `_note-figs.scss` |
 | Publications list | `_bibliography/papers.bib` (rendered by the scholar `bib.liquid` template) |
 | Nav labels, UI strings | `_includes/header.liquid`, `footer.liquid` |
 | CV text | `tools/cv/cv.html` (then rebuild the PDF) |
@@ -231,6 +239,15 @@ search tree (search was already off), every unused `*-setup.js`, distillpub, tik
 layouts and includes nothing rendered (distill, book-review, book-shelf, course, profiles, none, disqus, giscus,
 newsletter, latest_posts, related_posts, projects, video). The "dormant capabilities" list of section 12 below is
 history: those features would now have to be wired again on purpose, with their origins added to the CSP.
+
+**v29 (2026-11-21)**: the notes went to one file per language with their figures as includes (they had been one
+file with three language blocks and the figures pasted in by a script outside the repo); the homepage news lists the
+notes by itself. Out went what nothing read any more: the gems jekyll-get-json, jekyll-jupyter-notebook, jekyll-tabs,
+jekyll-toc, jekyll-twitter-plugin, jemoji, classifier-reborn, css_parser, feedjira, httparty and ostruct; the plugins
+`details.rb`, `external-posts.rb`, `google-scholar-citations.rb`, `inspirehep-citations.rb` with `_data/citations.yml`;
+about 40 `_config.yml` keys of removed al-folio features; every third-party library but the four vega ones. Checked by
+building before and after: the same pages, the same body HTML and visible text, apart from the news items and the
+Chinese and Japanese heading ids.
 
 ## 12. v24 cleanup (what was removed, what was deliberately kept)
 

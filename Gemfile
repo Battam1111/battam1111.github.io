@@ -2,40 +2,25 @@ source 'https://rubygems.org'
 
 gem 'jekyll'
 
-# Core plugins that directly affect site building
+# The plugins the site uses (2026-11-21: the al-folio ones nothing read any more are gone: get-json, jupyter-notebook,
+# tabs, toc, twitter-plugin, jemoji, classifier-reborn, and with them css_parser, feedjira, httparty, ostruct).
 group :jekyll_plugins do
-    gem 'jekyll-3rd-party-libraries'
-    gem 'jekyll-archives-v2'
-    gem 'jekyll-cache-bust'
-    gem 'jekyll-email-protect'
+    gem 'jekyll-3rd-party-libraries'   # the vega scripts of the charts (scripts.liquid)
+    gem 'jekyll-archives-v2'           # year, tag and category pages; off until Notes grows (_config.yml)
+    gem 'jekyll-cache-bust'            # bust_file_cache for the scripts
+    gem 'jekyll-email-protect'         # encode_email for the mailto link
     gem 'jekyll-feed'
-    gem 'jekyll-get-json'
-    gem 'jekyll-imagemagick'
-    gem 'jekyll-jupyter-notebook'
-    gem 'jekyll-link-attributes'
+    gem 'jekyll-imagemagick'           # the headshot and the publication thumbnails in several sizes
+    gem 'jekyll-link-attributes'       # external links open in a new tab
     gem 'jekyll-minifier'
-    gem 'jekyll-paginate-v2'
+    gem 'jekyll-paginate-v2'           # the Notes list
     gem 'jekyll-polyglot'   # one URL per language: English at /, Chinese at /zh/, Japanese at /ja/
-    gem 'jekyll-regex-replace'
-    gem 'jekyll-scholar'
-    gem 'jekyll-socials'
-    gem 'jekyll-tabs'
+    gem 'jekyll-regex-replace'         # author marks in the bibliography (bib.liquid)
+    gem 'jekyll-scholar'               # the publications
+    gem 'jekyll-socials'               # the contact icons ({% social_links %})
     gem 'jekyll-terser', :git => "https://github.com/RobertoJBeltran/jekyll-terser.git"
-    gem 'jekyll-toc'
-    gem 'jekyll-twitter-plugin'
-    gem 'jemoji'
-
-    gem 'classifier-reborn'  # used for content categorization during the build
 end
 
-# Gems for development or external data fetching (outside :jekyll_plugins)
 group :other_plugins do
-    gem 'css_parser'
-    gem 'feedjira'
-    gem 'httparty'
     gem 'observer'       # used by jekyll-scholar
-    gem 'ostruct'        # used by jekyll-twitter-plugin
-    # gem 'terser'         # used by jekyll-terser
-    # gem 'unicode_utils' -- should be already installed by jekyll
-    # gem 'webrick' -- should be already installed by jekyll
 end

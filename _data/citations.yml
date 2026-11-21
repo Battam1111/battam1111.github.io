@@ -1,9 +1,0 @@
-# Static Google Scholar citation cache. _layouts/bib.liquid (~lines 330-335) reads
-# site.data.citations.papers[<scholarid:articleid>].citations to show a citation badge.
-# NOTE: al-folio's google-scholar-citations plugin is a live-fetch Liquid tag and does
-# NOT write this file. Emptied in v24 (was Einstein demo data, scholar id qc6CJjYAAAAJ).
-# To show static counts, export real data keyed by scholar id Zg8cX0sAAAAJ. Otherwise the
-# live Google Scholar badge handles counts and this can stay an empty stub.
-metadata:
-  last_updated: ""
-papers: {}
