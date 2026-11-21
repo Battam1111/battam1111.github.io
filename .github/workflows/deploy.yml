@@ -9,6 +9,13 @@ on:
 permissions:
   contents: write
 
+# The same workflow also builds the drafts pushed to the private repo Battam1111/homepage-preview: there only the
+# newest push matters, so a new one cancels the run before it. Public deploys queue instead (one that is cancelled
+# halfway could leave gh-pages half pushed); a newer pending deploy replaces an older pending one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.repository != 'Battam1111/battam1111.github.io' }}
+
 jobs:
   deploy:
     # A fixed image, not ubuntu-latest: when "latest" moved to 26.04 (2026-11) the pinned Ruby had no build for it
@@ -46,7 +53,18 @@ jobs:
           pip install --quiet fonttools==4.56.0 brotli==1.1.0
           python tools/fonts/subset_cjk.py _site
 
+      # In the private preview repo the built site is only uploaded (the preview script downloads it); the two steps
+      # after this one run in the public repo alone.
+      - name: Upload the preview 📦
+        if: github.repository != 'Battam1111/battam1111.github.io'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+          retention-days: 1
+
       - name: Deploy 🚀
+        if: github.repository == 'Battam1111/battam1111.github.io'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
@@ -56,6 +74,7 @@ jobs:
       # The key is public by design: it is the file b7d3bf4ebb505c273f1876f024b317a2.txt at the site root.
       # Waits first, so GitHub Pages has published the new gh-pages commit before a crawler comes.
       - name: Submit the sitemap URLs to IndexNow 🔎
+        if: github.repository == 'Battam1111/battam1111.github.io'
         continue-on-error: true
         run: |
           sleep 120
