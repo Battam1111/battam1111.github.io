@@ -48,9 +48,9 @@ layout: default
               {{- page.now | strip -}}
               {%- if featured -%}
                 {%- case site.active_lang -%}
-                  {%- when 'zh' -%}其中一个例子写在<a href="{{ featured.url | relative_url }}">《{{ featured.title }}》</a>里。
-                  {%- when 'ja' -%}その一例を<a href="{{ featured.url | relative_url }}">「{{ featured.title }}」</a>に書きました。
-                  {%- else %} I wrote up one case in <a href="{{ featured.url | relative_url }}"><em>{{ featured.title }}</em></a>.
+                  {%- when 'zh' -%}最近的长文：<a href="{{ featured.url | relative_url }}">《{{ featured.title }}》</a>。
+                  {%- when 'ja' -%}最近の長文：<a href="{{ featured.url | relative_url }}">「{{ featured.title }}」</a>。
+                  {%- else %} Latest long read: <a href="{{ featured.url | relative_url }}"><em>{{ featured.title }}</em></a>.
                 {%- endcase -%}
               {%- endif -%}
             </p>

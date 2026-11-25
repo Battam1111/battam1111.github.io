@@ -486,6 +486,12 @@
     }
   }
 
+  // Each sentence of the thesis starts its own line on a wide screen; on a phone they run on (see the block for
+  // narrow screens below).
+  .thesis-line {
+    display: block;
+  }
+
   :root:lang(zh) .home-lede p.thesis,
   :root:lang(ja) .home-lede p.thesis {
     max-width: 38rem;
@@ -607,6 +613,16 @@
 
     .home-head {
       align-self: end;
+    }
+
+    .thesis-line {
+      display: inline;
+    }
+
+    // Chinese keeps one sentence to a line on a phone too: run on, the second sentence leaves its first character
+    // hanging at the end of the first line.
+    :root:lang(zh) .thesis-line {
+      display: block;
     }
 
     .home-links {

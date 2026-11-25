@@ -15,16 +15,20 @@ role: >
   <span lang="en"><span class="role-part"><strong>PhD Candidate</strong>, <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a></span> <span class="sep" aria-hidden="true">·</span> <span class="role-part"><strong>Research Intern</strong>, Microsoft Research Asia, Singapore</span></span><span lang="zh"><span class="role-part"><strong>博士生</strong>，<a href="https://www.polyu.edu.hk/">香港理工大学</a></span> <span class="sep" aria-hidden="true">·</span> <span class="role-part"><strong>研究实习生</strong>，微软亚洲研究院（新加坡）</span></span><span lang="ja"><span class="role-part"><strong>博士候補者</strong>、<a href="https://www.polyu.edu.hk/">香港理工大学</a></span> <span class="sep" aria-hidden="true">·</span> <span class="role-part"><strong>リサーチインターン</strong>、Microsoft Research Asia（シンガポール）</span></span>
 affiliation: >
   <span lang="en"><a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a> <span class="sep" aria-hidden="true">·</span> advised by Prof. <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> and Prof. <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> <span class="sep" aria-hidden="true">·</span> joint with EIT, Ningbo</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">计算学系</a> <span class="sep" aria-hidden="true">·</span> 师从 <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> 教授与 <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> 教授 <span class="sep" aria-hidden="true">·</span> 在东方理工（EIT，宁波）联合培养</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">コンピューティング学科</a> <span class="sep" aria-hidden="true">·</span> 指導教員は <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> 教授と <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> 教授 <span class="sep" aria-hidden="true">·</span> 東方理工（EIT、寧波）との共同育成</span>
-# The thesis of the page (rewritten 2026-11-25, the owner's choice). It names no method. The same sentence, in a
-# shorter form, opens the CV (tools/cv/cv.html), the GitHub profile README and the meta description in _config.yml:
-# change all four together.
+# The thesis of the page (rewritten 2026-11-25, the owner's choice): one judgment he has shown himself, and where
+# he stands. It says nothing about what the field has or has not done (environments are being built, generated and
+# learned in many ways now, so any "models are trained, environments are not" contrast no longer holds), and it
+# names no method. The same sentence, in a shorter form, opens the CV (tools/cv/cv.html), the GitHub profile README
+# and the meta description in _config.yml: change all four together. Each `thesis-line` starts its own line on a
+# wide screen, and the landing ("the environment.") stands alone on the last line in all three languages; on a phone
+# English and Japanese run on, Chinese keeps its three lines.
 thesis: >
-  <span lang="en">Models get better by <strong>training</strong>. The environments that train them get better only when someone <strong>rewrites</strong> them. I want environments that improve the way models do.</span><span lang="zh">模型靠<strong>训练</strong>变好。训练模型的环境，只有靠人<strong>重写</strong>才会变好。我想让环境也像模型那样，自己变好。</span><span lang="ja">モデルは<strong>訓練</strong>によって良くなる。モデルを訓練する環境は、誰かが<strong>書き直さない</strong>かぎり良くならない。私は環境も、モデルと同じように良くなっていくものにしたいのです。</span>
+  <span lang="en"><span class="thesis-line">An agent becomes what its environment <strong>teaches</strong> it.</span> <span class="thesis-line">I work on that side of reinforcement learning:</span> <span class="thesis-line"><strong>the environment</strong>.</span></span><span lang="zh"><span class="thesis-line">agent 会成为环境<strong>教</strong>它成为的样子。</span><span class="thesis-line">我做的是强化学习里的这一侧：</span><span class="thesis-line"><strong>环境</strong>。</span></span><span lang="ja"><span class="thesis-line">agent は、環境が<strong>教えた</strong>とおりのものになる。</span><span class="thesis-line">私が取り組んでいるのは、強化学習のその側、</span><span class="thesis-line">すなわち<strong>環境</strong>です。</span></span>
 # What I am working on now, as my own direction (never the topic of the internship). It lands on the environment
-# getting better with training, names no particular method, and ends on what the featured note shows, because the
-# layout adds a pointer to that note right after it ("I wrote up one case in ...").
+# getting better with training and names no particular method; it draws no contrast with what others do. The layout
+# adds a pointer to the featured note right after it ("Latest long read: ...").
 now: >
-  <span lang="en">Agentic RL on long-horizon tasks, and how an environment can improve with training instead of staying fixed: a flawed one teaches the agent its flaws.</span><span lang="zh">长程任务上的 agentic RL，以及怎样让环境在训练中自己变好、而不是定死不动：环境有缺陷，agent 学到的就是缺陷。</span><span lang="ja">長期タスクでの agentic RL、そして環境を固定したままにせず、訓練の中で環境そのものを良くしていく方法。環境に欠陥があれば、agent が学ぶのはその欠陥です。</span>
+  <span lang="en">Agentic RL on long-horizon tasks, and how an environment can improve with training.</span><span lang="zh">长程任务上的 agentic RL，以及怎样让环境在训练中自己变好。</span><span lang="ja">長期タスクでの agentic RL、そして訓練の中で環境そのものを良くしていく方法。</span>
 photo: prof_pic.jpg
 # The Chinese platforms, after the academic links of the first screen. WeChat has no address, so it is text only.
 platforms:
