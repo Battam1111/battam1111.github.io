@@ -11,7 +11,7 @@ citation: true
 citation_title: "Crooked Environments, Crooked Agents"
 home_feature: true
 poster: /assets/video/crooked-env/en-poster.jpg
-kicker: "長文 · 2 分の動画 · オープンソースの検査ツール"
+kicker: "長文 · 動画 · コード"
 chart:
   vega_lite: true
 ---

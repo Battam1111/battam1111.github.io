@@ -11,7 +11,7 @@ citation: true
 # The note the home page puts first under Writing (and points to from its "now" line), with this poster and kicker.
 home_feature: true
 poster: /assets/video/crooked-env/en-poster.jpg
-kicker: "Long read · 2-min film · open-source scan"
+kicker: "Long read · film · code"
 chart:
   vega_lite: true
 ---

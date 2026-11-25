@@ -24,6 +24,7 @@ layout: default
         </h1>
         <p class="home-role">{{ page.role }}</p>
       </div>
+      {% if page.affiliation %}<p class="home-affil">{{ page.affiliation }}</p>{% endif %}
 
       {% if page.photo %}
         <div class="home-photo">
@@ -37,13 +38,14 @@ layout: default
       {% endif %}
 
       <div class="home-lede">
-        {% if page.affiliation %}<p class="home-affil">{{ page.affiliation }}</p>{% endif %}
         <p class="thesis">{{ page.thesis }}</p>
         {% if page.now %}
-          <div class="home-now">
-            <span class="home-now__label"><span lang="en">Now</span><span lang="zh">现在</span><span lang="ja">現在</span></span>
-            {% comment %} No space between the sentence and the pointer in Chinese and Japanese, one in English. {% endcomment %}
-            <p>
+            {% comment %}
+              The label runs into the sentence, so the paragraph keeps the left edge of the page. No space between
+              the sentence and the pointer in Chinese and Japanese, one in English.
+            {% endcomment %}
+            <p class="home-now">
+              <span class="home-now__label"><span lang="en">Now</span><span lang="zh">现在</span><span lang="ja">現在</span></span>
               {{- page.now | strip -}}
               {%- if featured -%}
                 {%- case site.active_lang -%}
@@ -53,23 +55,25 @@ layout: default
                 {%- endcase -%}
               {%- endif -%}
             </p>
-          </div>
         {% endif %}
         <p class="home-links">
+          <span class="home-links__group">
           <a href="mailto:{{ site.email }}"><span lang="en">Email</span><span lang="zh">邮箱</span><span lang="ja">メール</span></a>
           <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" rel="external nofollow noopener" target="_blank">Google Scholar</a>
           <a href="https://github.com/{{ site.github_username }}" rel="external nofollow noopener" target="_blank">GitHub</a>
           <a href="https://x.com/{{ site.x_username }}" rel="external nofollow noopener" target="_blank">X</a>
           <a href="{{ '/assets/pdf/cv.pdf' | relative_url }}" target="_blank"><span lang="en">CV</span><span lang="zh">简历</span><span lang="ja">履歴書</span></a>
+          </span>
           {% if page.platforms %}
-            <span class="home-links__sep" aria-hidden="true"></span>
+            <span class="home-links__group home-links__group--quiet">
             {% for platform in page.platforms %}
               {% if platform.href %}
-                <a class="home-links__quiet" href="{{ platform.href }}" rel="external nofollow noopener" target="_blank">{{ platform.label }}</a>
+                <a href="{{ platform.href }}" rel="external nofollow noopener" target="_blank">{{ platform.label }}</a>
               {% else %}
-                <span class="home-links__quiet">{{ platform.label }}</span>
+                <span>{{ platform.label }}</span>
               {% endif %}
             {% endfor %}
+            </span>
           {% endif %}
         </p>
       </div>
@@ -108,9 +112,12 @@ layout: default
         {% if page.coauthored %}
           <div class="home-coauthored">
             <h3 class="home-coauthored__title"><span lang="en">Co-Authored</span><span lang="zh">合作论文</span><span lang="ja">共著</span></h3>
-            <ul>
+            <ul class="label-rows">
               {% for paper in page.coauthored %}
-                <li><a href="https://arxiv.org/abs/{{ paper.arxiv }}" rel="external nofollow noopener" target="_blank">{{ paper.title }}</a> <span class="home-coauthored__venue">{{ paper.venue }}</span></li>
+                <li>
+                  <span class="label-rows__label">{{ paper.venue }}</span>
+                  <a href="https://arxiv.org/abs/{{ paper.arxiv }}" rel="external nofollow noopener" target="_blank">{{ paper.title }}</a>
+                </li>
               {% endfor %}
             </ul>
           </div>
@@ -162,11 +169,11 @@ layout: default
     {% if page.open_source %}
       <section class="home-section">
         <h2 class="section-title"><span lang="en">Open Source</span><span lang="zh">开源</span><span lang="ja">オープンソース</span></h2>
-        <ul class="oss-list">
+        <ul class="label-rows label-rows--code">
           {% for item in page.open_source %}
             <li>
-              <a class="oss-list__name" href="{{ item.href }}" rel="external nofollow noopener" target="_blank">{{ item.name }}</a>
-              <span class="oss-list__text">{{ item.text }}</span>
+              <a class="label-rows__label" href="{{ item.href }}" rel="external nofollow noopener" target="_blank">{{ item.name }}</a>
+              <span>{{ item.text }}</span>
             </li>
           {% endfor %}
         </ul>
@@ -176,6 +183,7 @@ layout: default
     <section class="home-section">
       <h2 class="section-title"><span lang="en">Teaching &amp; Service</span><span lang="zh">教学与服务</span><span lang="ja">教育・学会活動</span></h2>
       <div class="teaching-service">
+        <div>
         <h3 class="ts-sub"><span lang="en">Teaching</span><span lang="zh">教学</span><span lang="ja">教育</span> <small class="ts-affil"><span lang="en">(Teaching Assistant, The Hong Kong Polytechnic University)</span><span lang="zh">（助教，香港理工大学）</span><span lang="ja">（ティーチング・アシスタント、香港理工大学）</span></small></h3>
         <ol class="timeline service-list">
           <li class="timeline__item"><span class="timeline__date">2025/26 S2</span><div class="timeline__body"><code>COMP5221</code>&nbsp; Software Project Management</div></li>
@@ -183,12 +191,15 @@ layout: default
           <li class="timeline__item"><span class="timeline__date">2024/25 S2</span><div class="timeline__body"><code>COMP1411</code>&nbsp; Introduction to Computer Systems</div></li>
           <li class="timeline__item"><span class="timeline__date">2024/25 S1</span><div class="timeline__body"><code>COMP5567</code>&nbsp; Distributed Algorithms and Protocols for Blockchains</div></li>
         </ol>
+        </div>
 
+        <div>
         <h3 class="ts-sub"><span lang="en">Reviewing</span><span lang="zh">审稿</span><span lang="ja">査読</span></h3>
         <ol class="timeline service-list">
           <li class="timeline__item"><span class="timeline__date">2026</span><div class="timeline__body">ACL Rolling Review (ARR)</div></li>
           <li class="timeline__item"><span class="timeline__date">2026</span><div class="timeline__body">IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</div></li>
         </ol>
+        </div>
       </div>
     </section>
 

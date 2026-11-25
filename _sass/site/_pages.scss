@@ -58,15 +58,17 @@
   }
 
   // ---------- Home ----------
-  // First screen: the name and the role, the photo beside them, then the affiliation, the thesis, what I am
-  // working on now and the links. On a wide window the photo is a column at the right; below 880px it shrinks
-  // to a thumbnail beside the name so the thesis stays on the first screen of a phone.
+  // First screen. The identity block comes first: the name, the role and the small print, with the photo at its
+  // right, as tall as the block. Under it, across the page: the thesis, what I am working on now, the links.
+  // Below 880px the photo is a thumbnail before the name and the small print moves under the links, so the thesis
+  // stays on the first screen of a phone. Everything keeps one left edge.
   .home-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 176px;
+    grid-template-columns: minmax(0, 1fr) 136px;
     grid-template-areas:
       "head photo"
-      "lede photo";
+      "affil photo"
+      "lede lede";
     column-gap: var(--space-7);
     align-items: start;
   }
@@ -86,7 +88,7 @@
 
     img {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1;
       object-fit: cover;
       object-position: 50% 30%;
       border: 1px solid var(--rule);
@@ -123,8 +125,9 @@
   }
 
   // Who and where, in one line: the two roles carry the first ink, the places the second.
+  // One role per line (the dot between them in the source is for readers without styles).
   .home-role {
-    max-width: 46rem;
+    max-width: none;
     margin-top: var(--space-3);
     font-size: var(--step-0);
     line-height: 1.5;
@@ -135,40 +138,53 @@
       color: var(--ink);
     }
 
+    .role-part {
+      display: block;
+    }
+
     .sep {
-      padding-inline: 0.3em;
-      color: var(--ink-3);
+      display: none;
     }
   }
 
   // Department, advisors, joint training: the small print under the role.
   .home-affil {
-    max-width: 44rem;
+    grid-area: affil;
+    max-width: none;
     margin-top: var(--space-2);
     font-size: 0.875rem;
     line-height: 1.55;
     color: var(--ink-3);
 
     a {
-      color: var(--ink-2);
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+    }
+
+    .sep {
+      padding-inline: 0.25em;
     }
   }
 
-  // What I am working on now: a labelled line under the thesis, set off by a hairline.
+  // What I am working on now: one sentence under the thesis; its label runs into it, so it keeps the left edge.
   .home-now {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: var(--space-4);
-    align-items: baseline;
     max-width: 44rem;
     margin-top: var(--space-5);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--rule);
     color: var(--ink-2);
+  }
+
+  .home-now__label {
+    margin-right: 0.8em;
   }
 
   .home-now__label,
   .paper-card__venue,
+  .home-coauthored__title,
   .note-feature__kicker {
     font-family: var(--font-mono);
     font-size: var(--step--2);
@@ -178,28 +194,92 @@
     color: var(--ink-3);
   }
 
-  // Links of the first screen: the academic ones, a hairline, then the Chinese platforms a step quieter.
+  // Links of the first screen: the academic ones, a hairline, then the Chinese platforms a step quieter. A row of
+  // names needs no underlines to read as links; the underline comes on hover.
   .home-links {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 6px var(--space-4);
+    gap: 6px var(--space-5);
     margin-top: var(--space-5);
     font-size: 0.875rem;
+    font-weight: 500;
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
   }
 
-  .home-links__sep {
-    align-self: stretch;
-    width: 1px;
-    background: var(--rule-strong);
+  .home-links__group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--space-5);
   }
 
-  .home-links__quiet {
-    color: var(--ink-2);
+  .home-links__group--quiet {
+    padding-left: var(--space-5);
+    border-left: 1px solid var(--rule-strong);
+    font-weight: 400;
+
+    a,
+    span {
+      color: var(--ink-3);
+    }
   }
 
-  a.home-links__quiet {
-    text-decoration-color: var(--rule-strong);
+  // Rows with a narrow label at the left and the content at the right: co-authored papers (venue, title) and
+  // open source (repository, what it is). The names are links without underlines, as in the row above.
+  .label-rows {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      grid-template-columns: 11.5rem minmax(0, 1fr);
+      column-gap: var(--space-5);
+      align-items: first baseline;
+      padding-block: 6px;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    li:first-child {
+      padding-top: 0;
+    }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
+
+    li > span:not(.label-rows__label) {
+      max-width: var(--measure);
+      color: var(--ink-2);
+    }
+  }
+
+  .label-rows__label {
+    font-size: var(--step--1);
+    white-space: nowrap;
+    color: var(--ink-3);
+  }
+
+  .label-rows--code .label-rows__label {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 
   // ---------- Home: selected papers ----------
@@ -293,47 +373,18 @@
   }
 
   .home-coauthored {
-    margin-top: var(--space-6);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--rule);
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    color: var(--ink-2);
-
-    ul {
-      padding: 0;
-      list-style: none;
-    }
-
-    li {
-      margin-top: var(--space-1);
-    }
-
-    a {
-      color: var(--ink);
-      text-decoration-color: var(--rule-strong);
-    }
+    margin-top: var(--space-7);
   }
 
   .home-coauthored__title {
-    font-family: var(--font-text);
-    font-size: var(--step--1);
-    font-weight: 500;
-    letter-spacing: 0;
-    color: var(--ink-3);
-  }
-
-  .home-coauthored__venue {
-    margin-left: 0.35em;
-    font-size: var(--step--1);
-    color: var(--ink-3);
-    white-space: nowrap;
+    margin-bottom: var(--space-3);
   }
 
   // ---------- Home: writing and news, side by side ----------
+  // Both columns use the same row: a date rail and, at the right, text a step smaller than the body.
   .home-two {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     column-gap: var(--space-8);
 
     .section-title {
@@ -343,6 +394,11 @@
     .timeline__item {
       grid-template-columns: 6.5rem minmax(0, 1fr);
       column-gap: var(--space-4);
+    }
+
+    .timeline__body {
+      font-size: 0.9375rem;
+      line-height: 1.55;
     }
   }
 
@@ -405,38 +461,11 @@
     color: var(--ink-2);
   }
 
-  // ---------- Home: open source ----------
-  .oss-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4) var(--space-7);
-    padding: 0;
-    list-style: none;
-
-    li {
-      min-width: 0;
-    }
-  }
-
-  .oss-list__name {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .oss-list__text {
-    display: block;
-    margin-top: 2px;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--ink-2);
-  }
-
   // The one-paragraph thesis of the page, set as a statement in the display face; its two bold words carry the
   // accent instead of more weight.
   .home-lede p.thesis {
     max-width: 42.75rem;
-    margin-top: var(--space-5);
+    margin-top: var(--space-6);
     font-family: var(--font-display);
     font-size: clamp(1.3rem, 1.12rem + 0.8vw, 1.62rem);
     font-weight: 600;
@@ -486,13 +515,27 @@
     }
   }
 
-  .teaching-service .ts-sub {
-    margin: var(--space-5) 0 var(--space-2);
-    font-size: var(--step-1);
+  // Teaching at the left, reviewing at the right: the least read section takes one row of the page, not a screen.
+  .teaching-service {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: var(--space-8);
 
-    &:first-child {
-      margin-top: 0;
+    .timeline__item {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      column-gap: var(--space-4);
+      padding-block: 6px;
     }
+
+    .timeline__body {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+  }
+
+  .teaching-service .ts-sub {
+    margin: 0 0 var(--space-3);
+    font-size: var(--step-1);
   }
 
   .ts-affil {
@@ -549,7 +592,8 @@
       grid-template-columns: 76px minmax(0, 1fr);
       grid-template-areas:
         "photo head"
-        "lede lede";
+        "lede lede"
+        "affil affil";
       column-gap: var(--space-4);
     }
 
@@ -565,29 +609,22 @@
     .home-role {
       margin-top: var(--space-1);
       font-size: 0.875rem;
+    }
 
-      // One role per line beside the thumbnail.
-      .role-part {
-        display: block;
-      }
-
-      .sep {
-        display: none;
-      }
+    // The Chinese platforms take their own line, without the hairline.
+    .home-links__group--quiet {
+      flex-basis: 100%;
+      padding-left: 0;
+      border-left: 0;
     }
 
     // On a phone the thesis comes right under the name; the small print moves below the links.
-    .home-lede {
-      display: flex;
-      flex-direction: column;
-    }
-
     .home-affil {
-      order: 1;
       margin-top: var(--space-5);
     }
 
-    .home-two {
+    .home-two,
+    .teaching-service {
       grid-template-columns: minmax(0, 1fr);
       row-gap: var(--space-7);
     }
@@ -598,12 +635,12 @@
       font-size: 1.75rem;
     }
 
-    .home-now {
+    .label-rows li {
       grid-template-columns: minmax(0, 1fr);
+      row-gap: 2px;
     }
 
-    .paper-cards,
-    .oss-list {
+    .paper-cards {
       grid-template-columns: minmax(0, 1fr);
     }
 
