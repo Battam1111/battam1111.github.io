@@ -24,7 +24,7 @@ same_as_extra:
 # here. Keep the whole title under ~60 characters or Google truncates it.
 title_suffix: "Reinforcement Learning, HK PolyU"
 contact_note: >
-  <span lang="en">Best reached by email. I am open to collaborations on reinforcement learning for large language models and agents, from reward and data design to credit assignment, and on making the environment trainable.</span><span lang="zh">邮件是最好的联系方式。我对面向 LLM 与 agent 的强化学习合作持开放态度：从 reward 与数据设计到 credit assignment，以及让环境本身能训练起来。</span><span lang="ja">ご連絡はメールが最適です。LLM と agent のための強化学習に関する共同研究を歓迎します。reward とデータの設計から credit assignment、そして環境そのものを訓練可能にする研究まで。</span>
+  <span lang="en">Email is the best way to reach me. I am open to collaborations on RL for long-horizon agents, on credit assignment, and on ways to make the environment trainable.</span><span lang="zh">邮件是最好的联系方式。欢迎合作：长程 agent 的 RL、credit assignment，以及让环境本身可训练的各种做法。</span><span lang="ja">ご連絡はメールが最適です。長期タスクの agent のための RL、credit assignment、そして環境そのものを訓練可能にするさまざまな方法について、共同研究を歓迎します。</span>
 # Meta description. Search snippets are cut at roughly 155 characters, so this
 # must stay inside that budget or the positioning never reaches the reader (the
 # previous 287-character version was truncated mid-clause, and Bing flagged it).

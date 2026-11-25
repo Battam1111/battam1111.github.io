@@ -6,8 +6,9 @@ permalink: /
 # The home page, top to bottom (_layouts/about.liquid lays it out):
 #   first screen: name (from _config.yml), role, thesis, now, links, affiliation (small print), photo at the right;
 #   selected papers: first-author papers only, each with a figure taken from the paper itself;
-#   the body of this file: the acknowledgement (the thread that tied the papers, the "how", was taken down on
-#   2026-11-25 until the owner settles how his work turns on environments; it goes back here, above the thanks);
+#   the body of this file: the acknowledgement only. No paragraph ties the papers together: the owner chose on
+#   2026-11-25 to let the two cards stand on their own (a thread there reads as a fixed route from the papers to
+#   the next step, and the route is his to settle);
 #   writing (from the posts), news (from _news), open source, teaching and service, contact.
 # The Research Intern half of the role line goes when the MSRA internship ends (so does the README sentence).
 role: >
@@ -16,10 +17,11 @@ affiliation: >
   <span lang="en"><a href="https://www.polyu.edu.hk/en/comp/">Department of Computing</a> <span class="sep" aria-hidden="true">·</span> advised by Prof. <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> and Prof. <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> <span class="sep" aria-hidden="true">·</span> joint with EIT, Ningbo</span><span lang="zh"><a href="https://www.polyu.edu.hk/en/comp/">计算学系</a> <span class="sep" aria-hidden="true">·</span> 师从 <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> 教授与 <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> 教授 <span class="sep" aria-hidden="true">·</span> 在东方理工（EIT，宁波）联合培养</span><span lang="ja"><a href="https://www.polyu.edu.hk/en/comp/">コンピューティング学科</a> <span class="sep" aria-hidden="true">·</span> 指導教員は <a href="https://www4.comp.polyu.edu.hk/~cswjli/">Wenjie Li (Maggie)</a> 教授と <a href="https://scholar.google.com.hk/citations?user=Z7u9yEoAAAAJ&hl=zh-CN">Wei Zhang</a> 教授 <span class="sep" aria-hidden="true">·</span> 東方理工（EIT、寧波）との共同育成</span>
 thesis: >
   <span lang="en">In reinforcement learning, models are <strong>trainable</strong>. The environments that train them are <strong>not</strong>. I want to make the environment trainable, the way models are, and with it to lift the ceiling of what AI can become.</span><span lang="zh">在强化学习里，模型是<strong>可以训练的</strong>。训练模型的环境，<strong>还不行</strong>。我想让环境也变得可训练，像模型一样，并以此把 AI 的上限抬上去。</span><span lang="ja">強化学習において、モデルは<strong>訓練できる</strong>。モデルを訓練する環境は、<strong>まだできない</strong>。私はその環境を、モデルと同じように訓練できるものにしたい。そしてそれによって、AI の到達点を引き上げたいのです。</span>
-# What I am working on now, as my own direction (never the topic of the internship). The layout adds a pointer to the
-# featured note after it.
+# What I am working on now, as my own direction (never the topic of the internship). It lands on the environment
+# getting better with training, names no particular method, and ends on what the featured note shows, because the
+# layout adds a pointer to that note right after it ("I wrote up one case in ...").
 now: >
-  <span lang="en">Agentic RL, and what a training environment actually teaches a long-horizon agent.</span><span lang="zh">agentic RL，以及训练环境到底教会了长程 agent 什么。</span><span lang="ja">agentic RL、そして訓練環境が長期タスクの agent に実際に何を教えているのか。</span>
+  <span lang="en">Agentic RL on long-horizon tasks, and how an environment can improve with training instead of staying fixed: a flawed one teaches the agent its flaws.</span><span lang="zh">长程任务上的 agentic RL，以及怎样让环境在训练中自己变好、而不是定死不动：环境有缺陷，agent 学到的就是缺陷。</span><span lang="ja">長期タスクでの agentic RL、そして環境を固定したままにせず、訓練の中で環境そのものを良くしていく方法。環境に欠陥があれば、agent が学ぶのはその欠陥です。</span>
 photo: prof_pic.jpg
 # The Chinese platforms, after the academic links of the first screen. WeChat has no address, so it is text only.
 platforms:
@@ -73,7 +75,7 @@ open_source:
       <span lang="en">Scans agent RL transcripts for two behaviors: touching the files that grade the agent, and leaving a script where a compiled program was asked for.</span><span lang="zh">在 agent 的 RL 训练记录里扫两种行为：碰给它打分的文件，以及在该交编译产物的地方留一个脚本。</span><span lang="ja">agent の RL 訓練記録から二つの振る舞いを探す。採点用のファイルに触れること、そしてコンパイル済みのプログラムの代わりにスクリプトを置くこと。</span>
   - name: C3
     href: https://github.com/EIT-EAST-Lab/C3
-    text: <span lang="en">Exact credit assignment for LLM agent teams, the code of <em>The Trace Is the State</em>.</span><span lang="zh">LLM agent 团队的精确 credit assignment，<em>The Trace Is the State</em> 的代码。</span><span lang="ja">LLM agent チームの厳密な credit assignment。<em>The Trace Is the State</em> のコード。</span>
+    text: <span lang="en">Exact credit assignment for LLM agent teams, the code of <em>The Trace Is the State</em>.</span><span lang="zh">LLM agent 团队的精确 credit assignment（信用分配），<em>The Trace Is the State</em> 的代码。</span><span lang="ja">LLM agent チームの厳密な credit assignment（貢献度の割り当て）。<em>The Trace Is the State</em> のコード。</span>
   - name: AccuracyParadox-RLHF
     href: https://github.com/EIT-NLP/AccuracyParadox-RLHF
     text: <span lang="en">The experiments of <em>The Accuracy Paradox in RLHF</em>.</span><span lang="zh"><em>The Accuracy Paradox in RLHF</em> 的实验代码。</span><span lang="ja"><em>The Accuracy Paradox in RLHF</em> の実験コード。</span>
