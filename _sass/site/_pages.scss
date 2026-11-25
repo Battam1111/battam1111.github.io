@@ -200,7 +200,7 @@
   }
 
   // Links of the first screen: the academic ones, a hairline, then the Chinese platforms a step quieter. A row of
-  // names needs no underlines to read as links; the underline comes on hover.
+  // names; each link keeps the site's thin underline.
   .home-links {
     grid-area: links;
     max-width: none;
@@ -211,14 +211,13 @@
     font-size: 0.875rem;
     font-weight: 500;
 
+    // The links keep the site's thin underline, so a link is told from plain text at a glance (the WeChat name
+    // in the same row is not a link).
     a {
       color: var(--ink);
-      text-decoration: none;
 
       &:hover {
         color: var(--accent);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
       }
     }
   }
@@ -241,7 +240,8 @@
   }
 
   // Rows with a narrow label at the left and the content at the right: co-authored papers (venue, title) and
-  // open source (repository, what it is). The names are links without underlines, as in the row above.
+  // open source (repository, what it is). The paper titles and the repository names are links and look like
+  // links: the site's own link style, accent with a thin underline.
   .label-rows {
     padding: 0;
     list-style: none;
@@ -260,14 +260,12 @@
       padding-top: 0;
     }
 
-    a {
-      color: var(--ink);
-      text-decoration: none;
+    a.label-rows__label {
+      justify-self: start;
+      color: var(--accent);
 
       &:hover {
-        color: var(--accent);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
+        color: var(--accent-strong);
       }
     }
 
