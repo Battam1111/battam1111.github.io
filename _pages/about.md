@@ -31,6 +31,7 @@ platforms:
   - label: '<span lang="en">WeChat: 升云迹</span><span lang="zh">公众号：升云迹</span><span lang="ja">WeChat：升云迹</span>'
 
 # First-author papers only (notes go under Writing). The figure is the paper's own Figure 1, never a redrawn one.
+# No abstract under a card: the title already says what the paper found. `note` is for what others said of it.
 # Papers under review carry no venue name.
 papers:
   - title: "The Trace Is the State: Exact Credit Assignment for LLM Agent Teams"
@@ -41,8 +42,6 @@ papers:
     venue: <span lang="en">arXiv 2026 · in submission</span><span lang="zh">arXiv 2026 · 在投</span><span lang="ja">arXiv 2026 · 投稿中</span>
     arxiv: "2603.06859"
     code: https://github.com/EIT-EAST-Lab/C3
-    text: >
-      <span lang="en">What each message in a team of LLM agents was worth has mostly been predicted, but when the team communicates through a shared context and everything a downstream agent reads is written into the trace, the trace is the state. One message can then be replaced and the run continued to its end, which makes its credit exact. For an LLM, much of the environment arrives as context (retrieved text, tool outputs, prompts), and that is where the same method points next: assigning credit to those pieces as well.</span><span lang="zh">LLM agent 团队里每条消息值多少，过去大多靠预测；但当团队通过共享上下文交流、下游 agent 读到的一切都写进记录（trace）时，记录就是状态。这时换掉一条消息、真实续跑到结束，它的 credit 就能精确算出。对 LLM 来说，环境大多以上下文的形式到达模型（检索到的文本、工具返回、提示词），同一个办法接下来指向的正是这些组件：给它们也分配 credit。</span><span lang="ja">LLM agent のチームで各メッセージの価値はこれまで主に予測されてきたが、チームが共有コンテキストを通じてやり取りし、下流の agent が読むものがすべて記録（trace）に書き込まれるなら、記録がそのまま状態になる。このとき一つのメッセージを差し替えて最後まで実際に走らせれば、その credit は厳密に求まる。LLM にとって環境の多くはコンテキストとして届く（検索されたテキスト、ツールの返り値、プロンプト）ので、同じ方法が次に向かう先は、こうした構成要素にも credit を割り当てることだ。</span>
   - title: "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models"
     image: paper-paradox-fig1.png
     width: 1600
@@ -51,8 +50,6 @@ papers:
     venue: EMNLP 2024
     arxiv: "2410.06554"
     code: https://github.com/EIT-NLP/AccuracyParadox-RLHF
-    text: >
-      <span lang="en">The reward model is the most typical piece of a training environment and is usually judged by its accuracy. Yet moderately accurate reward models train better language models than the most accurate ones, so a piece's worth has to be judged inside training.</span><span lang="zh">reward model 是训练环境里最典型的组件，通常按准确率评判。但中等准确率的 reward model 反而比最准的训出更好的语言模型，所以组件值多少，得放进训练里看。</span><span lang="ja">reward model は訓練環境の中で最も典型的な構成要素で、ふつうは精度で評価される。しかし、中程度の精度の reward model のほうが最も精度の高いものより良い言語モデルを訓練するので、構成要素の価値は訓練の内側で判断する必要がある。</span>
     note: >
       <span lang="en">Princeton's <em>What Makes a Reward Model a Good Teacher?</em> (NeurIPS 2025) opens with this finding; the ACL 2025 tutorial <em>Synthetic Data in the Era of LLMs</em> gives it a full slide.</span><span lang="zh">普林斯顿的 <em>What Makes a Reward Model a Good Teacher?</em>（NeurIPS 2025）在开篇引用了这一发现；ACL 2025 教程 <em>Synthetic Data in the Era of LLMs</em> 用一整页讲了它。</span><span lang="ja">プリンストンの <em>What Makes a Reward Model a Good Teacher?</em>（NeurIPS 2025）は冒頭でこの発見を引いている。ACL 2025 のチュートリアル <em>Synthetic Data in the Era of LLMs</em> でも、スライド一枚を割いて取り上げられた。</span>
 
