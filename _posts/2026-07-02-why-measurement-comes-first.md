@@ -1,7 +1,6 @@
 ---
 layout: post
 lang: en
-news: false
 title: "Why Measurement Comes First"
 date: 2026-07-02
 description: "Three fields hit the same wall in their own vocabularies. Regime-dependence forces measurement inside the training run, and the withdrawal test decides what counts as a contribution at all."

@@ -1,7 +1,6 @@
 ---
 layout: post
 lang: en
-news: false
 title: "Making the Environment Trainable"
 date: 2026-07-03
 description: "Models became trainable; the environment never got that deal. Today it is not even a single thing. What it takes to change that, laid out as a stack of problems, and why the ceiling moves if the stack gets built."

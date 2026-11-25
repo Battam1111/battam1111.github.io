@@ -1,7 +1,6 @@
 ---
 layout: post
 lang: zh
-news: false
 title: "为什么测量必须先行"
 date: 2026-07-02
 description: "三个领域各用各的语言撞上同一堵墙。体制依赖性迫使测量进入训练过程内部，而撤除测试决定什么才算贡献。"

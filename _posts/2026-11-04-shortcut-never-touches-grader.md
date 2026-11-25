@@ -8,6 +8,10 @@ description: "I went through three public RL training records and found a patter
 tags: [research, agents, reinforcement-learning, evaluation]
 categories: [research]
 citation: true
+# The note the home page puts first under Writing (and points to from its "now" line), with this poster and kicker.
+home_feature: true
+poster: /assets/video/crooked-env/en-poster.jpg
+kicker: "Long read · 2-min film · open-source scan"
 chart:
   vega_lite: true
 ---

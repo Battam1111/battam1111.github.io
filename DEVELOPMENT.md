@@ -74,7 +74,7 @@ These files are the actual craft. Everything else is largely vanilla al-folio.
 | `assets/js/bibsearch.js`, `assets/js/vega-setup.js` | The Publications filter and the year chart built from the entries on the page; the Vega-Lite charts of a post (redrawn on a theme change, axes and lettering from the design tokens). |
 | `_includes/icons/*.svg`, `_plugins/icons.rb` | Inline SVG icons. Templates include them directly; the plugin swaps the `<i class="fa-...">` / `<i class="ai ai-...">` markup that the content files and jekyll-socials still write for the same SVGs. A new icon class needs a line in `SiteIcons::ICONS`. |
 | `assets/fonts/`, `tools/fonts/subset_cjk.py`, `tools/fontsrc/` | Self-hosted fonts (section 13). Licences in `assets/LICENSES.md`. |
-| `_layouts/about.liquid` | Custom homepage: heading + profile card and bio side by side + News + Selected Publications + **Teaching & Service** + contact. Not the stock al-folio about layout. |
+| `_layouts/about.liquid` | Custom homepage (v30). First screen: name, role, affiliation, thesis, "now", links, with the photo beside them (a thumbnail beside the name below 880px). Then Selected papers (first-author papers only, each with the paper's own Figure 1, never a redrawn one), the thread and the co-authored list, Writing (the featured note and the latest three, straight from the posts) beside News (milestones from `_news`), Open source, **Teaching & Service**, contact. Every word comes from `_pages/about.md`. Not the stock al-folio about layout. |
 | `_layouts/page.liquid`, `_layouts/post.liquid` | Customized for trilingual `<h1>` and single-post scoping (the `single-post` class prevents post CSS bleeding onto the homepage). |
 | `_includes/head.liquid` | Per-language canonical and hreflang links, manual cache-bust, GoatCounter snippet, dark-mode FOUC fix, font preconnects. |
 | `_includes/header.liquid` | Navbar with always-render brand (mobile drawer fix) + trilingual nav + the EN/中/日 language pill (links to this page in each language). |
@@ -108,8 +108,8 @@ keep their own look.
   text Inter's tabular figures also widen the hyphen.
 - jekyll-minifier's CSS compression is off (`_config.yml`): cssminify2 strips the spaces `calc()` and `clamp()` need
   around `+`; Sass's `style: compressed` already minifies.
-- The home page's one-paragraph thesis is the paragraph marked `{: .thesis }` in `_pages/about.md` (once per
-  language): set in the display face, its two bold words in the accent. Its Chinese and Japanese characters come
+- The home page's one-paragraph thesis is the `thesis` field of the front matter of `_pages/about.md` (three
+  languages in one string): set in the display face, its two bold words in the accent. Its Chinese and Japanese characters come
   from the heading subset, so `thesis` is in the class list of `tools/fonts/subset_cjk.py`.
 - Lines are few on purpose: a hairline opens each section of the home page and each year of the Publications
   page; rows and entries inside are separated by space alone.
@@ -201,10 +201,12 @@ counts on your website" enabled in GoatCounter site settings.
 
 | Surface | File(s) |
 |---------|---------|
-| Homepage bio / research / acknowledgement | `_pages/about.md` (trilingual `<div lang>` blocks) |
+| Homepage first screen (role, affiliation, thesis, "now", Chinese platforms, photo) | `_pages/about.md` front matter. "now" is the owner's own direction, never the topic of the internship |
+| Homepage selected papers, co-authored list, open source | `_pages/about.md` front matter (`papers`, `coauthored`, `open_source`); a paper's figure is `assets/img/<name>.png`, rendered from the paper's own figure file at 1600px wide |
+| Homepage thread under the papers / acknowledgement | `_pages/about.md` body (trilingual `<div lang>` blocks) |
 | Homepage section headings + Teaching & Service table | `_layouts/about.liquid` |
-| Subtitle / profile sidebar | `_pages/about.md` front matter |
-| News timeline | `_news/*.md` (one file per item, inline trilingual spans); every note shows there by itself (`_includes/news.liquid`; `news: false` keeps one out) |
+| Homepage Writing block | the posts themselves: the one with `home_feature: true` (plus `poster`, `kicker`; not `featured`, which the notes index reads) comes first and is the note the "now" line points to; the latest three others follow. Nothing to write by hand for a new note |
+| News timeline | `_news/*.md` (one file per item, inline trilingual spans): milestones only (papers, positions, awards). Notes are not news |
 | Notes (blog) | `_posts/<date>-<slug>.md` (English), `_posts/zh/` and `_posts/ja/` (same file name); figures `_includes/figs/<slug>/<name>.<lang>.html`, their styles `_sass/site/_essay-figs.scss`, `_note-figs.scss` |
 | Publications list | `_bibliography/papers.bib` (rendered by the scholar `bib.liquid` template) |
 | Nav labels, UI strings | `_includes/header.liquid`, `footer.liquid` |

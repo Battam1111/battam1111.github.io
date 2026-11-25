@@ -40,9 +40,59 @@
     margin-top: var(--space-4);
   }
 
+  // A section heading with a quiet link at its right end ("All publications →").
+  .section-title--more {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .section-title .section-more {
+    flex: none;
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-2);
+  }
+
   // ---------- Home ----------
+  // First screen: the name and the role, the photo beside them, then the affiliation, the thesis, what I am
+  // working on now and the links. On a wide window the photo is a column at the right; below 880px it shrinks
+  // to a thumbnail beside the name so the thesis stays on the first screen of a phone.
+  .home-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 176px;
+    grid-template-areas:
+      "head photo"
+      "lede photo";
+    column-gap: var(--space-7);
+    align-items: start;
+  }
+
   .home-head {
-    margin-bottom: var(--space-7);
+    grid-area: head;
+    min-width: 0;
+  }
+
+  .home-lede {
+    grid-area: lede;
+    min-width: 0;
+  }
+
+  .home-photo {
+    grid-area: photo;
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 50% 30%;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-2);
+      box-shadow: var(--shadow-photo);
+    }
   }
 
   .home-name {
@@ -50,10 +100,10 @@
     flex-wrap: wrap;
     align-items: baseline;
     column-gap: 0.32em;
-    font-size: var(--step-4);
+    font-size: var(--step-3);
     line-height: 1.05;
-    letter-spacing: -0.02em;
-    font-variation-settings: "opsz" 72;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 60;
   }
 
   .name-latin {
@@ -72,115 +122,173 @@
     display: none;
   }
 
+  // Who and where, in one line: the two roles carry the first ink, the places the second.
   .home-role {
-    max-width: 48rem;
+    max-width: 46rem;
     margin-top: var(--space-3);
-    font-size: var(--step-1);
+    font-size: var(--step-0);
     line-height: 1.5;
     color: var(--ink-2);
+
+    strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .sep {
+      padding-inline: 0.3em;
+      color: var(--ink-3);
+    }
   }
 
-  .home-hero {
-    display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: var(--space-7);
-    align-items: start;
-  }
-
-  .profile-card {
+  // Department, advisors, joint training: the small print under the role.
+  .home-affil {
+    max-width: 44rem;
+    margin-top: var(--space-2);
     font-size: 0.875rem;
-    line-height: 1.45;
-  }
+    line-height: 1.55;
+    color: var(--ink-3);
 
-  // Beside the bio the card stays in view while the longer column scrolls past, but only while the whole card fits
-  // the window: assets/js/site.js adds "fits" by measuring it (783px tall with the 2026-11 photo; a fixed min-height
-  // query would go stale with the next photo).
-  @media (min-width: 880px) {
-    .profile-card.fits {
-      position: sticky;
-      top: calc(var(--header-h) + var(--space-5));
+    a {
+      color: var(--ink-2);
     }
   }
 
-  .profile-photo {
-    width: 100%;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-2);
-    box-shadow: var(--shadow-photo);
-  }
-
-  .profile-name {
-    margin-top: var(--space-4);
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.3;
-    font-variation-settings: "opsz" 24;
-    color: var(--ink);
-
-    .name-zh {
-      margin-left: 0.2em;
-      font-size: 0.9em;
-    }
-  }
-
-  .profile-role {
-    margin-top: 2px;
+  // What I am working on now: a labelled line under the thesis, set off by a hairline.
+  .home-now {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-4);
+    align-items: baseline;
+    max-width: 44rem;
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--rule);
     color: var(--ink-2);
   }
 
-  .profile-links {
+  .home-now__label,
+  .paper-card__venue,
+  .note-feature__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  // Links of the first screen: the academic ones, a hairline, then the Chinese platforms a step quieter.
+  .home-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px var(--space-4);
+    margin-top: var(--space-5);
+    font-size: 0.875rem;
+  }
+
+  .home-links__sep {
+    align-self: stretch;
+    width: 1px;
+    background: var(--rule-strong);
+  }
+
+  .home-links__quiet {
+    color: var(--ink-2);
+  }
+
+  a.home-links__quiet {
+    text-decoration-color: var(--rule-strong);
+  }
+
+  // ---------- Home: selected papers ----------
+  // One card per first-author paper: the paper's own figure on a white sheet (it was drawn for a white page, so
+  // the sheet stays white in the dark theme too), the venue, the title, what the paper found, the links.
+  .paper-cards {
     display: grid;
-    gap: 2px;
-    margin-top: var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--rule);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
 
-    > a,
-    > span:not(.pl-sep) {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 30px;
-      color: var(--ink-2);
-      text-decoration: none;
-      overflow-wrap: anywhere;
+  .paper-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .paper-card__figure {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    padding: var(--space-3);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-2);
+    background: #fff;
+    overflow: hidden;
+
+    figure,
+    picture {
+      display: contents;
     }
 
-    > a:hover {
-      color: var(--accent);
-
-      > span {
-        text-decoration: underline;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 0.2em;
-      }
-    }
-
-    .icon {
-      width: 16px;
-      height: 16px;
-      color: var(--ink-3);
-    }
-
-    > a:hover .icon {
-      color: currentColor;
-    }
-
-    > .pl-mail > span {
-      font-size: 0.8125rem;
-    }
-
-    .pl-sep {
-      height: 1px;
-      margin: var(--space-2) 0;
-      background: var(--rule);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
   }
 
-  // Bio and research: reading column of the hero.
-  .home-bio {
-    min-width: 0;
+  .paper-card__venue {
+    margin-top: var(--space-4);
+  }
+
+  .paper-card__title {
+    margin-top: var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.28;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+  }
+
+  .paper-card__text {
+    margin-top: var(--space-3);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+
+  .paper-card__note {
+    margin-top: var(--space-3);
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--rule-strong);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+
+    em {
+      color: var(--ink);
+    }
+  }
+
+  .paper-card__links {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: auto;
+    padding-top: var(--space-3);
+    font-size: 0.875rem;
+  }
+
+  // The thread that ties the papers, under the cards: reading column.
+  .home-thread {
+    margin-top: var(--space-7);
 
     > div > * {
       max-width: var(--measure);
@@ -189,19 +297,151 @@
     p + p {
       margin-top: 1em;
     }
+  }
 
-    h2 {
-      margin: var(--space-7) 0 var(--space-3);
+  .home-coauthored {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+
+    ul {
+      padding: 0;
+      list-style: none;
     }
 
-    h3 {
-      margin: var(--space-6) 0 var(--space-2);
+    li {
+      margin-top: var(--space-1);
     }
+
+    a {
+      color: var(--ink);
+      text-decoration-color: var(--rule-strong);
+    }
+  }
+
+  .home-coauthored__title {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-3);
+  }
+
+  .home-coauthored__venue {
+    margin-left: 0.35em;
+    font-size: var(--step--1);
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  // ---------- Home: writing and news, side by side ----------
+  .home-two {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    column-gap: var(--space-8);
+
+    .section-title {
+      margin-bottom: var(--space-5);
+    }
+
+    .timeline__item {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      column-gap: var(--space-4);
+    }
+  }
+
+  // The featured note: its poster, a kicker saying what comes with it, the title, the one-line summary.
+  .note-feature {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    column-gap: var(--space-4);
+    align-items: start;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+
+    img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-1);
+    }
+
+    &:hover .note-feature__title {
+      color: var(--accent);
+    }
+  }
+
+  .note-feature__body > span {
+    display: block;
+  }
+
+  .note-feature__title,
+  .note-list__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.28;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .note-feature__title {
+    margin-top: var(--space-1);
+    font-size: 1.125rem;
+  }
+
+  .note-list__title {
+    font-size: 1.0625rem;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  .note-feature__text,
+  .note-list__text {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  // ---------- Home: open source ----------
+  .oss-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-7);
+    padding: 0;
+    list-style: none;
+
+    li {
+      min-width: 0;
+    }
+  }
+
+  .oss-list__name {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .oss-list__text {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-2);
   }
 
   // The one-paragraph thesis of the page, set as a statement in the display face; its two bold words carry the
   // accent instead of more weight.
-  .home-bio p.thesis {
+  .home-lede p.thesis {
     max-width: 42.75rem;
     margin-top: var(--space-5);
     font-family: var(--font-display);
@@ -219,39 +459,12 @@
     }
   }
 
-  :root:lang(zh) .home-bio p.thesis,
-  :root:lang(ja) .home-bio p.thesis {
+  :root:lang(zh) .home-lede p.thesis,
+  :root:lang(ja) .home-lede p.thesis {
     max-width: 38rem;
     font-size: clamp(1.22rem, 1.08rem + 0.6vw, 1.45rem);
     line-height: 1.6;
     letter-spacing: 0.02em;
-  }
-
-  // A research direction: the paragraph that opens with a bold claim...
-  .angle {
-    margin-top: var(--space-6);
-  }
-
-  // ...and under it the papers, as one citation strip behind a hairline.
-  .angle-paper {
-    padding: 1px 0 1px var(--space-4);
-    border-left: 1px solid var(--rule-strong);
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    color: var(--ink-2);
-
-    em {
-      color: var(--ink);
-    }
-  }
-
-  .home-bio p.angle-paper {
-    margin-top: var(--space-3);
-  }
-
-  .home-bio p.angle-paper + p.angle-paper {
-    margin-top: 0;
-    padding-top: var(--space-1);
   }
 
   .acknowledgement {
@@ -264,7 +477,7 @@
     }
   }
 
-  .home-bio p.acknowledgement {
+  .home-thread p.acknowledgement {
     margin-top: var(--space-6);
   }
 
@@ -337,48 +550,76 @@
     color: var(--ink-2);
   }
 
-  @media (max-width: 959.98px) {
-    .home-hero {
-      gap: var(--space-6);
-    }
-  }
-
-  // Below 880px the card goes above the bio: a narrower card would break the e-mail address.
+  // Below 880px the photo becomes a thumbnail beside the name, and the two columns of the lower sections stack.
   @media (max-width: 879.98px) {
     .home-hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .profile-card {
-      text-align: center;
-
-      figure {
-        max-width: 168px;
-        margin-inline: auto;
-      }
-    }
-
-    .profile-links {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 76px minmax(0, 1fr);
+      grid-template-areas:
+        "photo head"
+        "lede lede";
       column-gap: var(--space-4);
-      max-width: 26rem;
-      margin-inline: auto;
-      text-align: left;
+    }
 
-      .pl-mail,
-      .pl-sep {
-        grid-column: 1 / -1;
+    .home-head {
+      align-self: center;
+    }
+
+    .home-photo img {
+      aspect-ratio: 1;
+      border-radius: var(--radius-1);
+    }
+
+    .home-role {
+      margin-top: var(--space-1);
+      font-size: 0.875rem;
+
+      // One role per line beside the thumbnail.
+      .role-part {
+        display: block;
       }
 
-      > a.pl-mail {
-        justify-content: center;
+      .sep {
+        display: none;
       }
+    }
+
+    // On a phone the thesis comes right under the name; the small print moves below the links.
+    .home-lede {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home-affil {
+      order: 1;
+      margin-top: var(--space-5);
+    }
+
+    .home-two {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-7);
     }
   }
 
   @media (max-width: 759.98px) {
-    .home-head {
-      margin-bottom: var(--space-6);
+    .home-name {
+      font-size: 1.75rem;
+    }
+
+    .home-now {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .paper-cards,
+    .oss-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .note-feature {
+      grid-template-columns: 112px minmax(0, 1fr);
+    }
+
+    .home-two .timeline__item {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .home-section,

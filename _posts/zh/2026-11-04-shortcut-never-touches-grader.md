@@ -9,6 +9,9 @@ tags: [research, agents, reinforcement-learning, evaluation]
 categories: [research]
 citation: true
 citation_title: "Crooked Environments, Crooked Agents"
+home_feature: true
+poster: /assets/video/crooked-env/zh-poster.jpg
+kicker: "长文 · 两分钟短片 · 开源扫描工具"
 chart:
   vega_lite: true
 ---

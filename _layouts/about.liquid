@@ -1,54 +1,176 @@
 ---
 layout: default
 ---
+{% comment %}
+  The home page. All the words come from _pages/about.md (front matter and body); this file only lays them out.
+  First screen: name, role, affiliation, thesis, now, links, with the photo beside them (beside the name on a phone).
+  Then selected papers (first-author papers with the paper's own figure), writing and news side by side, open
+  source, teaching and service, contact.
+{% endcomment %}
+{% assign featured = site.posts | where: 'home_feature', true | first %}
+{% assign notes = site.posts | where_exp: 'p', 'p.home_feature != true' %}
 <div class="home post">
-  <header class="home-head">
-    <h1 class="home-name">
-      {% if site.title == 'blank' %}
-        <span class="name-latin"><span class="name-first">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}</span>
-        {% if site.name_zh %}<span class="name-zh"><span class="name-sc">{{ site.name_zh }}</span>{% if site.name_ja %}<span lang="ja">{{ site.name_ja }}</span>{% endif %}</span>{% endif %}
-      {% else %}
-        {{ site.title }}
-      {% endif %}
-    </h1>
-    <p class="home-role desc">{{ page.subtitle }}</p>
-  </header>
-
   <article>
-    <div class="home-hero">
-      {% if page.profile %}
-        <aside class="profile-card profile">
-          {% if page.profile.image %}
-            {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-            {%
-              include figure.liquid loading="eager" path=profile_image_path class="profile-photo" width="400" height="529"
-              sizes="(min-width: 760px) 220px, 168px" alt=page.profile.image cache_bust=true
-            %}
+    <header class="home-hero">
+      <div class="home-head">
+        <h1 class="home-name">
+          {% if site.title == 'blank' %}
+            <span class="name-latin"><span class="name-first">{{ site.first_name }}</span> {{ site.middle_name }}
+            {{ site.last_name }}</span>
+            {% if site.name_zh %}<span class="name-zh"><span class="name-sc">{{ site.name_zh }}</span>{% if site.name_ja %}<span lang="ja">{{ site.name_ja }}</span>{% endif %}</span>{% endif %}
+          {% else %}
+            {{ site.title }}
           {% endif %}
-          {% if page.profile.more_info %}
-            <div class="more-info">{{ page.profile.more_info }}</div>
-          {% endif %}
-        </aside>
-      {% endif %}
-      <div class="home-bio">{{ content }}</div>
-    </div>
+        </h1>
+        <p class="home-role">{{ page.role }}</p>
+      </div>
 
-    {% if page.announcements and page.announcements.enabled %}
+      {% if page.photo %}
+        <div class="home-photo">
+          {% assign photo_path = page.photo | prepend: 'assets/img/' %}
+          {% capture photo_alt %}{{ site.first_name }} {{ site.last_name }}{% endcapture %}
+          {%
+            include figure.liquid loading="eager" path=photo_path width="400" height="529"
+            sizes="(min-width: 880px) 176px, 76px" alt=photo_alt cache_bust=true
+          %}
+        </div>
+      {% endif %}
+
+      <div class="home-lede">
+        {% if page.affiliation %}<p class="home-affil">{{ page.affiliation }}</p>{% endif %}
+        <p class="thesis">{{ page.thesis }}</p>
+        {% if page.now %}
+          <div class="home-now">
+            <span class="home-now__label"><span lang="en">Now</span><span lang="zh">现在</span><span lang="ja">現在</span></span>
+            {% comment %} No space between the sentence and the pointer in Chinese and Japanese, one in English. {% endcomment %}
+            <p>
+              {{- page.now | strip -}}
+              {%- if featured -%}
+                {%- case site.active_lang -%}
+                  {%- when 'zh' -%}其中一个例子写在<a href="{{ featured.url | relative_url }}">《{{ featured.title }}》</a>里。
+                  {%- when 'ja' -%}その一例を<a href="{{ featured.url | relative_url }}">「{{ featured.title }}」</a>に書きました。
+                  {%- else %} I wrote up one case in <a href="{{ featured.url | relative_url }}"><em>{{ featured.title }}</em></a>.
+                {%- endcase -%}
+              {%- endif -%}
+            </p>
+          </div>
+        {% endif %}
+        <p class="home-links">
+          <a href="mailto:{{ site.email }}"><span lang="en">Email</span><span lang="zh">邮箱</span><span lang="ja">メール</span></a>
+          <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" rel="external nofollow noopener" target="_blank">Google Scholar</a>
+          <a href="https://github.com/{{ site.github_username }}" rel="external nofollow noopener" target="_blank">GitHub</a>
+          <a href="https://x.com/{{ site.x_username }}" rel="external nofollow noopener" target="_blank">X</a>
+          <a href="{{ '/assets/pdf/cv.pdf' | relative_url }}" target="_blank"><span lang="en">CV</span><span lang="zh">简历</span><span lang="ja">履歴書</span></a>
+          {% if page.platforms %}
+            <span class="home-links__sep" aria-hidden="true"></span>
+            {% for platform in page.platforms %}
+              {% if platform.href %}
+                <a class="home-links__quiet" href="{{ platform.href }}" rel="external nofollow noopener" target="_blank">{{ platform.label }}</a>
+              {% else %}
+                <span class="home-links__quiet">{{ platform.label }}</span>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </p>
+      </div>
+    </header>
+
+    {% if page.papers %}
       <section class="home-section">
-        <h2 class="section-title">
-          <a href="{{ '/news/' | relative_url }}"><span lang="en">News</span><span lang="zh">近况</span><span lang="ja">お知らせ</span></a>
+        <h2 class="section-title section-title--more">
+          <span><span lang="en">Selected Papers</span><span lang="zh">代表性论文</span><span lang="ja">主要論文</span></span>
+          <a class="section-more" href="{{ '/publications/' | relative_url }}"><span lang="en">All Publications</span><span lang="zh">全部论文</span><span lang="ja">すべての論文</span> →</a>
         </h2>
-        {% include news.liquid limit=true %}
+        <div class="paper-cards">
+          {% for paper in page.papers %}
+            {% assign paper_url = 'https://arxiv.org/abs/' | append: paper.arxiv %}
+            {% assign figure_path = paper.image | prepend: 'assets/img/' %}
+            <article class="paper-card">
+              <a class="paper-card__figure" href="{{ paper_url }}" rel="external nofollow noopener" target="_blank">
+                {%
+                  include figure.liquid loading="lazy" path=figure_path width=paper.width height=paper.height
+                  sizes="(min-width: 760px) 488px, 92vw" alt=paper.alt
+                %}
+              </a>
+              <p class="paper-card__venue">{{ paper.venue }}</p>
+              <h3 class="paper-card__title">
+                <a href="{{ paper_url }}" rel="external nofollow noopener" target="_blank">{{ paper.title }}</a>
+              </h3>
+              <p class="paper-card__text">{{ paper.text }}</p>
+              {% if paper.note %}<p class="paper-card__note">{{ paper.note }}</p>{% endif %}
+              <p class="paper-card__links">
+                <a href="{{ paper_url }}" rel="external nofollow noopener" target="_blank">arXiv</a>
+                {% if paper.code %}<a href="{{ paper.code }}" rel="external nofollow noopener" target="_blank"><span lang="en">Code</span><span lang="zh">代码</span><span lang="ja">コード</span></a>{% endif %}
+              </p>
+            </article>
+          {% endfor %}
+        </div>
+
+        {% if page.coauthored %}
+          <div class="home-coauthored">
+            <h3 class="home-coauthored__title"><span lang="en">Co-Authored</span><span lang="zh">合作论文</span><span lang="ja">共著</span></h3>
+            <ul>
+              {% for paper in page.coauthored %}
+                <li><a href="https://arxiv.org/abs/{{ paper.arxiv }}" rel="external nofollow noopener" target="_blank">{{ paper.title }}</a> <span class="home-coauthored__venue">{{ paper.venue }}</span></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <div class="home-thread">{{ content }}</div>
       </section>
     {% endif %}
 
-    {% if page.selected_papers %}
-      <section class="home-section">
-        <h2 class="section-title">
-          <a href="{{ '/publications/' | relative_url }}"><span lang="en">Selected Publications</span><span lang="zh">代表性论文</span><span lang="ja">主要論文</span></a>
+    <div class="home-section home-two">
+      <section>
+        <h2 class="section-title section-title--more">
+          <span><span lang="en">Writing</span><span lang="zh">文章</span><span lang="ja">ノート</span></span>
+          <a class="section-more" href="{{ '/blog/' | relative_url }}"><span lang="en">All Notes</span><span lang="zh">全部文章</span><span lang="ja">すべてのノート</span> →</a>
         </h2>
-        {% include selected_papers.liquid %}
+        {% if featured %}
+          <a class="note-feature" href="{{ featured.url | relative_url }}">
+            {% if featured.poster %}<img src="{{ featured.poster | relative_url }}" alt="" width="1280" height="720" loading="lazy">{% endif %}
+            <span class="note-feature__body">
+              {% if featured.kicker %}<span class="note-feature__kicker">{{ featured.kicker }}</span>{% endif %}
+              <span class="note-feature__title">{{ featured.title }}</span>
+              <span class="note-feature__text">{{ featured.description }}</span>
+            </span>
+          </a>
+        {% endif %}
+        <ol class="timeline note-list">
+          {% for post in notes limit: 3 %}
+            <li class="timeline__item">
+              <time class="timeline__date" datetime="{{ post.date | date: '%Y-%m-%d' }}"><span lang="en">{{ post.date | date: '%b %d, %Y' }}</span><span lang="zh">{{ post.date | date: '%Y年%-m月%-d日' }}</span><span lang="ja">{{ post.date | date: '%Y年%-m月%-d日' }}</span></time>
+              <div class="timeline__body">
+                <a class="note-list__title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                <span class="note-list__text">{{ post.description }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      {% if page.announcements and page.announcements.enabled %}
+        <section>
+          <h2 class="section-title">
+            <a href="{{ '/news/' | relative_url }}"><span lang="en">News</span><span lang="zh">近况</span><span lang="ja">お知らせ</span></a>
+          </h2>
+          {% include news.liquid limit=true %}
+        </section>
+      {% endif %}
+    </div>
+
+    {% if page.open_source %}
+      <section class="home-section">
+        <h2 class="section-title"><span lang="en">Open Source</span><span lang="zh">开源</span><span lang="ja">オープンソース</span></h2>
+        <ul class="oss-list">
+          {% for item in page.open_source %}
+            <li>
+              <a class="oss-list__name" href="{{ item.href }}" rel="external nofollow noopener" target="_blank">{{ item.name }}</a>
+              <span class="oss-list__text">{{ item.text }}</span>
+            </li>
+          {% endfor %}
+        </ul>
       </section>
     {% endif %}
 
