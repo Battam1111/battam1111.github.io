@@ -29,7 +29,7 @@ contact_note: >
 # must stay inside that budget or the positioning never reaches the reader (the
 # previous 287-character version was truncated mid-clause, and Bing flagged it).
 description: >
-  Yanjun Chen (陈彦筠), PhD candidate at Hong Kong PolyU. Reinforcement learning for LLMs and agents: models are trainable, their environments are not.
+  Yanjun Chen (陈彦筠), PhD candidate at Hong Kong PolyU. Reinforcement learning for LLMs and agents: environments that improve the way models do.
 footer_text: >
   <span lang="en"><a href="https://github.com/Battam1111/battam1111.github.io">Source on GitHub</a>.</span><span lang="zh"><a href="https://github.com/Battam1111/battam1111.github.io">源代码在 GitHub</a>。</span><span lang="ja"><a href="https://github.com/Battam1111/battam1111.github.io">ソースは GitHub にて公開</a>。</span>
 keywords: reinforcement learning, RLHF, RLVR, reward models, verifiers, curriculum, credit assignment, LLM post-training, RL environments, embodied AI, PolyU
