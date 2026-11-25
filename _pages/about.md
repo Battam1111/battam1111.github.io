@@ -6,7 +6,8 @@ permalink: /
 # The home page, top to bottom (_layouts/about.liquid lays it out):
 #   first screen: name (from _config.yml), role, affiliation, thesis, now, links, photo;
 #   selected papers: first-author papers only, each with a figure taken from the paper itself;
-#   the body of this file: the thread that ties them, then the acknowledgement;
+#   the body of this file: the acknowledgement (the thread that tied the papers, the "how", was taken down on
+#   2026-11-25 until the owner settles how his work turns on environments; it goes back here, above the thanks);
 #   writing (from the posts), news (from _news), open source, teaching and service, contact.
 # The Research Intern half of the role line goes when the MSRA internship ends (so does the README sentence).
 role: >
@@ -93,29 +94,17 @@ announcements:
 
 <div lang="en" markdown="1">
 
-Making the pieces around a model trainable starts with knowing what they actually do in training, and which signal can say exactly what each step is worth.
-
-The destination: an environment that learns alongside the model it trains. The path runs through credit: **credit should not stop at the agent's boundary.** Once trustworthy learning signals reach the pieces around the model, the environment can begin to learn.
-
 <p class="acknowledgement"><small><em>With thanks to Xiaoyu Shen and Dawei Zhu, whose ongoing mentorship and guidance have shaped much of how I think about research.</em></small></p>
 
 </div>
 
 <div lang="zh" markdown="1">
 
-要让模型周围的组件也能训练，先得知道它们在训练里究竟起什么作用，以及什么信号能精确告诉我们每一步值多少。
-
-终局：环境与模型一起学习。去那里的路，经过 credit assignment（信用分配）：**credit 不该停在 agent 的边界上。** 当可信的学习信号能到达模型周围的组件，环境就能开始学习。
-
 <p class="acknowledgement"><small><em>感谢 Xiaoyu Shen 老师与 Dawei Zhu 师兄一直以来的指导与帮助，他们在很多方面塑造了我做研究的方式。</em></small></p>
 
 </div>
 
 <div lang="ja" markdown="1">
-
-モデルの周りの構成要素まで訓練できるようにするには、まず、それらが訓練の中で実際に何をしているのか、そして一歩ごとの価値をどの信号なら正確に言えるのかを知る必要がある。
-
-目指す先は、モデルとともに学ぶ環境です。そこへ至る道は credit assignment（貢献度の割り当て）にあります。**credit は agent の境界で止まるべきではない。** 信頼できる学習信号がモデルの周りの構成要素にまで届いたとき、環境は学び始めることができます。
 
 <p class="acknowledgement"><small><em>Xiaoyu Shen 先生と Dawei Zhu 先輩から受けた継続的なご指導とお力添えに深く感謝いたします。私の研究との向き合い方の多くは、お二人からの影響によるものです。</em></small></p>
 
