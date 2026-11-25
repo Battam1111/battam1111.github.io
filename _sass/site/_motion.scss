@@ -135,6 +135,8 @@
     .home-role,
     .home-photo,
     .home-lede,
+    .home-links,
+    .home-affil,
     .post-header,
     .post-header ~ * {
       animation: arrive var(--dur-3) var(--ease-out) backwards;
@@ -149,7 +151,9 @@
       animation-delay: 150ms;
     }
 
-    .home-lede {
+    .home-lede,
+    .home-links,
+    .home-affil {
       animation-delay: 230ms;
     }
   }
@@ -264,7 +268,7 @@
     animation: none !important;
   }
 
-  .intro :is(.home-name, .home-role, .home-photo, .home-lede, .post-header, .post-header ~ *),
+  .intro :is(.home-name, .home-role, .home-photo, .home-lede, .home-links, .home-affil, .post-header, .post-header ~ *),
   .home-section,
   .home-contact,
   .publications > ol.bibliography > li,

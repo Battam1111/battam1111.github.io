@@ -58,17 +58,20 @@
   }
 
   // ---------- Home ----------
-  // First screen. The identity block comes first: the name, the role and the small print, with the photo at its
-  // right, as tall as the block. Under it, across the page: the thesis, what I am working on now, the links.
-  // Below 880px the photo is a thumbnail before the name and the small print moves under the links, so the thesis
-  // stays on the first screen of a phone. Everything keeps one left edge.
+  // First screen. Two columns: the words at the left (name, role, thesis, what I am working on now), the portrait
+  // at the right: an upright 3:4 frame, 280px wide on a wide screen, about as tall as the words beside it. Under
+  // both, across the full width: the links, then the small print (department, advisors, joint training), so
+  // neither long row is squeezed by the portrait. Below 880px the portrait stands beside the name and the role,
+  // which sit at its foot; below 560px beside the name alone. It is never a thumbnail. The words keep one left
+  // edge.
   .home-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 136px;
+    grid-template-columns: minmax(0, 1fr) clamp(232px, 23vw, 280px);
     grid-template-areas:
       "head photo"
-      "affil photo"
-      "lede lede";
+      "lede photo"
+      "links links"
+      "affil affil";
     column-gap: var(--space-7);
     align-items: start;
   }
@@ -86,11 +89,13 @@
   .home-photo {
     grid-area: photo;
 
+    // The frame is upright whatever the file: a square photo loses a little of each side, never its proportions.
     img {
       width: 100%;
-      aspect-ratio: 1;
+      height: auto;
+      aspect-ratio: 3 / 4;
       object-fit: cover;
-      object-position: 50% 30%;
+      object-position: 50% 50%;
       border: 1px solid var(--rule);
       border-radius: var(--radius-2);
       box-shadow: var(--shadow-photo);
@@ -147,11 +152,11 @@
     }
   }
 
-  // Department, advisors, joint training: the small print under the role.
+  // Department, advisors, joint training: the small print that closes the first screen, under the links.
   .home-affil {
     grid-area: affil;
     max-width: none;
-    margin-top: var(--space-2);
+    margin-top: var(--space-5);
     font-size: 0.875rem;
     line-height: 1.55;
     color: var(--ink-3);
@@ -197,10 +202,12 @@
   // Links of the first screen: the academic ones, a hairline, then the Chinese platforms a step quieter. A row of
   // names needs no underlines to read as links; the underline comes on hover.
   .home-links {
+    grid-area: links;
+    max-width: none;
     display: flex;
     flex-wrap: wrap;
     gap: 6px var(--space-5);
-    margin-top: var(--space-5);
+    margin-top: var(--space-6);
     font-size: 0.875rem;
     font-weight: 500;
 
@@ -586,29 +593,26 @@
     color: var(--ink-2);
   }
 
-  // Below 880px the photo becomes a thumbnail beside the name, and the two columns of the lower sections stack.
+  // Below 880px the thesis and what follows run under the portrait at full width; the name and the role sit at
+  // the foot of the portrait's left side, so they read straight on into the thesis. The two columns of the lower
+  // sections stack.
   @media (max-width: 879.98px) {
     .home-hero {
-      grid-template-columns: 76px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) clamp(112px, 38vw, 200px);
       grid-template-areas:
-        "photo head"
+        "head photo"
         "lede lede"
+        "links links"
         "affil affil";
-      column-gap: var(--space-4);
+      column-gap: var(--space-5);
     }
 
     .home-head {
-      align-self: center;
+      align-self: end;
     }
 
-    .home-photo img {
-      aspect-ratio: 1;
-      border-radius: var(--radius-1);
-    }
-
-    .home-role {
-      margin-top: var(--space-1);
-      font-size: 0.875rem;
+    .home-links {
+      margin-top: var(--space-5);
     }
 
     // The Chinese platforms take their own line, without the hairline.
@@ -618,11 +622,6 @@
       border-left: 0;
     }
 
-    // On a phone the thesis comes right under the name; the small print moves below the links.
-    .home-affil {
-      margin-top: var(--space-5);
-    }
-
     .home-two,
     .teaching-service {
       grid-template-columns: minmax(0, 1fr);
@@ -630,9 +629,40 @@
     }
   }
 
-  @media (max-width: 759.98px) {
+  // On a phone the column beside the portrait is too narrow for the role lines: the name alone stands there, and
+  // the role runs under the two at full width.
+  @media (max-width: 559.98px) {
+    .home-hero {
+      grid-template-areas:
+        "name photo"
+        "role role"
+        "lede lede"
+        "links links"
+        "affil affil";
+      column-gap: var(--space-4);
+    }
+
+    // The name and the role become grid items of their own.
+    .home-head {
+      display: contents;
+    }
+
     .home-name {
-      font-size: 1.75rem;
+      grid-area: name;
+      align-self: end;
+    }
+
+    .home-role {
+      grid-area: role;
+      margin-top: var(--space-4);
+    }
+  }
+
+  @media (max-width: 759.98px) {
+    // Scales down on the narrowest phones, so the Latin name (one unbreakable line) stays inside its column
+    // beside the portrait.
+    .home-name {
+      font-size: clamp(1.4rem, 7.6vw, 1.75rem);
     }
 
     .label-rows li {

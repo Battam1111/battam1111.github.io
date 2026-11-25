@@ -4,7 +4,7 @@ title: About
 permalink: /
 
 # The home page, top to bottom (_layouts/about.liquid lays it out):
-#   first screen: name (from _config.yml), role, affiliation, thesis, now, links, photo;
+#   first screen: name (from _config.yml), role, thesis, now, links, affiliation (small print), photo at the right;
 #   selected papers: first-author papers only, each with a figure taken from the paper itself;
 #   the body of this file: the acknowledgement (the thread that tied the papers, the "how", was taken down on
 #   2026-11-25 until the owner settles how his work turns on environments; it goes back here, above the thanks);

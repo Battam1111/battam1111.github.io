@@ -3,7 +3,8 @@ layout: default
 ---
 {% comment %}
   The home page. All the words come from _pages/about.md (front matter and body); this file only lays them out.
-  First screen: name, role, affiliation, thesis, now, links, with the photo beside them (beside the name on a phone).
+  First screen: the words at the left (name, role, thesis, now), the portrait at the right; under both, the links
+  and the affiliation as small print. On a phone the portrait stands beside the name and the rest runs under them.
   Then selected papers (first-author papers with the paper's own figure), writing and news side by side, open
   source, teaching and service, contact.
 {% endcomment %}
@@ -24,15 +25,13 @@ layout: default
         </h1>
         <p class="home-role">{{ page.role }}</p>
       </div>
-      {% if page.affiliation %}<p class="home-affil">{{ page.affiliation }}</p>{% endif %}
-
       {% if page.photo %}
         <div class="home-photo">
           {% assign photo_path = page.photo | prepend: 'assets/img/' %}
           {% capture photo_alt %}{{ site.first_name }} {{ site.last_name }}{% endcapture %}
           {%
-            include figure.liquid loading="eager" path=photo_path width="400" height="529"
-            sizes="(min-width: 880px) 176px, 76px" alt=photo_alt cache_bust=true
+            include figure.liquid loading="eager" path=photo_path width="484" height="482"
+            sizes="(min-width: 880px) 375px, 51vw" alt=photo_alt cache_bust=true
           %}
         </div>
       {% endif %}
@@ -56,7 +55,8 @@ layout: default
               {%- endif -%}
             </p>
         {% endif %}
-        <p class="home-links">
+      </div>
+      <p class="home-links">
           <span class="home-links__group">
           <a href="mailto:{{ site.email }}"><span lang="en">Email</span><span lang="zh">邮箱</span><span lang="ja">メール</span></a>
           <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" rel="external nofollow noopener" target="_blank">Google Scholar</a>
@@ -75,8 +75,8 @@ layout: default
             {% endfor %}
             </span>
           {% endif %}
-        </p>
-      </div>
+      </p>
+      {% if page.affiliation %}<p class="home-affil">{{ page.affiliation }}</p>{% endif %}
     </header>
 
     {% if page.papers %}
